@@ -116,7 +116,7 @@ class FrontendController extends Controller
 	public function index(Request $request)
 	{
 
-        //$this->code_image();
+        ////$this->code_image();
          if(!empty($request->reff))
          {
             $affilate_user = User::where('affilate_code','=',$request->reff)->first();
@@ -136,9 +136,10 @@ class FrontendController extends Controller
         $sliders = DB::table('sliders')->get();
         $top_small_banners = DB::table('banners')->where('type','=','TopSmall')->get();
         $ps = DB::table('pagesettings')->find(1);
+        $best_products =  Product::with('user')->where('best','=',1)->where('status','=',1)->select($selectable)->orderBy('id','desc')->take(8)->get();
         $feature_products =  Product::with('user')->where('featured','=',1)->where('status','=',1)->select($selectable)->orderBy('id','desc')->take(8)->get();
         
-	    return view('front.index',compact('ps','sliders','top_small_banners','feature_products'));
+	    return view('front.index',compact('ps','sliders','top_small_banners','best_products', 'feature_products'));
 	}
 
     public function extraIndex()
@@ -168,7 +169,7 @@ class FrontendController extends Controller
 
     public function language($id)
     {
-        //$this->code_image();
+        ////$this->code_image();
         Session::put('language', $id);
         cache()->forget('session_language');
         return redirect()->back();
@@ -181,7 +182,7 @@ class FrontendController extends Controller
 
     public function currency($id)
     {
-        //$this->code_image();
+        ////$this->code_image();
         if (Session::has('coupon')) {
             Session::forget('coupon');
             Session::forget('coupon_code');
@@ -222,7 +223,7 @@ class FrontendController extends Controller
 
 	public function blog(Request $request)
 	{
-        //$this->code_image();
+        ////$this->code_image();
 		$blogs = Blog::orderBy('created_at','desc')->paginate(9);
             if($request->ajax()){
                 return view('front.pagination.blog',compact('blogs'));
@@ -232,7 +233,7 @@ class FrontendController extends Controller
 
     public function blogcategory(Request $request, $slug)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $bcat = BlogCategory::where('slug', '=', str_replace(' ', '-', $slug))->first();
         $blogs = $bcat->blogs()->orderBy('created_at','desc')->paginate(9);
             if($request->ajax()){
@@ -243,7 +244,7 @@ class FrontendController extends Controller
 
     public function blogtags(Request $request, $slug)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $blogs = Blog::where('tags', 'like', '%' . $slug . '%')->paginate(9);
             if($request->ajax()){
                 return view('front.pagination.blog',compact('blogs'));
@@ -253,7 +254,7 @@ class FrontendController extends Controller
 
     public function blogsearch(Request $request)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $search = $request->search;
         $blogs = Blog::where('title', 'like', '%' . $search . '%')->orWhere('details', 'like', '%' . $search . '%')->paginate(9);
             if($request->ajax()){
@@ -264,7 +265,7 @@ class FrontendController extends Controller
 
     public function blogarchive(Request $request,$slug)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $date = \Carbon\Carbon::parse($slug)->format('Y-m');
         $blogs = Blog::where('created_at', 'like', '%' . $date . '%')->paginate(9);
             if($request->ajax()){
@@ -275,7 +276,7 @@ class FrontendController extends Controller
 
     public function blogshow($id)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $tags = null;
         $tagz = '';
         $bcats = BlogCategory::all();
@@ -301,7 +302,7 @@ class FrontendController extends Controller
 // -------------------------------- FAQ SECTION ----------------------------------------
 	public function faq()
 	{
-        //$this->code_image();
+        ////$this->code_image();
         if(DB::table('generalsettings')->find(1)->is_faq == 0){
             return redirect()->back();
         }
@@ -313,7 +314,7 @@ class FrontendController extends Controller
 // -------------------------------- PAGE SECTION ----------------------------------------
     public function page($slug)
     {
-        //$this->code_image();
+        ////$this->code_image();
         $page =  DB::table('pages')->where('slug',$slug)->first();
         if(empty($page))
         {
@@ -328,7 +329,7 @@ class FrontendController extends Controller
 // -------------------------------- CONTACT SECTION ----------------------------------------
 	public function contact()
 	{
-        //$this->code_image();
+        ////$this->code_image();
         if(DB::table('generalsettings')->find(1)->is_contact== 0){
             return redirect()->back();
         }
@@ -385,7 +386,7 @@ class FrontendController extends Controller
 
     // Refresh Capcha Code
     public function refresh_code(){
-        //$this->code_image();
+        ////$this->code_image();
         return "done";
     }
 

@@ -231,7 +231,7 @@ class CatalogController extends Controller
 
     public function product($slug)
     {
-        $this->code_image();
+        //$this->code_image();
         $productt = Product::where('slug','=',$slug)->firstOrFail();
         if($productt->status == 0){
           return response()->view('errors.404')->setStatusCode(404); 

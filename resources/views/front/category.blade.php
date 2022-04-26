@@ -1,63 +1,88 @@
 @extends('layouts.front')
+
+@section('styles')
+<style>
+.livecount, .price-range-block {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+}
+.price-range-field {
+    width: 84px !important;
+    background-color: none;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: black;
+    height: 30px;
+    text-align: center;
+    font-size: 14px;
+}
+</style>
+
+@endsection
 @section('content')
-<!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area">
-   <div class="container">
-      <div class="row">
-         <div class="col-lg-12">
-            <ul class="pages">
-               <li>
-                  <a href="{{route('front.index')}}">{{ $langg->lang17 }}</a>
-               </li>
-               @if (!empty($cat))
-               <li>
-                  <a href="{{route('front.category', $cat->slug)}}">{{ $cat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($subcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug])}}">{{ $subcat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($childcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{ $childcat->name }}</a>
-               </li>
-               @endif
-               @if (empty($childcat) && empty($subcat) && empty($cat))
-               <li>
-                  <a href="{{route('front.category')}}">{{ $langg->lang36 }}</a>
-               </li>
-               @endif
+<section class="inner_page_wrapper">
+		<div class="breadcrumb_section">
+			<div class="container">
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li>Collaboration</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="product_wrapper collaboration_wrapper">
+			<div class="container">
+				<div class="heading">
+					<h3>Paintings</h3>
+					<div class="sortby_c">
+            @include('includes.filter')
+						
+					</div>	
+				</div>
+				<div class="collaboration_inner">
+					<div class="left_block">
+          @include('includes.catalog')
+        
 
-            </ul>
-         </div>
-      </div>
-   </div>
-</div>
-<!-- Breadcrumb Area End -->
-<!-- SubCategori Area Start -->
-<section class="sub-categori">
-   <div class="container">
-      <div class="row">
-         @include('includes.catalog')
-         <div class="col-lg-9 order-first order-lg-last ajax-loader-parent">
-            <div class="right-area" id="app">
+						
+					
 
-               @include('includes.filter')
-               <div class="categori-item-area">
-                 <div class="row" id="ajaxContent">
-                   @include('includes.product.filtered-products')
-                 </div>
-                 <div id="ajaxLoader" class="ajax-loader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);"></div>
-               </div>
 
+           
+					</div>
+					<div class="right_block">
+						<div class="row" id="ajaxContent">
+                   @include('includes.product.filtered-products')            
             </div>
-         </div>
-      </div>
-   </div>
-</section>
-<!-- SubCategori Area End -->
+
+            <div class="row">
+              <div class="col-12 loading_list">
+								<ul>
+									<li class="spinner-grow text-primary" role="status">
+										<span class="visually-hidden"></span>
+									</li>
+									<li class="spinner-grow text-secondary" role="status">
+										<span class="visually-hidden"></span>
+									</li>
+									<li class="spinner-grow text-success" role="status">
+										<span class="visually-hidden"></span>
+									</li>
+									<li class="spinner-grow text-danger" role="status">
+										<span class="visually-hidden"></span>
+									</li>
+									<li class="spinner-grow text-warning" role="status">
+										<span class="visually-hidden"></span>
+									</li>
+								</ul>
+								<p>Loading...</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
 @endsection
 
 
