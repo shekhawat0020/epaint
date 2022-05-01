@@ -237,30 +237,14 @@
                         <h2>Our Social Posts</h2>
                     </div>
                 </div>
+				@foreach (App\Models\Blog::orderBy('created_at', 'desc')->limit(4)->get() as $blog)
                 <div class="col-3">
-                    <a href="#" class="social_post">
-                        <img src="{{asset('assets/front/images/collection-small9.webp')}}" alt="">
-                        <i class="fa fa-instagram"></i>
+                    <a href="{{ route('front.blogshow',$blog->id) }}" class="social_post">
+                        <img src="{{ asset('assets/images/blogs/'.$blog->photo) }}" alt="">
+                        <i class="fa">{{mb_strlen($blog->title,'utf-8') > 45 ? mb_substr($blog->title,0,45,'utf-8')." .." : $blog->title}}</i>
                     </a>
                 </div>
-                <div class="col-3">
-                    <a href="#" class="social_post">
-                        <img src="{{asset('assets/front/images/collection-small10.webp')}}" alt="">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="#" class="social_post">
-                        <img src="{{asset('assets/front/images/collection-small11.webp')}}" alt="">
-                        <i class="fa fa-instagram"></i>
-                    </a>
-                </div>
-                <div class="col-3">
-                    <a href="#" class="social_post">
-                        <img src="{{asset('assets/front/images/collection-small1.webp')}}" alt="">
-                        <i class="fa fa-facebook"></i>
-                    </a>
-                </div>
+				@endforeach
 			</div>
 		</div>
 	</section>

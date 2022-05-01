@@ -1240,6 +1240,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   // PRODCT AUTO SEARCH SECTION ENDS
 
   // CATEGORY SECTION
+  Route::get('/product','Front\CatalogController@products')->name('front.products');
   Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
   Route::get('/category/{slug1}/{slug2}','Front\CatalogController@subcategory')->name('front.subcat');
   Route::get('/category/{slug1}/{slug2}/{slug3}','Front\CatalogController@childcategory')->name('front.childcat');

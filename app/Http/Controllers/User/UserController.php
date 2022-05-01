@@ -14,6 +14,7 @@ use App\Models\Subscription;
 use App\Models\Generalsetting;
 use App\Models\UserSubscription;
 use App\Models\FavoriteSeller;
+use App\Models\Order;
 
 class UserController extends Controller
 {
@@ -24,8 +25,9 @@ class UserController extends Controller
 
     public function index()
     {
-        $user = Auth::user();  
-        return view('user.dashboard',compact('user'));
+        $user = Auth::user(); 
+        $orders = Order::where('user_id','=',$user->id)->orderBy('id','desc')->get(); 
+        return view('user.dashboard',compact('user', 'orders'));
     }
 
     public function profile()

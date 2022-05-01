@@ -2,29 +2,20 @@
 
 @section('content')
 
-<div class="breadcrumb-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <ul class="pages">
-                    <li>
-                        <a href="{{ route('front.index') }}">
-                            {{ $langg->lang17 }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('user-forgot') }}">
-                            {{ $langg->lang190 }}
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<section class="inner_page_wrapper">
+		<div class="breadcrumb_section">
+			<div class="container">
+				<ul>
+					<li><a href="{{ route('front.index') }}">Home</a></li>
+					<li>  {{ $langg->lang190 }}</li>
+				</ul>
+			</div>
+		</div>
 
 
-<section class="login-signup forgot-password">
+
+
+<div class="login-signup forgot-password">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">
@@ -37,10 +28,9 @@
                         @include('includes.admin.form-login')
                         <form id="forgotform" action="{{route('user-forgot-submit')}}" method="POST">
                             {{ csrf_field() }}
-                            <div class="form-input">
-                                <input type="email" name="email" class="User Name" placeholder="{{ $langg->lang193 }}"
+                            <div class="form-group">
+                                <input type="email" name="email" class="User Name form-control" placeholder="{{ $langg->lang193 }}"
                                     required="">
-                                <i class="icofont-user-alt-5"></i>
                             </div>
                             <div class="to-login-page">
                                 <a href="{{ route('user.login') }}">
@@ -48,13 +38,13 @@
                                 </a>
                             </div>
                             <input class="authdata" type="hidden" value="{{ $langg->lang195 }}">
-                            <button type="submit" class="submit-btn">{{ $langg->lang196 }}</button>
+                            <button type="submit" class="submit-btn btn">{{ $langg->lang196 }}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </section>
-
 @endsection

@@ -16,6 +16,16 @@
     text-align: center;
     font-size: 14px;
 }
+.categori-item-area .ajax-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    display: none;
+    /* background-color: rgba(0,0,0,.2); */
+}
 </style>
 
 @endsection
@@ -50,33 +60,12 @@
 
            
 					</div>
-					<div class="right_block">
+					<div class="right_block categori-item-area">
 						<div class="row" id="ajaxContent">
                    @include('includes.product.filtered-products')            
             </div>
-
-            <div class="row">
-              <div class="col-12 loading_list">
-								<ul>
-									<li class="spinner-grow text-primary" role="status">
-										<span class="visually-hidden"></span>
-									</li>
-									<li class="spinner-grow text-secondary" role="status">
-										<span class="visually-hidden"></span>
-									</li>
-									<li class="spinner-grow text-success" role="status">
-										<span class="visually-hidden"></span>
-									</li>
-									<li class="spinner-grow text-danger" role="status">
-										<span class="visually-hidden"></span>
-									</li>
-									<li class="spinner-grow text-warning" role="status">
-										<span class="visually-hidden"></span>
-									</li>
-								</ul>
-								<p>Loading...</p>
-							</div>
-						</div>
+            <div id="ajaxLoader" class="ajax-loader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);"></div>
+            
 					</div>
 				</div>
 			</div>

@@ -32,6 +32,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/front/css/bootstrap.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/front/css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('assets/front/css/responsive.css')}}">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/front/jquery-ui/jquery-ui.min.css')}}">
@@ -127,8 +128,8 @@
 					@endif
 					</li>
 					<li>
-						<a href="{{ route('front.checkout') }}">
-							<i class="fa fa-shopping-cart"></i><span>{{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}</span>
+						<a href="{{ route('front.cart') }}">
+							<i class="fa fa-shopping-cart"></i><span id="cart-count">{{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }}</span>
 							<b>Cart</b>
 						</a>
 					</li>
@@ -231,32 +232,46 @@
 		</div>
 	</footer>
 	
+
+
+
 <div class="modal fade login_modal" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			<div class="modal-body">
+			<div class="modal-body signin-form">
 				<h2>Hello!</h2>
 				<p>Please enter your details</p>
-				<form>
-					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Email/Mobile number">
+				@include('includes.admin.form-login')
+				<form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
+				{{ csrf_field() }}	
+				<div class="form-group">
+						<input type="email" name="email" class="form-control" placeholder="Email/Mobile number" required="">
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Password">
+						<input type="password" name="password" class="form-control Password" placeholder="Password">
 					</div>
 					<div class="form-group text-end">
-						<a href="#" class="link">Forgot Password?</a>
+						<a href="{{ route('user-forgot') }}" class="link">Forgot Password?</a>
 					</div>
 					<div class="form-group text-center">
-						<input type="button" class="btn" value="Continue">
+					<input type="hidden" name="modal" value="1">
+                  	<input class="mauthdata" type="hidden" value="{{ $langg->lang177 }}">
+						<input type="submit" class="btn" value="Continue">
 					</div>
 				</form>
+				@if(App\Models\Socialsetting::find(1)->f_check == 1 || App\Models\Socialsetting::find(1)->g_check ==
+                  1)
 				<h3>Or login with</h3>
 				<ul class="social_login">
-					<li><a href="#"><i class="fa fa-facebook-f"></i>Facebook</a></li>
-					<li><a href="#"><i class="fa fa-google"></i>Google</a></li>
+					@if(App\Models\Socialsetting::find(1)->f_check == 1)
+					<li><a href="{{ route('social-provider','facebook') }}"><i class="fa fa-facebook-f"></i>Facebook</a></li>
+					@endif
+					@if(App\Models\Socialsetting::find(1)->g_check == 1)
+					<li><a href="{{ route('social-provider','google') }}"><i class="fa fa-google"></i>Google</a></li>
+					@endif
 				</ul>
+				@endif
 				<div class="text-center">
 					<a href="#register" class="link" data-bs-toggle="modal" data-bs-dismiss="modal">New user? Sign up here!</a>
 				</div>
@@ -268,48 +283,53 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
-			<div class="modal-body">
+			<div class="modal-body signup-form">
 				<h2>Hello!</h2>
 				<p>Please add your address information</p>
-				<form>
+				@include('includes.admin.form-login')
+                <form class="mregisterform" action="{{route('user-register-submit')}}" method="POST">
+                  {{ csrf_field() }}
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Name*">
+						<input type="text" class="User Name form-control" name="name" placeholder="Name*" required="">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Email/Mobile number">
+						<input type="email" class="User Name form-control" name="email" placeholder="Email" required="">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Mobile">
-						<a href="#" class="otp">Send OTP</a>
+						<input type="text" class="User Name form-control" name="phone" placeholder="Mobile" required="">
+					</div>
+					
+					<div class="form-group">
+						<input type="text" class="User Name form-control" name="address" placeholder="Address" required="">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Enter OTP*">
+					<input type="password" class="Password form-control" name="password" placeholder="{{ $langg->lang186 }}"
+                      required="">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Flat / House no. / Floor / Building**">
+					<input type="password" class="Password form-control" name="password_confirmation"
+                      placeholder="{{ $langg->lang187 }}" required="">
 					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Colony / Street / Locality**">
+					@if($gs->is_capcha == 1)
+
+					<ul class="captcha-area">
+						<li>
+						<p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}" alt=""> <i
+							class="fas fa-sync-alt pointer refresh_code "></i></p>
+						</li>
+					</ul>
+
+					<div class="form-input">
+						<input type="text" class="Password" name="codes" placeholder="{{ $langg->lang51 }}" required="">
+						<i class="icofont-refresh"></i>
 					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Pincode*">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="City*">
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="State*">
-					</div>
-					<div class="form-group">
-						<div class="styled_select">
-							<select class="form-control">
-								<option selected>Country</option>
-								<option>India</option>
-							</select>
-						</div>
-					</div>
+
+					@endif
+
+                  <input class="mprocessdata" type="hidden" value="{{ $langg->lang188 }}">
+					
 					<div class="form-group text-center">
-						<input type="button" class="btn" value="Ship to this address">
+						<input type="submit" class="btn" value="Ship to this address">
 					</div>
 				</form>
 			</div>
@@ -398,6 +418,7 @@
 <script type="text/javascript" src="{{asset('assets/front/js/jquery.min.js')}}"></script>	
 <script type="text/javascript" src="{{asset('assets/front/js/bootstrap.bundle.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/front/js/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('assets/front/js/toastr.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/front/js/custom.js')}}"></script>
 
 <script src="{{asset('assets/front/jquery-ui/jquery-ui.min.js')}}"></script>

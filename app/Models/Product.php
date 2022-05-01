@@ -17,8 +17,10 @@ class Product extends Model
         foreach ($collection as $key => $data) {
             if($data->user_id != 0){
                 if($data->user->is_vendor != 2){
-                    unset($collection[$key]);
+                  
+                   // unset($collection[$key]);
                 }
+               
             }
             if(isset($_GET['max'])){
                  if($data->vendorSizePrice() >= $_GET['max']) {

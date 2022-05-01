@@ -12,22 +12,23 @@
 					<a href="javascript::void(0)" class="cart_btn add-to-cart-btn affilate-btn"><i class="fa fa-shopping-cart"></i>{{ $langg->lang251 }}</a>
 					@else
 
-						@if($prod->emptyStock())
-						<a href="javascript::void(0)" data-href="{{ route('product.cart.add',$prod->id) }}" class="cart_btn add-to-cart add-to-cart-btn"><i class="fa fa-shopping-cart"></i>{{ $langg->lang56 }}</a>
-						@else
-						<a href="javascript::void(0)" data-href="{{ route('product.cart.quickadd',$prod->id) }}" class="cart_btn add-to-cart-quick add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
-						@endif
+					<a href="javascript::void(0)" data-href="{{ route('product.cart.add',$prod->id) }}" class="cart_btn add-to-cart add-to-cart-btn"><i class="fa fa-shopping-cart"></i>Add to Cart</a>
 
 					@endif
 
 
 
 				</div>	
-				<a href="{{ route('front.product', $prod->slug) }}" class="title">palem cotton ivory multi quilted bespread</a>
+				<a href="{{ route('front.product', $prod->slug) }}" class="title">{{ $prod->name }}</a>
 				<p class="price">{{ $prod->setCurrency() }} <del><small>{{ $prod->showPreviousPrice() }}</small></del></p>
 			</div>
 		</div>
-	@endforeach		
+	@endforeach	
+	<div class="col-lg-12 ">
+		<div class="page-center mt-5">
+			{!! $prods->appends(['search' => request()->input('search')])->links() !!}
+		</div>
+	</div>	
 @else
 	<div class="col-lg-12">
 	<div class="page-center">
