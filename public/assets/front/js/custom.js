@@ -1492,7 +1492,6 @@ prices = $(".product-attr:checked").map(function() {
     });
 
 
-
 // Cart Section Ends
 
 // Cart Page Section
@@ -1671,6 +1670,14 @@ $('#track-form').on('submit',function(e){
 });
 
 // TRACK ORDER ENDS
+
+
+// Coupon code toggle code
+$('#coupon-link').on('click', function(){
+  $("#coupon-form,#check-coupon-form").toggle();
+});
+
+
 
 });
 

@@ -4,194 +4,120 @@
 
 
 @section('content')
-
-<!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <ul class="pages">
-          <li>
-            <a href="{{ route('front.index') }}">
-              {{ $langg->lang17 }}
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('payment.return') }}">
-              {{ $langg->lang169 }}
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Breadcrumb Area End -->
-
-
-
-
-
-
-
-<section class="tempcart">
-
 @if(!empty($tempcart))
+<section class="inner_page_wrapper">
+		<div class="breadcrumb_section">
+			<div class="container">
+				<ul>
+					<li><a href="{{ route('front.index') }}">Home</a></li>
+					<li>Order Success</li>
+				</ul>
+			</div>
+		</div>
+		<div class="shoppingcart_section wishlist_section">
+			<div class="container">
+           		<div class="heading">
+					<h3>THANK YOU FOR YOUR PURCHASE.</h3>
+                    <p class="text">
+                        {{ $langg->order_text }}
+                    </p>
+                    <a href="{{ route('front.index') }}" class="link">{{ $langg->lang170 }}</a>
+                    
+				</div>
+				<p class="copy_text">Ordered on {{date('d-M-Y',strtotime($order->created_at))}}<span>|</span> Order# {{$order->order_number}} </p>
+				@include('includes.form-success')
+                <div class="shipping_detail row">
+					<div class="col-4">
+					@if($order->dp == 1)
+                        <h4>Billing Address</h4>
+                        <p>
+                            {{ $langg->lang288 }} {{$order->customer_name}}<br>
+                            {{ $langg->lang289 }} {{$order->customer_email}}<br>
+                            {{ $langg->lang290 }} {{$order->customer_phone}}<br>
+                            {{ $langg->lang291 }} {{$order->customer_address}}<br>
+                            {{$order->customer_city}}-{{$order->customer_zip}}
+                        </p>
+                    
+                    @else
+                        @if($order->shipping == "shipto")
+                        <h4>Shipping Address</h4>
+                    <p> {{ $langg->lang288 }} {{$order->shipping_name == null ? $order->customer_name : $order->shipping_name}}<br>
+                        {{ $langg->lang289 }} {{$order->shipping_email == null ? $order->customer_email : $order->shipping_email}}<br>
+                        {{ $langg->lang290 }} {{$order->shipping_phone == null ? $order->customer_phone : $order->shipping_phone}}<br>
+                        {{ $langg->lang291 }} {{$order->shipping_address == null ? $order->customer_address : $order->shipping_address}}<br>
+                        {{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}-{{$order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip}}
+                        </p>
+                        @else
+                        <h4>PickUp Location</h4>
+                            <p>
+                                {{ $langg->lang304 }} {{$order->pickup_location}}<br>
+                            </p>
+                        @endif
 
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <!-- Starting of Dashboard data-table area -->
-                    <div class="content-box section-padding add-product-1">
-                        <div class="top-area">
-                                <div class="content">
-                                    <h4 class="heading">
-                                        {{ $langg->order_title }}
-                                    </h4>
-                                    <p class="text">
-                                        {{ $langg->order_text }}
-                                    </p>
-                                    <a href="{{ route('front.index') }}" class="link">{{ $langg->lang170 }}</a>
-                                  </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
+                        <h4>Billing Address</h4>
+                        <p>
+                            {{ $langg->lang288 }} {{$order->customer_name}}<br>
+                            {{ $langg->lang289 }} {{$order->customer_email}}<br>
+                            {{ $langg->lang290 }} {{$order->customer_phone}}<br>
+                            {{ $langg->lang291 }} {{$order->customer_address}}<br>
+                            {{$order->customer_city}}-{{$order->customer_zip}}
+                        </p>
 
-                                    <div class="product__header">
-                                        <div class="row reorder-xs">
-                                            <div class="col-lg-12">
-                                                <div class="product-header-title">
-                                                    <h2>{{ $langg->lang285 }} {{$order->order_number}}</h2>
-                                        </div>   
-                                    </div>
-                                        @include('includes.form-success')
-                                            <div class="col-md-12" id="tempview">
-                                                <div class="dashboard-content">
-                                                    <div class="view-order-page" id="print">
-                                                        <p class="order-date">{{ $langg->lang301 }} {{date('d-M-Y',strtotime($order->created_at))}}</p>
+                    @endif
+						
+					</div>
+					<div class="col-4">
+						<h4>Payment Method</h4>
+						<p>{{$order->method}}</p>
+                        @if($order->method != "Cash On Delivery")
+                            @if($order->method=="Stripe")
+                            <p>{{$order->method}} {{ $langg->lang295 }} {{$order->charge_id}}</p>
+                            @endif
+                            @if($order->method=="Paypal")
+                            <p id="ttn">{{$order->method}} {{ $langg->lang296 }} {{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
+                            @else
+                            <p id="ttn">{{$order->method}} {{ $langg->lang296 }} {{$order->txnid}}</p>
+                            @endif
 
+                        @endif
+					</div>
+					<div class="col-4">
+						<h4>Order Summary</h4>
+						<ul>
+							<li>Item(s) Subtotal: <span>{{$order->currency_sign}} {{$tempcart->totalPrice}}</span></li>
+                            @if($order->coupon_discount)
+							<li>Coupon: ({{$order->coupon_code}}) <span>-{{$order->currency_sign}} {{$order->coupon_discount}}</span></li>
+                            @endif
+                            @if($order->shipping_cost != 0)
+                                @php 
+                                $price = round(($order->shipping_cost / $order->currency_value),2);
+                                @endphp
+                                @if(DB::table('shippings')->where('price','=',$price)->count() > 0)
+                                <li>
+                                {{ DB::table('shippings')->where('price','=',$price)->first()->title }}: <span>{{$order->currency_sign}}{{ round($order->shipping_cost, 2) }}</span>
+                                </li>
+                                @endif
+                            @endif
 
-@if($order->dp == 1)
+                            @if($order->packing_cost != 0)
 
-                                                        <div class="billing-add-area">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <h5>{{ $langg->lang287 }}</h5>
-                                                                    <address>
-                                                                        {{ $langg->lang288 }} {{$order->customer_name}}<br>
-                                                                        {{ $langg->lang289 }} {{$order->customer_email}}<br>
-                                                                        {{ $langg->lang290 }} {{$order->customer_phone}}<br>
-                                                                        {{ $langg->lang291 }} {{$order->customer_address}}<br>
-                                                                        {{$order->customer_city}}-{{$order->customer_zip}}
-                                                                    </address>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <h5>{{ $langg->lang292 }}</h5>
-                                                                    <p>{{ $langg->lang293 }} {{$order->currency_sign}}{{ round($order->pay_amount * $order->currency_value , 2) }}</p>
-                                                                    <p>{{ $langg->lang294 }} {{$order->method}}</p>
-
-                                                                    @if($order->method != "Cash On Delivery")
-                                                                        @if($order->method=="Stripe")
-                                                                            {{$order->method}} {{ $langg->lang295 }} <p>{{$order->charge_id}}</p>
-                                                                        @endif
-                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
-
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-@else
-                                                        <div class="shipping-add-area">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    @if($order->shipping == "shipto")
-                                                                        <h5>{{ $langg->lang302 }}</h5>
-                                                                        <address>
-                {{ $langg->lang288 }} {{$order->shipping_name == null ? $order->customer_name : $order->shipping_name}}<br>
-                {{ $langg->lang289 }} {{$order->shipping_email == null ? $order->customer_email : $order->shipping_email}}<br>
-                {{ $langg->lang290 }} {{$order->shipping_phone == null ? $order->customer_phone : $order->shipping_phone}}<br>
-                {{ $langg->lang291 }} {{$order->shipping_address == null ? $order->customer_address : $order->shipping_address}}<br>
-{{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}-{{$order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip}}
-                                                                        </address>
-                                                                    @else
-                                                                        <h5>{{ $langg->lang303 }}</h5>
-                                                                        <address>
-                                                                            {{ $langg->lang304 }} {{$order->pickup_location}}<br>
-                                                                        </address>
-                                                                    @endif
-
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <h5>{{ $langg->lang305 }}</h5>
-                                                                    @if($order->shipping == "shipto")
-                                                                        <p>{{ $langg->lang306 }}</p>
-                                                                    @else
-                                                                        <p>{{ $langg->lang307 }}</p>
-                                                                    @endif
-                                                                    @if($order->shipping_cost != 0)
-                                                                        @php 
-                                                                        $price = round(($order->shipping_cost / $order->currency_value),2);
-                                                                        @endphp
-                                                                        @if(DB::table('shippings')->where('price','=',$price)->count() > 0)
-                                                                <p>
-                                                                    {{ DB::table('shippings')->where('price','=',$price)->first()->title }}: {{$order->currency_sign}}{{ round($order->shipping_cost, 2) }}
-                                                                </p>
-                                                                        @endif
-                                                                    @endif
-
-                                                                    @if($order->packing_cost != 0)
-
-                                                                        @php 
-                                                                        $pprice = round(($order->packing_cost / $order->currency_value),2);
-                                                                        @endphp
+                                @php 
+                                $pprice = round(($order->packing_cost / $order->currency_value),2);
+                                @endphp
 
 
-                                                                        @if(DB::table('packages')->where('price','=',$pprice)->count() > 0)
-                                                                <p>
-                                                                    {{ DB::table('packages')->where('price','=',$pprice)->first()->title }}: {{$order->currency_sign}}{{ round($order->packing_cost, 2) }}
-                                                                </p>
-                                                                        @endif
-                                                                    @endif
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="billing-add-area">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <h5>{{ $langg->lang287 }}</h5>
-                                                                    <address>
-                                                                        {{ $langg->lang288 }} {{$order->customer_name}}<br>
-                                                                        {{ $langg->lang289 }} {{$order->customer_email}}<br>
-                                                                        {{ $langg->lang290 }} {{$order->customer_phone}}<br>
-                                                                        {{ $langg->lang291 }} {{$order->customer_address}}<br>
-                                                                        {{$order->customer_city}}-{{$order->customer_zip}}
-                                                                    </address>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <h5>{{ $langg->lang292 }}</h5>
-                                                                    <p>{{ $langg->lang293 }} {{$order->currency_sign}}{{ round($order->pay_amount * $order->currency_value , 2) }}</p>
-                                                                    <p>{{ $langg->lang294 }} {{$order->method}}</p>
-
-                                                                    @if($order->method != "Cash On Delivery")
-                                                                        @if($order->method=="Stripe")
-                                                                            {{$order->method}} {{ $langg->lang295 }} <p>{{$order->charge_id}}</p>
-                                                                        @endif
-                                                                        @if($order->method=="Paypal")
-                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
-                                                                        @else
-                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
-                                                                        @endif
-
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                        </div>
-@endif
-                                                        <br>
-                                                        <div class="table-responsive">
-                            <table  class="table">
+                                @if(DB::table('packages')->where('price','=',$pprice)->count() > 0)
+                                <li>
+                            {{ DB::table('packages')->where('price','=',$pprice)->first()->title }}: <span>{{$order->currency_sign}}{{ round($order->packing_cost, 2) }}</span>
+                            </li>
+                                @endif
+                            @endif
+							<li>Paid Amount: <span>{{$order->currency_sign}}{{ round($order->pay_amount * $order->currency_value , 2) }}</span></li>
+						</ul>
+					</div>
+				</div>
+                <br/>
+                <table  class="table">
                                 <h4 class="text-center">{{ $langg->lang308 }}</h4>
                                 <thead>
                                 <tr>
@@ -240,21 +166,16 @@
                                 </tbody>
                             </table>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- Ending of Dashboard data-table area -->
-            </div>
+    		</div>
+		</div>
+	</section>
+	
 
 @endif
 
-  </section>
+
+
+
+
 
 @endsection

@@ -331,6 +331,7 @@
 										
 									</div>
 									<div class="col-4">
+									@if(!Auth::check())
 										<div class="fb_login">
 											<span class="or">OR</span>
 											<h5>Login With</h5>
@@ -339,7 +340,7 @@
 												<li><a href="#"><i class="fa fa-facebook"></i>Login with Facebook</a></li>
 											</ul>
 										</div>
-
+									@else
 										<div class="col-12">
 											<div class="address_block">
 												<div class="add_inner">
@@ -356,22 +357,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-12">
-											<div class="address_block">
-												<div class="add_inner">
-													<p>XYZ Kumar</p>
-													<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-													<div class="float-left">
-														<p>1023456789</p>
-														<a href="#" class="btn">Deliver Here</a>
-													</div>
-													<ul class="edit_list">
-														<li><a href="#"><i class="fa fa-edit"></i></a></li>
-														<li><a href="#"><i class="fa fa-trash-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
+									@endif
 
 
 
@@ -812,8 +798,8 @@
 													@endif
 													@if(Session::has('coupon'))
 													<li class="discount-bar">Coupon 
-													<div class="dpercent">{{ Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')' }}</div>	
-													<a href="#coupon" data-bs-toggle="modal" class="edit">edit</a> 
+													<i class="dpercent">{{ Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')' }}</i>	
+													
 														@if($gs->currency_format == 0)
 															<span id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</span>
 														@else 
@@ -821,7 +807,7 @@
 														@endif
 													</li>
 													@else
-													<li class="discount-bar d-none">Coupon<a href="#coupon" data-bs-toggle="modal" class="edit">edit</a> 
+													<li class="discount-bar d-none">Coupon
 														<span id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</span>
 													</li>
 													@endif
@@ -842,12 +828,12 @@
 													</li>
 												</ul>
 												<div class="coupon_detail">
-													<!--<a href="#" class="cc_link">Have a coupon code?</a>
-													<div class="form-group">
-														<input type="text" class="form-control" placeholder="Enter your coupon code">
-														<button class="btn">Apply Now</button>
-													</div>-->
-													<div class="after_apply">
+												<a href="javascript::void(0)" class="cc_link" id="coupon-link">Have a coupon code?</a>
+														<div class="form-group coupon" id="check-coupon-form" style="display:none">
+															<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" >
+															<button type="button" id="applycoupon" class="btn">Apply Now</button>
+														</div>
+													<div class="after_apply" style="display:none">
 														<h5>(FA10)</h5>
 														<h6>Coupon code applied successfully <a href="#">Remove</a></h6>
 													</div>
@@ -1085,7 +1071,8 @@ $('#grandtotal').val(ttotal);
 		
 })
 
-    $("#check-coupon-form").on('submit', function () {
+$('#applycoupon').click(function(){
+	if($('#code').val() != ""){
         var val = $("#code").val();
         var total = $("#ttotal").val();
         var ship = 0;
@@ -1148,7 +1135,9 @@ ttotal = parseFloat(ttotal);
                         }
                       }
               }); 
-              return false;
+	}else{
+alert("Please enter a code");
+}
     });
 
 // Password Checking
