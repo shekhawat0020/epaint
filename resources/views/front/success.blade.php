@@ -47,10 +47,11 @@
                         {{ $langg->lang291 }} {{$order->shipping_address == null ? $order->customer_address : $order->shipping_address}}<br>
                         {{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}-{{$order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip}}
                         </p>
-                        @else
-                        <h4>PickUp Location</h4>
-                            <p>
-                                {{ $langg->lang304 }} {{$order->pickup_location}}<br>
+                        
+                         @else
+                         <h4>PickUp Location</h4>
+                           <p>
+                               {{$order->shipping}} {{ $langg->lang304 }} {{$order->pickup_location}}<br>
                             </p>
                         @endif
 

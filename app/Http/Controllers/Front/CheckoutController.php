@@ -366,6 +366,7 @@ class CheckoutController extends Controller
 
     public function cashondelivery(Request $request)
     {
+        dd( $request);
         if($request->pass_check) {
             $users = User::where('email','=',$request->personal_email)->get();
             if(count($users) == 0) {

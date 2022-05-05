@@ -386,7 +386,7 @@
 										<li><span>Email:</span>  <div class="d_email"></div></li>
 									</ul>
 								</li>
-								<li><a href="javascript::void(0)" class="editfirst"><i class="fa fa-pencil"></i></a></li>
+								<li><a href="javascript::void(0)" class="edit_step_block"><i class="fa fa-pencil"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -462,7 +462,7 @@
 										<li><span></span></li>
 									</ul>
 								</li>
-								<li><a href="javascript::void(0)" class="editsecond"><i class="fa fa-pencil"></i></a></li>
+								<li><a href="javascript::void(0)" class="edit_step_block"><i class="fa fa-pencil"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -1311,6 +1311,14 @@ var ck = 0;
                     return true;   
                 }
         });
+
+$('.edit_step_block').click(function(){
+
+	$('.step_block').removeClass('active');
+	$('.step_block').addClass('complete');
+	$(this).parent('li').parent('ul').parent('.edit_block').parent('.step_block').removeClass('complete');
+	$(this).parent('li').parent('ul').parent('.edit_block').parent('.step_block').addClass('active');
+});
 
 </script>
 
