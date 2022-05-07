@@ -24,8 +24,12 @@
     position: relative;
     margin-bottom: 0;
     vertical-align: top;
-    float: left;
+    
 }
+.norating{
+  color:#888 !important;
+}
+
 </style>
 @endsection
 @section('content')
@@ -358,7 +362,7 @@
                       @if(Auth::guard('web')->check())
                       <li class="favorite">
                         <a href="javascript:;" class="add-to-wish"
-                          data-href="{{ route('user-wishlist-add',$productt->id) }}"><i class="icofont-heart-alt"></i></a>
+                          data-href="{{ route('user-wishlist-add',$productt->id) }}">Add TO Wishlist</a>
                       </li>
                       @endif
                     
@@ -382,6 +386,9 @@
 				</div>
 			</div>
 		</div>
+
+
+    
 		<div class="review_section">
         	<div class="container">
            		<div class="heading">
@@ -393,79 +400,71 @@
                         	<h4>Overall rating</h4>
                             <div class="total-rating">
                             	<span>{{App\Models\Rating::rating($productt->id)}}</span>
+                              @for($i = 1; $i <= 5 ; $i++)
+                                @if($i <= App\Models\Rating::rating($productt->id))
                                 <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
+                                @else
+                                <i class="fa fa-star norating"></i>
+                                @endif
+                              @endfor
+                               
                             </div>
-                            <h6>Based on 1 review</h6>
+                            <h6>Based on {{ count($productt->ratings) }} review</h6>
                             <ul>
-                            	<li>
-									<strong>Quality</strong>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                    <span>0</span>
-                                </li>
-                                <li>
-									<strong>Price</strong>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                    <span>4</span>
-                                </li>
-                                <li>
-									<strong>Value</strong>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                	<i class="fa fa-star"></i>
-                                    <span>0</span>
-                                </li>
+                         
                             </ul>
                         </div>
                     </div>
                     <div class="col-9">
                     	<div class="write_review">
-                        	<!--<h4>Have you used this product?
-                            	<span>Rate it on scale of 5</span>
-                            </h4>-->
+                      @if(Auth::guard('web')->check())
                             <div class="rating">
                               <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
                             </div>
-                           	<form>
-								<div class="form-group">
-									<textarea class="form-control" placeholder="Write a review"></textarea>
-								</div>
-								<input type="submit" value="Submit review" class="btn">
+                           	<form  id="reviewform" action="{{route('front.review.submit')}}"
+                              data-href="{{ route('front.reviews',$productt->id) }}" method="POST">
+                              @include('includes.admin.form-both')
+                              {{ csrf_field() }}
+                              <input type="hidden" id="rating" name="rating" value="5">
+                              <input type="hidden" name="user_id" value="{{Auth::guard('web')->user()->id}}">
+                              <input type="hidden" name="product_id" value="{{$productt->id}}">
+                              <div class="form-group">
+                                <textarea name="review" class="form-control" placeholder="Write a review" required=""></textarea>
+                              </div>
+								                <input type="submit" value="Submit review" class="btn submit-btn">
                             </form>
+                      @else
+
+                      <div class="text-center">
+                          <a  href="#login" data-bs-toggle="modal" class="btn more_review">Login To Review</a>
+                    </div>
+
+                      @endif
                         </div>
                     </div>
                 </div>
-                <h4>showing 2 reviews</h4>
+                <h4>showing {{ count($productt->ratings) }} reviews</h4>
+                @if(count($productt->ratings) > 0)
+                @foreach($productt->ratings as $review)
                 <div class="detailed_review">
                 	<div class="review-user">
                     	<div class="img-block">
-                        	<img src="images/user.png" alt="">
+                        	<img src="{{ $review->user->photo ? asset('assets/images/users/'.$review->user->photo):asset('assets/images/noimage.png') }}" alt="">
                         </div>
-                        <h5>User Name</h5>
+                        <h5>{{ $review->user->name }}</h5>
                     </div>
                     <div class="review-text">
                     	<div class="rating">
-                        	<i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
+                              @for($i = 1; $i <= 5 ; $i++)
+                                @if($i <= $review->rating)
+                                <i class="fa fa-star"></i>
+                                @else
+                                <i class="fa fa-star norating"></i>
+                                @endif
+                              @endfor
                         </div>
-                        <h5>Product Name<span>May 3, 2016</span></h5>
-                        <p>Good product .. really helps in increasing endurance</p>
+                        <h5><span>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$review->review_date)->diffForHumans() }}</span></h5>
+                        <p> {{$review->review}}</p>
                         <div class="report-block">
                         	<div class="float-left">
                             	<p>Was this review helpful to you?</p>
@@ -475,36 +474,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="detailed_review">
-                	<div class="review-user">
-                    	<div class="img-block">
-                        	<img src="images/user.png" alt="">
-                        </div>
-                        <h5>User Name</h5>
-                    </div>
-                    <div class="review-text">
-                    	<div class="rating">
-                        	<i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                       <h5>Product Name<span>May 3, 2016</span></h5>
-                        <p>Good product .. really helps in increasing endurance</p>
-                        <div class="report-block">
-                        	<div class="float-left">
-                            	<p>Was this review helpful to you?</p>
-                                <a href="#">Yes</a>
-                                <a href="#">No</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                @else
+                <p>{{ $langg->lang97 }}</p>
+                @endif
+
+
                 
-                <div class="text-center">
+                
+               {{--<div class="text-center">
                 	<a href="#" class="btn more_review">View more reviews</a>
-                </div>
+                </div>--}} 
             </div>
         </div>
 		<div class="product_sliders">

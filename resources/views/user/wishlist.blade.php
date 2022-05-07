@@ -1,120 +1,60 @@
 @extends('layouts.front')
 
 @section('content')
-
-<!-- Breadcrumb Area Start -->
-	<div class="breadcrumb-area">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<ul class="pages">
-						<li>
-							<a href="{{ route('front.index') }}">
-								{{ $langg->lang17 }}
-							</a>
-						</li>
-						<li>
-							<a href="{{ route('user-wishlists') }}">
-								{{ $langg->lang168 }}
-							</a>
-						</li>
-					</ul>
-				</div>
+<section class="inner_page_wrapper">
+		<div class="breadcrumb_section">
+			<div class="container">
+				<ul>
+				<li>
+					<a href="{{ route('front.index') }}">
+						{{ $langg->lang17 }}
+					</a>
+				</li>
+				<li>
+					<a href="{{ route('user-wishlists') }}">
+						{{ $langg->lang168 }}
+					</a>
+				</li>
+				</ul>
 			</div>
 		</div>
-	</div>
-<!-- Breadcrumb Area End -->
-
-<!-- Wish List Area Start -->
-	<section class="sub-categori wish-list">
-		<div class="container">
-
-			@if(count($wishlists))
-			<div class="right-area">
-				@include('includes.filter')
-			<div id="ajaxContent">
-			<div class="row wish-list-area">
-
+		<div class="shoppingcart_section wishlist_section">
+			<div class="container">
+           		<div class="heading">
+					<h3>Wishlist ({{count($wishlists)}})</h3>
+				</div>
+				<ul class="wishlist2">
+				@if(count($wishlists))
 				@foreach($wishlists as $wishlist)
-
-				@if(!empty($sort))
-
-
-				<div class="col-lg-6">
-					<div class="single-wish">
-						<span class="remove wishlist-remove" data-href="{{ route('user-wishlist-remove', App\Models\Wishlist::where('user_id','=',$user->id)->where('product_id','=',$wishlist->id)->first()->id ) }}"><i class="fas fa-times"></i></span>
-						<div class="left">
-							<img src="{{ $wishlist->photo ? asset('assets/images/products/'.$wishlist->photo):asset('assets/images/noimage.png') }}" alt="">
-						</div>
-						<div class="right">
-							<h4 class="title">
-								<a href="{{ route('front.product', $wishlist->slug) }}">
-								{{ $wishlist->name }}
-								</a>
-							</h4>
-							<ul class="stars">
-                                <div class="ratings">
-                                    <div class="empty-stars"></div>
-                                   	<div class="full-stars" style="width:{{App\Models\Rating::ratings($wishlist->id)}}%"></div>
-                                </div>
-							</ul>
-							<div class="price">
-								{{ $wishlist->showPrice() }}<small><del>{{ $wishlist->showPreviousPrice() }}</del></small>
+					<li>
+						<div class="inner">
+							<div class="product_img">
+								<img src="{{ $wishlist->product->photo ? asset('assets/images/products/'.$wishlist->product->photo):asset('assets/images/noimage.png') }}" alt="">
 							</div>
-						</div>
-					</div>
-				</div>
-
-				@else
-
-				<div class="col-lg-6">
-					<div class="single-wish">
-						<span class="remove wishlist-remove" data-href="{{ route('user-wishlist-remove',$wishlist->id) }}"><i class="fas fa-times"></i></span>
-						<div class="left">
-							<img src="{{ $wishlist->product->photo ? asset('assets/images/products/'.$wishlist->product->photo):asset('assets/images/noimage.png') }}" alt="">
-						</div>
-						<div class="right">
-							<h4 class="title">
-						<a href="{{ route('front.product', $wishlist->product->slug) }}">
-							{{ $wishlist->product->name }}
-						</a>
-							</h4>
-							<ul class="stars">
-                                <div class="ratings">
-                                    <div class="empty-stars"></div>
-                                   	<div class="full-stars" style="width:{{App\Models\Rating::ratings($wishlist->product->id)}}%"></div>
-                                </div>
-							</ul>
-							<div class="price">
-								{{ $wishlist->product->showPrice() }}<small><del>{{ $wishlist->product->showPreviousPrice() }}</del></small>
+							<div class="copy_block">
+								<a href="{{ route('front.product', $wishlist->product->slug) }}" class="title">{{ $wishlist->product->name }}</a>
+								<p class="rating"><span>{{App\Models\Rating::ratings($wishlist->product->id)}}*</span> ({{ count($wishlist->product->ratings) }})</p>
+								<p class="price">{{ $wishlist->product->showPrice() }}<small><del>{{ $wishlist->product->showPreviousPrice() }}</del></small></p>
 							</div>
-						</div>
-					</div>
-				</div>
+							<a href="javascript::void(0)" class="del remove wishlist-remove"  data-href="{{ route('user-wishlist-remove',$wishlist->id) }}"><i class="fa fa-trash-o"></i></a>
+						</div>	
+					</li>
+					@endforeach
+					@else
 
-				@endif
-				@endforeach
+					<li class="page-center">
+						<h4 class="text-center">{{ $langg->lang60 }}</h4>
+					</li>
 
-			</div>
-
-			<div class="page-center category">
-				{{ $wishlists->appends(['sort' => $sort])->links() }}
-			</div>
-
-
-			</div>
-		</div>
-			@else
-
-			<div class="page-center">
-				<h4 class="text-center">{{ $langg->lang60 }}</h4>
-			</div>
-
-			@endif
-
+					@endif
+					
+				</ul>
+    		</div>
 		</div>
 	</section>
-<!-- Wish List Area End -->
+	
+
+
 
 @endsection
 

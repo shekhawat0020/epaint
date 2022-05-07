@@ -117,7 +117,7 @@
 					<li>
 					@if(Auth::guard('web')->check())
 						<a href="{{ route('user-wishlists') }}" class="wist">
-							<i class="fa fa-heart-o"></i><span>{{ Auth::user()->wishlistCount() }}</span>
+							<i class="fa fa-heart-o"></i><span id="wishlist-count">{{ Auth::user()->wishlistCount() }}</span>
 							<b>Wishlist</b>
 						</a>
 					@else
