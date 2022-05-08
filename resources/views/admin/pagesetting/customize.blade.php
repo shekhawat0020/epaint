@@ -46,6 +46,7 @@
                     <span class="slider round"></span>
                   </label>
                 </div>
+            
                 <div class="col-lg-2"></div>
                 <div class="col-lg-4 d-flex justify-content-between">
                   <label class="control-label" for="featured_category">{{ __('Featured Category') }} *</label>
@@ -56,7 +57,7 @@
                 </div>
               </div>
 
-              <div class="row justify-content-center">
+              {{--<div class="row justify-content-center">
                 <div class="col-lg-4 d-flex justify-content-between">
                   <label class="control-label" for="featured">{{ __('Featured') }} *</label>
                   <label class="switch">
@@ -72,7 +73,7 @@
                     <span class="slider round"></span>
                   </label>
                 </div>
-              </div>
+              </div>--}}
 
               <div class="row justify-content-center">
                 <div class="col-lg-4 d-flex justify-content-between">
@@ -84,18 +85,18 @@
                 </div>
                 <div class="col-lg-2"></div>
 
-                <div class="col-lg-4 d-flex justify-content-between">
+               {{-- <div class="col-lg-4 d-flex justify-content-between">
                   <label class="control-label" for="flash_deal">{{ __('Flash Deal') }} *</label>
                   <label class="switch">
                     <input type="checkbox" name="flash_deal" value="1" {{$data->flash_deal==1?"checked":""}}>
                     <span class="slider round"></span>
                   </label>
-                </div>
+                </div>--}}
               </div>
 
 
 
-              <div class="row justify-content-center">
+             {{-- <div class="row justify-content-center">
                 <div class="col-lg-4 d-flex justify-content-between">
                   <label class="control-label" for="large_banner">{{ __('Large Banner') }} *</label>
                   <label class="switch">
@@ -177,7 +178,7 @@
                 </div>
 
               </div>
-
+--}}
               <br>
 
               <div class="row justify-content-center">
