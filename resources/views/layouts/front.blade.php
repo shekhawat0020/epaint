@@ -36,7 +36,32 @@
 
 
 <link rel="stylesheet" type="text/css" href="{{asset('assets/front/jquery-ui/jquery-ui.min.css')}}">
-
+<style>
+.close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+button.close {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover {
+    opacity: .75;
+}
+.close:hover {
+    color: #000;
+    text-decoration: none;
+}
+</style>
 	@yield('styles')
 
 </head>
@@ -343,18 +368,20 @@
 			<div class="modal-body">
 				<h2>Hello!</h2>
 				<p>Please enter your details</p>
-				<form>
+				<form id="contactform" action="{{route('front.requestcall.submit')}}" method="POST">
+					{{csrf_field()}}
+						@include('includes.admin.form-both') 
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Name">
+						<input type="text" class="form-control" placeholder="Name" name="name"  required="">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Mobile number">
+						<input type="text" class="form-control" placeholder="Mobile number" name="phone"  required="">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="City">
+						<input type="email" class="form-control" placeholder="Email" name="email"  required="">
 					</div>
 					<div class="form-group text-center">
-						<input type="button" class="btn" value="Continue">
+						<input type="submit" class="btn" value="Continue">
 					</div>
 				</form>
 			</div>

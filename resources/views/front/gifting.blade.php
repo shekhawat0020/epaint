@@ -2,6 +2,7 @@
 @section('styles')
 <link rel="stylesheet" href="{{asset('assets/front/css/chosen.css')}}">
 @endsection
+
 @section('content')
 
 
@@ -15,8 +16,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('front.contact') }}">
-                        Contact US
+                        <a href="{{ route('front.gifting') }}">
+							Wedding / Corporate Gifting
                         
                         </a>
                     </li>
@@ -26,9 +27,9 @@
 		<div class="shoppingcart_section join_section">
 			<div class="banner">
                 <picture>
-                    <source srcset="{{asset('assets/front/images/reseller-banner.webp')}}" media="(min-width:1023px)">
-                    <source srcset="{{asset('assets/front/images/reseller-banner.webp')}}" media="(min-width:320px)">
-                    <img src="{{asset('assets/front/images/reseller-banner.webp')}}" alt="">
+                    <source srcset="{{asset('assets/front/images/gift-banner.webp')}}" media="(min-width:1023px)">
+                    <source srcset="{{asset('assets/front/images/gift-banner.webp')}}" media="(min-width:320px)">
+                    <img src="{{asset('assets/front/images/gift-banner.webp')}}" alt="">
                 </picture>
             </div>
 			<div class="container">
@@ -39,29 +40,38 @@
 						
 						<div class="bulk">
 							<div class="heading">
-                            {!! $ps->contact_title !!}
-                           
+								<h3>Wedding / Corporate Gifting</h3>
                                
 							</div>
-                            {!! $ps->contact_text !!}
                             <form id="contactform" action="{{route('front.contact.submit')}}" method="POST">
                                 {{csrf_field()}}
                                     @include('includes.admin.form-both') 
-							
-
+						
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Name" name="name" required="">
 							</div>
-                            <div class="form-group">
+							<div class="form-group">
 								<input type="email" class="form-control" placeholder="Email" name="email" required="">
 							</div>
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Contact No." name="phone" required="">
 							</div>
 							<div class="form-group">
-								<textarea class="form-control" placeholder="Comments" name="text" required=""></textarea>
+								<textarea class="form-control" placeholder="Address" name="address" required=""></textarea>
 							</div>
-							
+							<div class="form-group">
+								<select data-placeholder="Choose tags ..." name="tags[]" multiple class="chosen-select form-control"  required="">
+									<option value="Engineering">Engineering</option>
+									<option value="Carpentry">Carpentry</option>
+									<option value="Plumbing">Plumbing</option>
+									<option value="Electical">Electrical</option>
+									<option value="Mechanical">Mechanical</option>
+									<option value="HVAC">HVAC</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Other Comments" name="text">
+							</div>
                             <input type="hidden" name="to" value="{{ $ps->contact_email }}">
 							<div class="form-group">
 								<input type="submit" class="btn" value="Submit">

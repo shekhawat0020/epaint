@@ -397,6 +397,23 @@ Route::prefix('admin')->group(function() {
 
   //------------ ADMIN COUPON SECTION ENDS------------
 
+    //------------ ADMIN Event SECTION ------------
+
+    Route::group(['middleware'=>'permissions:set_events'],function(){
+
+      Route::get('/event/datatables', 'Admin\EventController@datatables')->name('admin-event-datatables'); //JSON REQUEST
+      Route::get('/event', 'Admin\EventController@index')->name('admin-event-index');
+      Route::get('/event/create', 'Admin\EventController@create')->name('admin-event-create');
+      Route::post('/event/create', 'Admin\EventController@store')->name('admin-event-store');
+      Route::get('/event/edit/{id}', 'Admin\EventController@edit')->name('admin-event-edit');
+      Route::post('/event/edit/{id}', 'Admin\EventController@update')->name('admin-event-update');
+      Route::get('/event/delete/{id}', 'Admin\EventController@destroy')->name('admin-event-delete');
+      Route::get('/event/status/{id1}/{id2}', 'Admin\EventController@status')->name('admin-event-status');
+    
+      });
+    
+      //------------ ADMIN Event SECTION ENDS------------
+
   //------------ ADMIN BLOG SECTION ------------
 
   Route::group(['middleware'=>'permissions:blog'],function(){
@@ -1228,13 +1245,24 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   // FAQ SECTION
   Route::get('/faq','Front\FrontendController@faq')->name('front.faq');
   // FAQ SECTION ENDS
+  
+  // FAQ SECTION
+  Route::get('/event','Front\FrontendController@event')->name('front.event');
+  // FAQ SECTION ENDS
 
   // CONTACT SECTION
   Route::get('/contact','Front\FrontendController@contact')->name('front.contact');
   Route::post('/contact','Front\FrontendController@contactemail')->name('front.contact.submit');
   Route::get('/contact/refresh_code','Front\FrontendController@refresh_code');
-  // CONTACT SECTION  ENDS
 
+  Route::get('/joinus','Front\FrontendController@joinus')->name('front.joinus');
+  Route::post('/joinus','Front\FrontendController@joinusemail')->name('front.joinus.submit');
+
+  Route::get('/gifting','Front\FrontendController@gifting')->name('front.gifting');
+  Route::post('/gifting','Front\FrontendController@giftingemail')->name('front.gifting.submit');
+  Route::post('/requestcall','Front\FrontendController@requestcallemail')->name('front.requestcall.submit');
+  // CONTACT SECTION  ENDS
+  
   // PRODCT AUTO SEARCH SECTION
   Route::get('/autosearch/product/{slug}','Front\FrontendController@autosearch');
   // PRODCT AUTO SEARCH SECTION ENDS

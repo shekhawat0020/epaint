@@ -310,7 +310,12 @@ class FrontendController extends Controller
 		return view('front.faq',compact('faqs'));
 	}
 // -------------------------------- FAQ SECTION ENDS----------------------------------------
-
+public function event()
+	{
+        
+        $events =  DB::table('events')->orderBy('id','desc')->get();
+		return view('front.event',compact('events'));
+	}
 // -------------------------------- PAGE SECTION ----------------------------------------
     public function page($slug)
     {
@@ -362,6 +367,133 @@ class FrontendController extends Controller
         $phone = $request->phone;
         $from = $request->email;
         $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone."\nMessage: ".$request->text;
+        if($gs->is_smtp)
+        {
+        $data = [
+            'to' => $to,
+            'subject' => $subject,
+            'body' => $msg,
+        ];
+
+        $mailer = new GeniusMailer();
+        $mailer->sendCustomMail($data);
+        }
+        else
+        {
+        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+        mail($to,$subject,$msg,$headers);
+        }
+        // Login Section Ends
+
+        // Redirect Section
+        return response()->json($ps->contact_success);
+    }
+
+
+    public function joinus()
+	{
+        
+        $ps =  DB::table('pagesettings')->where('id','=',1)->first();
+		return view('front.join-us',compact('ps'));
+	}
+
+
+    //Send email to admin
+    public function joinusemail(Request $request)
+    {
+        $gs = Generalsetting::findOrFail(1);
+
+       
+
+        // Login Section
+        $ps = DB::table('pagesettings')->where('id','=',1)->first();
+        $subject = "jOIN US, Email From Of ".$request->name;
+        $to = $request->to;
+        $name = $request->name;
+        $phone = $request->phone;
+        $from = $request->email;
+        $msg = "Reseller: ".$request->reseller."Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone."\nMessage: ".$request->text."\nAddress: ".$request->address."\nTags: ".implode(',',$request->tags);
+        if($gs->is_smtp)
+        {
+        $data = [
+            'to' => $to,
+            'subject' => $subject,
+            'body' => $msg,
+        ];
+
+        $mailer = new GeniusMailer();
+        $mailer->sendCustomMail($data);
+        }
+        else
+        {
+        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+        mail($to,$subject,$msg,$headers);
+        }
+        // Login Section Ends
+
+        // Redirect Section
+        return response()->json($ps->contact_success);
+    }
+
+    public function gifting()
+	{
+        
+        $ps =  DB::table('pagesettings')->where('id','=',1)->first();
+		return view('front.gifting',compact('ps'));
+	}
+
+
+    //Send email to admin
+    public function giftingemail(Request $request)
+    {
+        $gs = Generalsetting::findOrFail(1);
+
+       
+
+        // Login Section
+        $ps = DB::table('pagesettings')->where('id','=',1)->first();
+        $subject = "Wedding / Corporate Gifting, Email From Of ".$request->name;
+        $to = $request->to;
+        $name = $request->name;
+        $phone = $request->phone;
+        $from = $request->email;
+        $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone."\nMessage: ".$request->text."\nAddress: ".$request->address."\nTags: ".implode(',',$request->tags);
+        if($gs->is_smtp)
+        {
+        $data = [
+            'to' => $to,
+            'subject' => $subject,
+            'body' => $msg,
+        ];
+
+        $mailer = new GeniusMailer();
+        $mailer->sendCustomMail($data);
+        }
+        else
+        {
+        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+        mail($to,$subject,$msg,$headers);
+        }
+        // Login Section Ends
+
+        // Redirect Section
+        return response()->json($ps->contact_success);
+    }
+    
+    public function requestcallemail(Request $request)
+    {
+        $gs = Generalsetting::findOrFail(1);
+
+       
+
+        // Login Section
+        $ps = DB::table('pagesettings')->where('id','=',1)->first();
+        $subject = "Request Call, Email From Of ".$request->name;
+        $to = $ps->contact_email;
+        $name = $request->name;
+        $phone = $request->phone;
+        $from = $request->email;
+        $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone;
         if($gs->is_smtp)
         {
         $data = [
