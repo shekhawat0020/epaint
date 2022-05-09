@@ -48,7 +48,7 @@
                     </div>
                     </a>
                   </div>
-                  <div class="col-lg-4">
+                  {{--<div class="col-lg-4">
                     <a href="{{ route('admin-prod-digital-create') }}">
                     <div class="cat-box box2">
                       <div class="icon">
@@ -67,7 +67,7 @@
                       <h5 class="title">{{ __("license") }} </h5>
                     </div>
                     </a>
-                  </div>
+                  </div>--}}
                 </div>
               </div>
             </div>
