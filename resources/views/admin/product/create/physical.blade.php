@@ -571,7 +571,7 @@
 									</div>
 		
 		
-									<div class="row">
+									<div class="row" style="display:none">
 										<div class="col-lg-12">
 											<div class="left-area">
 												<h4 class="heading">{{ __('Youtube Video URL') }}*</h4>
@@ -583,7 +583,7 @@
 												placeholder="{{ __('Enter Youtube Video URL') }}">
 										</div>
 									</div>
-									<div class="row">
+									<div class="row" style="display:none">
 										<div class="col-lg-12">
 											<div class="left-area">
 		
