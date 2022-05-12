@@ -28,7 +28,7 @@ class CouponController extends Controller
                                 return $type;
                             })
                             ->editColumn('price', function(Coupon $data) {
-                                $price = $data->type == 0 ? $data->price.'%' : $data->price.'$';
+                                $price = $data->type == 0 ? $data->price.'%' : $data->price.'₹';
                                 return $price;
                             })
                             ->addColumn('status', function(Coupon $data) {

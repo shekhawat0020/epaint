@@ -74,7 +74,7 @@
                             </div>
                           </div>
                           <div class="col-lg-3">
-                            <input type="text" class="input-field less-width" name="price" placeholder="" required="" value=""><span></span>
+                            <input type="text" class="input-field less-width" name="price" placeholder="" required="" value="">
                           </div>
                         </div>
 

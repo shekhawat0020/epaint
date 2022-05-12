@@ -24,7 +24,27 @@
 			</div>
 		</div>
 	@endforeach	
-	<div class="col-lg-12 ">
+	<div class="col-12 loading_list"  style="visibility: hidden;">
+		<ul>
+			<li class="spinner-grow text-primary" role="status">
+				<span class="visually-hidden"></span>
+			</li>
+			<li class="spinner-grow text-secondary" role="status">
+				<span class="visually-hidden"></span>
+			</li>
+			<li class="spinner-grow text-success" role="status">
+				<span class="visually-hidden"></span>
+			</li>
+			<li class="spinner-grow text-danger" role="status">
+				<span class="visually-hidden"></span>
+			</li>
+			<li class="spinner-grow text-warning" role="status">
+				<span class="visually-hidden"></span>
+			</li>
+		</ul>
+		<p>Loading...</p>
+	</div>
+	<div class="col-lg-12 paginglist" style="visibility: hidden;">
 		<div class="page-center mt-5">
 			{!! $prods->appends(['search' => request()->input('search')])->links() !!}
 		</div>

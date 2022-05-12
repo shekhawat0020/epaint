@@ -66,7 +66,7 @@ button.close {
 }
 
 
-}
+
 </style>
 	@yield('styles')
 
