@@ -560,7 +560,7 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="left-area">
-												<h4 class="heading">{{ __('Product Previous Price') }}*</h4>
+												<h4 class="heading">{{ __('Product Previous Price') }}</h4>
 												<p class="sub-heading">{{ __('(Optional)') }}</p>
 											</div>
 										</div>

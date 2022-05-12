@@ -492,8 +492,9 @@ public function event()
         $to = $ps->contact_email;
         $name = $request->name;
         $phone = $request->phone;
-        $from = $request->email;
-        $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone;
+        $city = $request->city;
+        $from = $ps->contact_email;
+        $msg = "Name: ".$name."\nCity: ".$city."\nPhone: ".$phone;
         if($gs->is_smtp)
         {
         $data = [

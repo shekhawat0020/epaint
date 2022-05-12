@@ -3,7 +3,7 @@
 		<div class="col-4">
 			<div class="product_block">
 				<div class="img_block">
-					<img src="{{ $prod->thumbnail ? asset('assets/images/thumbnails/'.$prod->thumbnail):asset('assets/images/noimage.png') }}" alt="">
+				<a href="{{ route('front.product', $prod->slug) }}"><img src="{{ $prod->thumbnail ? asset('assets/images/thumbnails/'.$prod->thumbnail):asset('assets/images/noimage.png') }}" alt=""></a>
 					@if(Auth::guard('web')->check())
 					<a href="javascript::void(0)" data-href="{{ route('user-wishlist-add',$prod->id) }}"  class="wishlist add-to-wish"><i class="fa fa-heart"></i></a>
 					@endif

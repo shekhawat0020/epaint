@@ -979,7 +979,7 @@ $('#category_select').on('change',function(){
 
     // Product Details Product Size Active Js Code
     $(document).on('click', '.product-size .siz-list .box', function () {
-        $('.qttotal').html('1');
+        $('.qttotal').val('1');
         var parent = $(this).parent();
          size_qty = $(this).find('.size_qty').val();
          size_price = $(this).find('.size_price').val();
@@ -1264,38 +1264,38 @@ $(document).on('click','#comment-area .remove',function(){
     $(document).on('click', '.qtminus', function () {
         var el = $(this);
         var $tselector = el.parent().parent().find('.qttotal');
-        total = $($tselector).text();
+        total = $($tselector).val();
         if (total > 1) {
             total--;
         }
-        $($tselector).text(total);
+        $($tselector).val(total);
     });
 
     $(document).on('click', '.qtplus', function () {
         var el = $(this);
         var $tselector = el.parent().parent().find('.qttotal');
-        total = $($tselector).text();
+        total = $($tselector).val();
         if(stock != "")
         {
             var stk = parseInt(stock);
               if(total < stk)
               {
                  total++;
-                 $($tselector).text(total);
+                 $($tselector).val(total);
               }
         }
         else {
         total++;
         }
 
-        $($tselector).text(total);
+        $($tselector).val(total);
     });
 
 
 
 
     $(document).on("click", "#addcrt" , function(){
-     var qty = $('.qttotal').html();
+     var qty = $('.qttotal').val();
      var pid = $(this).parent().parent().parent().parent().find("#product_id").val();
 
 if($('.product-attr').length > 0)
@@ -1346,7 +1346,7 @@ prices = $(".product-attr:checked").map(function() {
 
 
     $(document).on("click", "#qaddcrt" , function(){
-      var qty = $('.qttotal').html();
+      var qty = $('.qttotal').val();
       var pid = $(this).parent().parent().parent().parent().find("#product_id").val();
  
       if($('.product-attr').length > 0)
@@ -1374,7 +1374,7 @@ prices = $(".product-attr:checked").map(function() {
 // Add By ONE
 
       $(document).on("click", ".adding" , function(){
-        alert();
+        
         var pid =  $(this).parent().parent().find('.prodid').val();
         var itemid =  $(this).parent().parent().find('.itemid').val();
         var size_qty = $(this).parent().parent().find('.size_qty').val();

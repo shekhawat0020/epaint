@@ -61,6 +61,12 @@ button.close {
     color: #000;
     text-decoration: none;
 }
+.pinterest a{
+	background: #c40d11;
+}
+
+
+}
 </style>
 	@yield('styles')
 
@@ -227,13 +233,13 @@ button.close {
                         <li class="instagram"><a href="{{ $socialsetting->gplus }}"><i class="fa fa-instagram"></i></a></li>
 					@endif
 					@if($socialsetting->t_status == 1)
-                        <li class="instagram"><a href="{{ $socialsetting->twitter }}"><i class="fa fa-instagram"></i></a></li>
+                        <li class="twitter"><a href="{{ $socialsetting->twitter }}"><i class="fa fa-twitter"></i></a></li>
 					@endif
 					@if($socialsetting->l_status == 1)
-                        <li class="instagram"><a href="{{ $socialsetting->linkedin }}"><i class="fa fa-instagram"></i></a></li>
+                        <li class="linkedin"><a href="{{ $socialsetting->linkedin }}"><i class="fa fa-linkedin"></i></a></li>
 					@endif
 					@if($socialsetting->d_status == 1)
-                        <li class="instagram"><a href="{{ $socialsetting->dribble }}"><i class="fa fa-instagram"></i></a></li>
+                        <li class="pinterest"><a href="{{ $socialsetting->dribble }}"><i class="fa fa-pinterest"></i></a></li>
 					@endif
                     </ul>
 				</div>
@@ -378,7 +384,7 @@ button.close {
 						<input type="text" class="form-control" placeholder="Mobile number" name="phone"  required="">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Email" name="email"  required="">
+						<input type="text" class="form-control" placeholder="City" name="city"  required="">
 					</div>
 					<div class="form-group text-center">
 						<input type="submit" class="btn" value="Continue">

@@ -4,18 +4,23 @@
 
 @if($ps->slider == 1)
 @if(count($sliders))
+
+
+
+
+	
 	<section class="banner_section">
 		<div id="home-banner" class="carousel carousel-dark carousel-fade slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 			@foreach($sliders as $key => $data)	
-				<button class="@if($key==0)active @endif" type="button" data-bs-target="#home-banner" data-bs-slide-to="{{$key}}" aria-current="true" aria-label="Slide {{$key}}">
+				<button @if($key==0) class="active" @endif type="button" data-bs-target="#home-banner" data-bs-slide-to="{{$key}}" aria-current="true" aria-label="Slide {{$key}}">
 				{{$data->title_text}}<span>{{$data->subtitle_text}}</span>
 				</button>
 			@endforeach		
 			</div>
 			<div class="carousel-inner">
 			@foreach($sliders as $key => $data)
-				<div class="carousel-item @if($key==0)active @endif">
+				<div @if($key==0) class="carousel-item active" @else class="carousel-item" @endif>
 					<picture>
 						<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:1023px)">
 						<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:320px)">

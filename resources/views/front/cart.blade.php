@@ -139,7 +139,7 @@
                         	<div class="all_price">
                             	<label> You pay</label>
                                 <div>
-									<i class="fa fa-rupee"></i> 466.00
+								{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}
 									<!--<span>
 										MRP: <i class="fa fa-rupee"></i> <span class="text-linethrough">999.00</span> | You save <i class="fa fa-rupee"></i> 466.00
 									</span>-->
