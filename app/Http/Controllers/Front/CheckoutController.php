@@ -366,7 +366,7 @@ class CheckoutController extends Controller
 
     public function cashondelivery(Request $request)
     {
-        dd( $request);
+       
         if($request->pass_check) {
             $users = User::where('email','=',$request->personal_email)->get();
             if(count($users) == 0) {
@@ -451,6 +451,7 @@ class CheckoutController extends Controller
         $order['order_number'] = Str::random(10);
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
+        $order['customer_state'] = $request->customer_state;
         $order['customer_city'] = $request->city;
         $order['customer_zip'] = $request->zip;
         $order['shipping_email'] = $request->shipping_email;
@@ -458,6 +459,7 @@ class CheckoutController extends Controller
         $order['shipping_phone'] = $request->shipping_phone;
         $order['shipping_address'] = $request->shipping_address;
         $order['shipping_country'] = $request->shipping_country;
+        $order['shipping_state'] = $request->shipping_state;
         $order['shipping_city'] = $request->shipping_city;
         $order['shipping_zip'] = $request->shipping_zip;
         $order['order_note'] = $request->order_notes;

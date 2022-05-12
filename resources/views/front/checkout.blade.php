@@ -257,6 +257,10 @@
 													</select>
 												</div>
 												<div class="form-group col-lg-6">
+													<input type="text" class="form-control" name="customer_state" required="" placeholder="State">
+														
+												</div>
+												<div class="form-group col-lg-6">
 													<input class="form-control" type="text" name="city"
 														placeholder="{{ $langg->lang158 }}" required=""
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->city : '' }}">
@@ -305,14 +309,21 @@
 											</div>
 											<div class="row">
 												<div class="form-group col-lg-6">
+													<input type="text" class="form-control" name="shipping_state" id="shipping_state" placeholder="State">
+														
+												</div>
+												<div class="form-group col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_city"
 														id="shipping_city" placeholder="{{ $langg->lang158 }}">
 												</div>
-												<div class="form-group col-lg-6">
+												
+
+											</div>
+											<div class="row">
+											<div class="form-group col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_zip"
 														id="shippingPostal_code" placeholder="{{ $langg->lang159 }}">
 												</div>
-
 											</div>
 
 										</div>
