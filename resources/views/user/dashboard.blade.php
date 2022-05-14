@@ -35,7 +35,7 @@
 										<li><span>Address</span> {{ $user->address }}</li>
                     @endif
 									</ul>
-									<a data-toggle="modal" data-target="#ma_edit" class="btn">Edit Information</a>
+									<a data-bs-toggle="modal" href="#ma_edit" class="btn">Edit Information</a>
 								</div>
 							</div>
 							<!--<div class="tab-pane fade" id="profile">
@@ -95,41 +95,13 @@
 							<div class="tab-pane fade" id="address">
 								<div class="ma_inner">
 									<h2>Address Book</h2>
-									<div class="row delvery_address">
-										<div class="col-6">
-											<div class="address_block">
-												<div class="add_inner">
-													<p>XYZ Kumar</p>
-													<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-													<div class="float-left">
-														<p>1023456789</p>
-													</div>
-													<ul class="edit_list">
-														<li><a href="#"><i class="fa fa-edit"></i></a></li>
-														<li><a href="#"><i class="fa fa-trash-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
-										<div class="col-6">
-											<div class="address_block">
-												<div class="add_inner">
-													<p>XYZ Kumar</p>
-													<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-													<div class="float-left">
-														<p>1023456789</p>
-													</div>
-													<ul class="edit_list">
-														<li><a href="#"><i class="fa fa-edit"></i></a></li>
-														<li><a href="#"><i class="fa fa-trash-o"></i></a></li>
-													</ul>
-												</div>
-											</div>
-										</div>
+									<div class="row delvery_address" id="delvery_address_box">
+										
+									</div>	
 										<div class="col-12">
-											<a href="#address_popup" data-toggle="modal" class="btn">Add Another Address</a>
+											<a href="#address_popup" data-bs-toggle="modal" class="btn">Add Another Address</a>
 										</div>
-									</div>
+									
 								</div>	
 							</div>
 						</div>
@@ -138,8 +110,157 @@
     		</div>
 		</div>
 	</section>
-	
 
 
+
+<!--- Start profile edit  Pop  -->
+
+<div class="modal fade login_modal" id="ma_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<h2>Edit Account Information!</h2>
+				<p>Please enter your details</p>
+				<form  id="userform" action="{{route('user-profile-update')}}" method="POST"
+                                            enctype="multipart/form-data">
+					{{csrf_field()}}
+						@include('includes.admin.form-both') 
+					<div class="form-group">
+					<input name="name" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang264 }}" required=""
+                                                        value="{{ $user->name }}">
+					</div>
+					<div class="form-group">
+					<input name="email" type="email" class="form-control"
+                                                        placeholder="{{ $langg->lang265 }}" required=""
+                                                        value="{{ $user->email }}" disabled>
+					</div>
+					<div class="form-group">
+					<input name="phone" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang266 }}" required=""
+                                                        value="{{ $user->phone }}">
+					</div>
+					<div class="form-group">
+					<input name="city" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang268 }}" value="{{ $user->city }}">
+					</div>
+					<div class="form-group">
+					<select class="form-control" name="country">
+                                                        <option value="">{{ $langg->lang157 }}</option>
+                                                        @foreach (DB::table('countries')->get() as $data)
+                                                            <option value="{{ $data->country_name }}" {{ $user->country == $data->country_name ? 'selected' : '' }}>
+                                                                {{ $data->country_name }}
+                                                            </option>		
+                                                         @endforeach
+                                                    </select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="State" name="state"  value="{{ $user->state }}"  required="">
+					</div>
+
+					<div class="form-group">
+						 <input name="zip" type="text" class="form-control"
+                                                                placeholder="{{ $langg->lang269 }}" value="{{ $user->zip }}">
+					</div>
+					<div class="form-group">
+					<textarea class="form-control" name="address" required=""
+                                                        placeholder="{{ $langg->lang270 }}">{{ $user->address }}</textarea>
+					</div>
+					
+					<div class="form-group text-center">
+						<input type="submit" class="btn submit-btn" value="Update">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--- End profile edit  Pop  -->
+<!--- Start Address Pop  -->
+
+<div class="modal fade login_modal" id="address_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<h2>Edit Account Information!</h2>
+				<p>Please enter your details</p>
+				<form  id="userAddressform" action="{{route('user-add-address')}}" method="POST"
+                                            enctype="multipart/form-data">
+					{{csrf_field()}}
+						@include('includes.admin.form-both') 
+					<div class="form-group">
+					<input name="name" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang264 }}" required=""
+                                                        >
+					</div>
+					
+					<div class="form-group">
+					<input name="phone" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang266 }}" required=""
+                                                        >
+					</div>
+					<div class="form-group">
+					<input name="city" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang268 }}">
+					</div>
+					<div class="form-group">
+					<select class="form-control" name="country">
+                                                        <option value="">{{ $langg->lang157 }}</option>
+                                                        @foreach (DB::table('countries')->get() as $data)
+                                                            <option value="{{ $data->country_name }}" {{ $user->country == $data->country_name ? 'selected' : '' }}>
+                                                                {{ $data->country_name }}
+                                                            </option>		
+                                                         @endforeach
+                                                    </select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="State" name="state"   required="">
+					</div>
+
+					<div class="form-group">
+						 <input name="zip" type="text" class="form-control"
+                                                                placeholder="{{ $langg->lang269 }}">
+					</div>
+					<div class="form-group">
+					<textarea class="form-control" name="address" required=""
+                                                        placeholder="{{ $langg->lang270 }}"></textarea>
+					</div>
+					
+					<div class="form-group text-center">
+						<input type="submit" class="btn submit-btn" value="Update">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- End address pop -->
+
+
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+
+//user delivery address load
+function loadaddress(){
+
+$('#delvery_address_box').load("{{route('user-get-address')}}", function (response, status, xhr) {
+         if (status == "success") {
+           $('#preloader').hide();
+           
+       }
+  });
+}
+loadaddress();
+</script>
 
 @endsection

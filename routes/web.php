@@ -930,6 +930,12 @@ Route::prefix('user')->group(function() {
   Route::post('/profile', 'User\UserController@profileupdate')->name('user-profile-update');
   // User Profile Ends
 
+   // User Address
+   Route::post('/address/add', 'User\UserController@addAddress')->name('user-add-address');
+   Route::post('/address/update', 'User\UserController@updateAddress')->name('user-update-address');
+   Route::get('/address/get', 'User\UserController@getAddress')->name('user-get-address');
+   //end User Address
+
   // User Forgot
   Route::get('/forgot', 'User\ForgotController@showforgotform')->name('user-forgot');
   Route::post('/forgot', 'User\ForgotController@forgot')->name('user-forgot-submit');

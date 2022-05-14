@@ -15,6 +15,7 @@ use App\Models\Generalsetting;
 use App\Models\UserSubscription;
 use App\Models\FavoriteSeller;
 use App\Models\Order;
+use App\Models\Address;
 
 class UserController extends Controller
 {
@@ -70,6 +71,38 @@ class UserController extends Controller
         $data->update($input);
         $msg = 'Successfully updated your profile';
         return response()->json($msg); 
+    }
+
+    public function addAddress(Request $request)
+    {
+        $rules =
+        [
+        ];
+
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
+          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        //--- Validation Section Ends
+        $data = new Address();
+        $input = $request->all();
+        $input['user_id'] = Auth::user()->id;
+        $data->fill($input)->save();
+        $msg = 'Successfully Added your address';
+        return response()->json($msg); 
+
+
+    }
+
+    public function getAddress(Request $request)
+    {
+        $address = Address::get();
+
+       return  view('includes.user-address', compact('address'))->render();
+      //  return View::make('includes.user-address', compact('address'));
+
     }
 
     public function resetform()
