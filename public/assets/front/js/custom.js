@@ -102,13 +102,13 @@ $(document).ready(function() {
         }
     })
 	$('.collection_carousel2').owlCarousel({
-        loop:false,
+        loop:true,
         nav:false,
 		dots:true,
 		smartSpeed: 1000,
         margin:0,
-		autoplay:false,
-		autoplayTimeout:6000,
+		autoplay:true,
+		autoplayTimeout:5000,
         responsive:{
             0:{
                 items:1
@@ -1054,10 +1054,10 @@ function getAmount()
 
 
     // Product Details Product Color Active Js Code
-    $(document).on('click', '.product-color .color-list .box', function () {
+    $(document).on('click', '.color-list .box', function () {
         colors = $(this).data('color');
         var parent = $(this).parent();
-            $('.product-color .color-list li').removeClass('active');
+            $('.color-list li').removeClass('active');
             parent.addClass('active');
     });
 

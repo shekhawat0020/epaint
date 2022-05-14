@@ -29,6 +29,22 @@
 .norating{
   color:#888 !important;
 }
+.color-list li.active .box::after {
+    opacity: 1;
+}
+.color-list li .box::after {
+    position: absolute;
+    content: "\f00c";
+    font-family: FontAwesome;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    color: #FFF;
+    font-size: 17px;
+    opacity: 0;
+}
 
 </style>
 @endsection
@@ -131,61 +147,7 @@
 							<div class="copy_block">
               {!! $productt->details !!}
 							</div>
-							<div class="accordion accordion-flush" id="accordionFlushExample">
-								<div class="accordion-item">
-									<h2 class="accordion-header" id="flush-headingOne">
-										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-											More Information
-										</button>
-									</h2>
-									<div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-										<div class="accordion-body">
-											<div class="table-responsive">
-												<table class="table">
-													<tbody>
-														<tr>
-															<td>Country of Manufacture</td>
-															<td>India</td>
-														</tr>
-														<tr>
-															<td>Color</td>
-															<td>Moss Green</td>
-														</tr>
-														<tr>
-															<td>Type</td>
-															<td>Bedspread</td>
-														</tr>
-														<tr>
-															<td>Size</td>
-															<td>94" x 102"</td>
-														</tr>
-														<tr>
-															<td>HSN Code</td>
-															<td>9404</td>
-														</tr>
-														<tr>
-															<td>Fabric</td>
-															<td>100% Cotton</td>
-														</tr>
-														<tr>
-															<td>Weight</td>
-															<td>4.840000</td>
-														</tr>
-														<tr>
-															<td>Washcare Instructions</td>
-															<td>Machine washable</td>
-														</tr>
-														<tr>
-															<td>Extra info</td>
-															<td>Each set consists of a Bedspread and 2 standard shams. Plain solid cotton fabric back with 100% cotton batting inside</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+						
 
 
 					
@@ -216,7 +178,9 @@
                       @endphp
                       @foreach($productt->color as $key => $data1)
                       <li class="nav-item {{ $is_first ? 'active' : '' }}">
-                      <span class="box" data-color="{{ $productt->color[$key] }}" style="background-color: {{ $productt->color[$key] }}"></span>
+                      <span class="box" data-color="{{ $productt->color[$key] }}" style="background-color: {{ $productt->color[$key] }}">
+                        
+                    </span>
                       </li>
 										  @php
                       $is_first = false;
@@ -370,12 +334,12 @@
                  
 
 
-							<ul class="share_list">
+							<ul class="share_list a2a_kit a2a_kit_size_32 a2a_default_style">
 								<li>Share:</li>
-								<li><a class="facebook a2a_button_facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a class="pinterest a2a_button_instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-								<li><a class="pinterest a2a_button_whatsapp" href="#"><i class="fa fa-whatsapp"></i></a></li>
-								<li><a class="pinterest a2a_button_pinterest" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+								<li><a class="facebook a2a_button_facebook" ><i class="fa fa-facebook"></i></a></li>
+								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-instagram"></i></a></li>
+								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-whatsapp"></i></a></li>
+								<li><a class="pinterest a2a_button_pinterest" ><i class="fa fa-pinterest-p"></i></a></li>
 							</ul>
               <script async src="https://static.addtoany.com/menu/page.js"></script>
 							<div class="link">
@@ -540,8 +504,9 @@
 		</div>
 	</section>
 	
-	<a href="#" class="whatsapp_icon"><i class="fa fa-whatsapp"></i></a>
-
+  <span class="a2a_kit a2a_kit_size_32 ">
+	<a href="#" class="whatsapp_icon a2a_button_whatsapp"><i class="fa fa-whatsapp"></i></a>
+    </span>
 @endsection
 
 

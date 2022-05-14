@@ -1,15 +1,18 @@
 
 @extends('layouts.front')
 @section('content')	
-
+<section class="banner_section" style="display:none">
+		<div id="home-banner" class="carousel carousel-dark carousel-fade slide" data-bs-ride="carousel">
+			
+		</div>
+</section>
 @if($ps->slider == 1)
 @if(count($sliders))
 
 
 
 
-	
-	<section class="banner_section">
+<section class="banner_section">
 		<div id="home-banner" class="carousel carousel-dark carousel-fade slide" data-bs-ride="carousel">
 			<div class="carousel-indicators">
 			@foreach($sliders as $key => $data)	
@@ -19,15 +22,15 @@
 			@endforeach		
 			</div>
 			<div class="carousel-inner">
-			@foreach($sliders as $key => $data)
-				<div @if($key==0) class="carousel-item active" @else class="carousel-item" @endif>
-					<picture>
-						<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:1023px)">
-						<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:320px)">
-						<img src="{{asset('assets/images/sliders/'.$data->photo)}}" alt="">
-					</picture>
-				</div>
-			@endforeach	
+				@foreach($sliders as $key => $data)
+					<div @if($key==0) class="carousel-item active" @else class="carousel-item" @endif>
+						<picture>
+							<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:1023px)">
+							<source srcset="{{asset('assets/images/sliders/'.$data->photo)}}" media="(min-width:320px)">
+							<img src="{{asset('assets/images/sliders/'.$data->photo)}}" alt="">
+						</picture>
+					</div>
+				@endforeach	
 			</div>
 		</div>
 		
