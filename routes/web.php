@@ -934,6 +934,7 @@ Route::prefix('user')->group(function() {
    Route::post('/address/add', 'User\UserController@addAddress')->name('user-add-address');
    Route::post('/address/update', 'User\UserController@updateAddress')->name('user-update-address');
    Route::get('/address/get', 'User\UserController@getAddress')->name('user-get-address');
+   Route::get('/address/delete/{id}', 'User\UserController@deleteAddress')->name('user-delete-address');
    //end User Address
 
   // User Forgot

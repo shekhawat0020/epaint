@@ -247,26 +247,26 @@
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->email : '' }}">
 												</div>
 												<div class="form-group col-lg-6">
-													<input class="form-control" type="text" name="address"
+													<input class="form-control" type="text" id="u_address" name="address"
 														placeholder="{{ $langg->lang155 }}" required=""
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->address : '' }}">
 												</div>
 												<div class="form-group col-lg-6">
-													<select class="form-control" name="customer_country" required="">
+													<select class="form-control" id="u_country" name="customer_country" required="">
 														@include('includes.countries')
 													</select>
 												</div>
 												<div class="form-group col-lg-6">
-													<input type="text" class="form-control" name="customer_state" required="" placeholder="State">
+													<input type="text" class="form-control" id="u_state" name="customer_state" required="" placeholder="State" value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->state : '' }}">
 														
 												</div>
 												<div class="form-group col-lg-6">
-													<input class="form-control" type="text" name="city"
+													<input class="form-control" type="text" id="u_city" name="city"
 														placeholder="{{ $langg->lang158 }}" required=""
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->city : '' }}">
 												</div>
 												<div class="form-group col-lg-6">
-													<input class="form-control" type="text" name="zip"
+													<input class="form-control" type="text" id="u_zip" name="zip"
 														placeholder="{{ $langg->lang159 }}" required=""
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : '' }}">
 												</div>
@@ -353,20 +353,24 @@
 										</div>
 									@else
 										<div class="col-12">
+
+										@foreach($address_list as $add)
 											<div class="address_block">
 												<div class="add_inner">
-													<p>XYZ Kumar</p>
-													<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+													<p>{{$add->name}}</p>
+													<p>{{$add->address}}, {{$add->city}} , {{$add->state}}, {{$add->country}}, {{$add->zip}}   </p>
 													<div class="float-left">
-														<p>1023456789</p>
-														<a href="#" class="btn">Deliver Here</a>
+														<p>{{$add->phone}} </p>
+														<a href="javascript::void(0)" class="btn deliver_this"  data-zip="{{$add->zip}}" data-id="{{$add->id}}" data-name="{{$add->name}}" data-phone="{{$add->phone}}"  data-address="{{$add->address}}" data-city="{{$add->city}}" data-country="{{$add->country}}" data-state="{{$add->state}}">Deliver Here</a>
 													</div>
 													<ul class="edit_list">
-														<li><a href="#"><i class="fa fa-edit"></i></a></li>
-														<li><a href="#"><i class="fa fa-trash-o"></i></a></li>
+														<li><a href="{{route('user-dashboard')}}"><i class="fa fa-edit"></i></a></li>
+														
 													</ul>
 												</div>
 											</div>
+										@endforeach
+
 										</div>
 									@endif
 
@@ -961,6 +965,8 @@
     		</div>
 		</div>
 	</section>
+
+
 	
 
 @endsection
@@ -1329,6 +1335,19 @@ $('.edit_step_block').click(function(){
 	$('.step_block').addClass('complete');
 	$(this).parent('li').parent('ul').parent('.edit_block').parent('.step_block').removeClass('complete');
 	$(this).parent('li').parent('ul').parent('.edit_block').parent('.step_block').addClass('active');
+});
+
+
+$(document).on('click', '.deliver_this', function(){
+	
+	$('#address_id').val($(this).data('id'));
+	$('#u_name').val($(this).data('name'));
+	$('#u_phone').val($(this).data('phone'));
+	$('#u_city').val($(this).data('city'));
+	$('#u_state').val($(this).data('state'));
+	$('#u_country').val($(this).data('country'));
+	$('#u_zip').val($(this).data('zip'));
+	$('#u_address').val($(this).data('address'));
 });
 
 </script>

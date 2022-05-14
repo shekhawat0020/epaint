@@ -186,7 +186,7 @@
 		<div class="modal-content">
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			<div class="modal-body">
-				<h2>Edit Account Information!</h2>
+				<h2>Add Address!</h2>
 				<p>Please enter your details</p>
 				<form  id="userAddressform" action="{{route('user-add-address')}}" method="POST"
                                             enctype="multipart/form-data">
@@ -239,6 +239,67 @@
 	</div>
 </div>
 
+
+
+<div class="modal fade login_modal" id="address_edit_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<h2>Edit Address!</h2>
+				<p>Please enter your details</p>
+				<form  id="userEditAddressform" action="{{route('user-update-address')}}" method="POST"
+                                            enctype="multipart/form-data">
+					{{csrf_field()}}
+					<input type="hidden" name="id" id="address_id">
+						@include('includes.admin.form-both') 
+					<div class="form-group">
+					<input name="name" id="address_name" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang264 }}" required=""
+                                                        >
+					</div>
+					
+					<div class="form-group">
+					<input name="phone" id="address_phone" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang266 }}" required=""
+                                                        >
+					</div>
+					<div class="form-group">
+					<input name="city" id="address_city" type="text" class="form-control"
+                                                        placeholder="{{ $langg->lang268 }}">
+					</div>
+					<div class="form-group">
+					<select class="form-control" id="address_country" name="country">
+						<option value="">{{ $langg->lang157 }}</option>
+						@foreach (DB::table('countries')->get() as $data)
+							<option value="{{ $data->country_name }}" {{ $user->country == $data->country_name ? 'selected' : '' }}>
+								{{ $data->country_name }}
+							</option>		
+							@endforeach
+					</select>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="State" name="state"  id="address_state" required="">
+					</div>
+
+					<div class="form-group">
+						 <input name="zip" id="address_zip" type="text" class="form-control"
+                                                                placeholder="{{ $langg->lang269 }}">
+					</div>
+					<div class="form-group">
+					<textarea class="form-control" id="address_address" name="address" required=""
+                                                        placeholder="{{ $langg->lang270 }}"></textarea>
+					</div>
+					
+					<div class="form-group text-center">
+						<input type="submit" class="btn submit-btn" value="Update">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 <!-- End address pop -->
 
 
@@ -260,6 +321,34 @@ $('#delvery_address_box').load("{{route('user-get-address')}}", function (respon
        }
   });
 }
+
+$(document).on('click', '.editaddresslink', function(){
+	
+	$('#address_id').val($(this).data('id'));
+	$('#address_name').val($(this).data('name'));
+	$('#address_phone').val($(this).data('phone'));
+	$('#address_city').val($(this).data('city'));
+	$('#address_state').val($(this).data('state'));
+	$('#address_country').val($(this).data('country'));
+	$('#address_zip').val($(this).data('zip'));
+	$('#address_address').val($(this).data('address'));
+});
+
+$(document).on('click', '.delete_link', function(e){
+	e.preventDefault();
+	block = $(this).closest('.col-6');
+
+	$.ajax({
+       url: $(this).attr('href'),
+       type: "GET",
+       success: function (data) {
+		block.remove();
+       },
+       error: function(xhr, ajaxOptions, thrownError){
+         alert('Error ...');
+       }
+  });
+});
 loadaddress();
 </script>
 

@@ -729,6 +729,46 @@ $("#reportform").on('submit',function(e){
 
     });
 
+
+    $(document).on('submit','#userEditAddressform',function(e){
+      e.preventDefault();
+      $('.gocover').show();
+      $('button.submit-btn').prop('disabled',true);
+          $.ajax({
+           method:"POST",
+           url:$(this).prop('action'),
+           data:new FormData(this),
+           contentType: false,
+           cache: false,
+           processData: false,
+           success:function(data)
+           {
+              if ((data.errors)) {
+              $('.alert-success').hide();
+              $('.alert-danger').show();
+              $('.alert-danger ul').html('');
+                for(var error in data.errors)
+                {
+                  $('.alert-danger ul').append('<li>'+ data.errors[error] +'</li>')
+                }
+                $('#userAddressform input[type=text], #userAddressform input[type=email], #userAddressform textarea').eq(0).focus();
+              }
+              else
+              {
+                $('.alert-danger').hide();
+                $('.alert-success').show();
+                $('.alert-success p').html(data);
+                $('#userAddressform input[type=text], #userAddressform input[type=email], #userAddressform textarea').eq(0).focus();
+              }
+              $('.gocover').hide();
+              $('button.submit-btn').prop('disabled',false);
+              loadaddress();
+           }
+
+          });
+
+    });
+
     // USER FORM SUBMIT SECTION ENDS
 
     // Pagination Starts

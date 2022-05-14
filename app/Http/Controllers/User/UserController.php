@@ -95,7 +95,29 @@ class UserController extends Controller
 
 
     }
+    
+    public function updateAddress(Request $request)
+    {
+        $rules =
+        [
+        ];
 
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
+          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        //--- Validation Section Ends
+        $data = Address::findOrFail($request->id);
+        $input = $request->all();
+        $input['user_id'] = Auth::user()->id;
+        $data->update($input);
+        $msg = 'Successfully Updated your address';
+        return response()->json($msg); 
+
+
+    }
     public function getAddress(Request $request)
     {
         $address = Address::get();
@@ -103,6 +125,13 @@ class UserController extends Controller
        return  view('includes.user-address', compact('address'))->render();
       //  return View::make('includes.user-address', compact('address'));
 
+    }
+
+    public function deleteAddress(Request $request, $id)
+    {
+        Address::where('id', $id)->where('user_id', Auth::user()->id)->delete();
+        $msg = 'Successfully Deleted your address';
+        return response()->json($msg); 
     }
 
     public function resetform()
