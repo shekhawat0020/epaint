@@ -259,7 +259,7 @@
 	.cart_block { margin-bottom: 15px;}
 	.cart_product { width: 100%; padding-right: 30px;}
 	.cs_one .cart_product h3 { padding: 0; text-align: left;}
-	.cart_qty{ display: none;}
+	/*.cart_qty{ display: none;} */
 	.qty_rate{ display: inline-block;}
 	.cart_price { width: 100%; padding: 0 8px 8px 10px; font-size: 14px; text-align: right;}
 	.del_product { bottom: 45px;}

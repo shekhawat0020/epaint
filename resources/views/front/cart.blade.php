@@ -63,16 +63,7 @@
 										@endforeach
 
 										@endif
-                    				<div class="qty_rate">
-                    					<span class="rate">{{ App\Models\Product::convertPrice($product['item_price']) }}   </span> 
-                    					<div class="number_wrap">
-											<div class="number">
-												<span class="minus"><i class="fa fa-minus"></i></span>
-												<input type="text" value="1"/>
-												<span class="plus"><i class="fa fa-plus"></i></span>
-											</div>
-										</div>
-                    				</div>
+                    				
                     			</div>
                     			<div class="cart_qty">
 								<span class="rate">{{ App\Models\Product::convertPrice($product['item_price']) }}   </span> 
