@@ -78,12 +78,12 @@ $(document).ready(function() {
 	})
 	
 	$('.collection_carousel').owlCarousel({
-        loop:false,
+        loop:true,
         nav:false,
 		dots:true,
 		smartSpeed: 1000,
         margin:0,
-		autoplay:false,
+		autoplay:true,
 		autoplayTimeout:6000,
 		//dotsContainer: '.myDotsCollection',
         responsive:{
