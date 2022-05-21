@@ -100,16 +100,26 @@ button.close {
 				<a class="close_nav"><i class="fa fa-close"></i></a>
 				<ul class="nav_list">
 				@if($gs->is_home == 1)
-					<li><a href="{{ route('front.index') }}">Home Story</a></li>
-				@endif				
-				<li class="dropdown">
-					<a href="" class="dropdown-toggle" data-bs-toggle="dropdown">collaboration</a>
+					<li><a href="{{ route('front.index') }}">Home</a></li>
+				@endif	
+				@foreach($categories->take(3) as $category)
+				<li class="{{count($category->subs) > 0 ? 'dropdown':''}}">
+				@if(count($category->subs) > 0)
+					<a href="{{ route('front.category',$category->slug) }}" class="dropdown-toggle" data-bs-toggle="dropdown">{{ $category->name }}</a>
 					<ul class="dropdown-menu">
-					@foreach($categories as $category)
-					<li><a class="dropdown-item" href="{{ route('front.category',$category->slug) }}">{{ $category->name }}</a></li>
+					@foreach($category->subs()->whereStatus(1)->get() as $subcat)
+					<li><a class="dropdown-item" href="{{ route('front.subcat',['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">{{ $subcat->name }}</a></li>
 					@endforeach
 					</ul>
+				@else
+				<a href="{{ route('front.category',$category->slug) }}">{{ $category->name }}</a>
+				@endif
 				</li>
+				@endforeach
+
+
+
+				
 				@if (DB::table('pagesettings')->find(1)->review_blog==1)
 				<li class="active" ><a  href="{{ route('front.blog') }}">{{ $langg->lang18 }}</a></li>
 				@endif
@@ -421,7 +431,7 @@ button.close {
 			<div class="modal-body">
 				<div class="lp_wrapper">
 					<div class="img_block">
-						<img src="{{asset('assets/front/images/popup-img.webp')}}" alt="">
+						<img src="{{asset('assets/images/'.$gs->popup_background)}}" alt="">
 					</div>
 					<div class="copy_block">
 						<h3>{{$gs->popup_title}} <span>{{$gs->popup_text}}</span></h3>

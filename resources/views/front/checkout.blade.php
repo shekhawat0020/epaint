@@ -216,10 +216,10 @@
 											</h5>
 											<hr/>
 											<div class="row">
-												<div class="form-group col-lg-6 {{ $digital == 1 ? 'd-none' : '' }}">
+												<div class="form-group d-none col-lg-6 {{ $digital == 1 ? 'd-none' : '' }}">
 													<select class="form-control" id="shipop" name="shipping" required="">
 														<option value="shipto">{{ $langg->lang149 }}</option>
-														<option value="pickup">{{ $langg->lang150 }}</option>
+													{{--	<option value="pickup">{{ $langg->lang150 }}</option>--}}
 													</select>
 												</div>
 		
