@@ -435,7 +435,7 @@
 													<h5><span>{{ $langg->lang312 }} -</span> {{ str_replace('-',' ',$product['size']) }}</h5>
 													@endif
 													@if(!empty($product['color']))
-													<h5><span>{{ $langg->lang313 }} -</span> <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span></h5>
+													<h5><span>{{ $langg->lang313 }} -</span> <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}}; position: absolute; margin-left: 5px;"></span></h5>
 													@endif
 													@if(!empty($product['keys']))
 

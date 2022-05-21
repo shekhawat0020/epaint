@@ -17,13 +17,19 @@
 		<div class="shoppingcart_section wishlist_section">
 			<div class="container">
            		<div class="heading">
+                    @if($order->payment_status =="Completed")
 					<h3>THANK YOU FOR YOUR PURCHASE.</h3>
+                    @else
+					<h3>Payment Status are still pending</h3>
+                    @endif
+
                     <p class="text">
                         {{ $langg->order_text }}
                     </p>
                     <a href="{{ route('front.index') }}" class="link">{{ $langg->lang170 }}</a>
                     
 				</div>
+           
 				<p class="copy_text">Ordered on {{date('d-M-Y',strtotime($order->created_at))}}<span>|</span> Order# {{$order->order_number}} </p>
 				@include('includes.form-success')
                 <div class="shipping_detail row">

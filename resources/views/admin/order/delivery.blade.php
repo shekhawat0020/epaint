@@ -53,7 +53,7 @@
 
 
 
-                        <div class="row">
+                        <div class="row d-none">
                           <div class="col-lg-4">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Track Note') }} *</h4>

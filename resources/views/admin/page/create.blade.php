@@ -114,6 +114,46 @@
 
 
                         <div class="row">
+                            <div class="col-lg-4">
+                              <div class="left-area">
+                                <h4 class="heading">
+                                    {{ __('Redirect Page Url') }} 
+                                </h4>
+                              </div>
+                            </div>
+                            <div class="col-lg-7">
+                              <div class="text-editor">
+                              <input type="text" class="input-field" name="redirect_url" placeholder="{{ __('url') }}" value="{{ Request::old('redirect_url') }}">
+                              </div>
+                            </div>
+                          </div>
+                        
+
+
+                        <div class="row">
+                            <div class="col-lg-4">
+                              <div class="left-area">
+                                <h4 class="heading">
+                                    {{ __('Footer  Menu') }} 
+                                </h4>
+                              </div>
+                            </div>
+                            <div class="col-lg-7">
+                              <div class="text-editor">
+                                <select name="footer_menu" class="input-field">
+                                  <option value="">Non</option>
+                                  <option value="ABOUT">ABOUT</option>
+                                  <option value="HELP">HELP</option>
+                                  <option value="CONTACT">CONTACT</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div class="row">
                           <div class="col-lg-4">
                             <div class="left-area">
                               

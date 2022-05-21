@@ -47,7 +47,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }}  {{ $langg->lang28 }} *</h4>
@@ -61,7 +61,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }}  {{ $langg->lang29 }} *</h4>
@@ -75,7 +75,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }}  {{ $langg->lang30 }} *</h4>
@@ -90,7 +90,7 @@
 												</div>
 
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }} {{ $langg->lang31 }} *</h4>
@@ -104,7 +104,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }} {{ $langg->lang32 }} *</h4>
@@ -118,7 +118,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }} {{ $langg->lang33 }} *</h4>
@@ -132,7 +132,7 @@
 									                  </div>
 												</div>
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-8">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Highlight in") }} {{ $langg->lang244 }} *</h4>
@@ -148,7 +148,7 @@
 
 												<div class="{{ $data->is_discount == 0 ? "showbox":"" }}">
 
-												<div class="row">
+												<div class="row d-none">
 													<div class="col-lg-6">
 														<div class="left-area">
 																<h4 class="heading">{{ __("Discount Date") }} *</h4>

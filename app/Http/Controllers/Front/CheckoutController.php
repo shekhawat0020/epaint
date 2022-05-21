@@ -442,7 +442,7 @@ class CheckoutController extends Controller
         $order['totalQty'] = $request->totalQty;
         $order['pay_amount'] = round($request->total / $curr->value, 2);
         $order['method'] = $request->method;
-        $order['shipping'] = $request->shipping;
+        $order['shipping'] = 'shipto'; //$request->shipping;
         $order['pickup_location'] = $request->pickup_location;
         $order['customer_email'] = $request->email;
         $order['customer_name'] = $request->name;
@@ -726,7 +726,7 @@ $validator = Validator::make($input, $rules, $messages);
         $order['totalQty'] = $request->totalQty;
         $order['pay_amount'] = round($request->total / $curr->value, 2);
         $order['method'] = $request->method;
-        $order['shipping'] = $request->shipping;
+        $order['shipping'] = 'shipto'; //$request->shipping;
         $order['pickup_location'] = $request->pickup_location;
         $order['customer_email'] = $request->email;
         $order['customer_name'] = $request->name;

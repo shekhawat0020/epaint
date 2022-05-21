@@ -248,8 +248,8 @@
 				@foreach (App\Models\Blog::orderBy('created_at', 'desc')->limit(4)->get() as $blog)
                 <div class="col-3">
                     <a href="{{ route('front.blogshow',$blog->id) }}" class="social_post">
-                        <img src="{{ asset('assets/images/blogs/'.$blog->photo) }}" alt="">
-                        <i class="fa">{{mb_strlen($blog->title,'utf-8') > 45 ? mb_substr($blog->title,0,45,'utf-8')." .." : $blog->title}}</i>
+                        <img src="{{ asset('assets/images/blogs/'.$blog->photo) }}" alt="{{mb_strlen($blog->title,'utf-8') > 45 ? mb_substr($blog->title,0,45,'utf-8')." .." : $blog->title}}">
+                        <i class="fa"></i>
                     </a>
                 </div>
 				@endforeach

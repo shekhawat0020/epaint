@@ -201,29 +201,26 @@ button.close {
                     </ul>
 				</div>
 				<div class="col-2">
-					<h3>FOOTER LINKS</h3>
+					<h3>ABOUT</h3>
                     <ul class="footer_list">
-                        <li><a href="{{ route('front.index') }}">Home</a></li>
-                        @foreach(DB::table('pages')->where('footer','=',1)->get() as $data)
-						<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
+                        @foreach(DB::table('pages')->where('footer_menu','=','ABOUT')->get() as $data)
+						<li><a href="@if($data->redirect_url != null) {{$data->redirect_url}} @else{{ route('front.page',$data->slug) }} @endif">{{ $data->title }}</a></li>
 						@endforeach
                     </ul>
 				</div>
 				<div class="col-2">
 					<h3>HELP</h3>
                     <ul class="footer_list">
-						<li><a href="{{ route('front.index') }}">Home</a></li>
-                        @foreach(DB::table('pages')->where('footer','=',1)->get() as $data)
-						<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
+                        @foreach(DB::table('pages')->where('footer_menu','=','HELP')->get() as $data)
+						<li><a href="@if($data->redirect_url != null) {{$data->redirect_url}} @else{{ route('front.page',$data->slug) }} @endif">{{ $data->title }}</a></li>
 						@endforeach
                     </ul>
 				</div>
 				<div class="col-2">
-					<h3>HELP</h3>
+					<h3>Contact</h3>
                     <ul class="footer_list">
-						<li><a href="{{ route('front.index') }}">Home</a></li>
-                        @foreach(DB::table('pages')->where('footer','=',1)->get() as $data)
-						<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
+                        @foreach(DB::table('pages')->where('footer_menu','=','Contact')->get() as $data)
+						<li><a href="@if($data->redirect_url != null) {{$data->redirect_url}} @else{{ route('front.page',$data->slug) }} @endif">{{ $data->title }}</a></li>
 						@endforeach
                     </ul>
 				</div>

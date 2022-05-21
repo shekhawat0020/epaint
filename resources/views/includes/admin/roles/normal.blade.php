@@ -42,9 +42,9 @@
             <li>
                 <a href="{{ route('admin-prod-deactive') }}"><span>{{ __('Deactivated Product') }}</span></a>
             </li>
-            <li>
+            {{--<li>
                 <a href="{{ route('admin-prod-catalog-index') }}"><span>{{ __('Product Catalogs') }}</span></a>
-            </li>
+            </li>--}}
         </ul>
     </li>
 
@@ -80,9 +80,9 @@
             <li>
                 <a href="{{ route('admin-user-index') }}"><span>{{ __('Customers List') }}</span></a>
             </li>
-            <li>
+           {{-- <li>
                 <a href="{{ route('admin-withdraw-index') }}"><span>{{ __('Withdraws') }}</span></a>
-            </li>
+            </li>--}}
             <li>
                 <a href="{{ route('admin-user-image') }}"><span>{{ __('Customer Default Image') }}</span></a>
             </li>
@@ -271,9 +271,9 @@
             <li>
                 <a href="{{ route('admin-gs-footer') }}"><span>{{ __('Footer') }}</span></a>
             </li>
-            <li>
+            {{--<li>
                 <a href="{{ route('admin-gs-affilate') }}"><span>{{__('Affiliate Information')}}</span></a>
-            </li>
+            </li>--}}
 
             <li>
                 <a href="{{ route('admin-gs-popup') }}"><span>{{ __('Popup Banner') }}</span></a>
@@ -387,8 +387,8 @@
         </a>
         <ul class="collapse list-unstyled" id="payments" data-parent="#accordion">
             <li><a href="{{route('admin-gs-payments')}}"><span>{{__('Payment Information')}}</span></a></li>  
-            <li><a href="{{route('admin-payment-index')}}"><span>{{ __('Payment Gateways') }}</span></a></li>  
-            <li><a href="{{route('admin-currency-index')}}"><span>{{ __('Currencies') }}</span></a></li>  
+{{--<li><a href="{{route('admin-payment-index')}}"><span>{{ __('Payment Gateways') }}</span></a></li> --}} 
+           {{-- <li><a href="{{route('admin-currency-index')}}"><span>{{ __('Currencies') }}</span></a></li>  --}}
         </ul>
     </li>
 

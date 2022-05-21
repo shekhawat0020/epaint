@@ -295,8 +295,8 @@
                                                             <tr>
                                 <tr>
                                     <th width="10%">{{ __('Product ID#') }}</th>
-                                    <th>{{ __('Shop Name') }}</th>
-                                    <th>{{ __('Vendor Status') }}</th>
+                                    
+                                    <th>{{ __('Order Status') }}</th>
                                     <th>{{ __('Product Title') }}</th>
                                     <th width="20%">{{ __('Details') }}</th>
                                     <th width="10%">{{ __('Total Price') }}</th>
@@ -309,21 +309,7 @@
                                         
                                             <td><input type="hidden" value="{{$key}}">{{ $product['item']['id'] }}</td>
 
-                                            <td>
-                                                @if($product['item']['user_id'] != 0)
-                                                @php
-                                                $user = App\Models\User::find($product['item']['user_id']);
-                                                @endphp
-                                                @if(isset($user))
-                                                <a target="_blank" href="{{route('admin-vendor-show',$user->id)}}">{{$user->shop_name}}</a>
-                                                @else
-                                                {{ __('Vendor Removed') }}
-                                                @endif
-                                                @else 
-                                                <a  href="javascript:;">{{ App\Models\Admin::find(1)->shop_name }}</a>
-                                                @endif
-
-                                            </td>
+                                           
                                             <td>
                                                 @if($product['item']['user_id'] != 0)
                                                 @php

@@ -44,7 +44,7 @@
                         @include('includes.admin.form-both')
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -63,7 +63,7 @@
                           </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Stripe Key') }} *
@@ -75,7 +75,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Stripe Secret') }} *
@@ -88,7 +88,7 @@
                         </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Stripe Text') }} *</h4>
@@ -105,7 +105,7 @@
 <hr>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -124,7 +124,7 @@
                           </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paypal Email') }} *
@@ -136,7 +136,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paypal Text') }} *</h4>
@@ -153,7 +153,7 @@
 
 <hr>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -171,7 +171,7 @@
                             </div>
                           </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Instamojo API Key ') }}*
@@ -183,7 +183,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Instamojo Auth Token') }} *
@@ -196,7 +196,7 @@
                         </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Instamojo Text') }} *</h4>
@@ -209,7 +209,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Instamojo Sandbox Check') }} *
@@ -229,7 +229,7 @@
 <hr>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -248,7 +248,7 @@
                           </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paystack Public Key') }} *
@@ -260,7 +260,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paystack Business Email') }} *
@@ -273,7 +273,7 @@
                         </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paystack Text') }} *</h4>
@@ -290,7 +290,7 @@
                         <hr>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -308,7 +308,7 @@
                             </div>
                           </div>
 
-                          <div class="row justify-content-center">
+                          <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                   <h4 class="heading">{{ __('Paytm Merchant') }} *
@@ -320,7 +320,7 @@
                             </div>
                           </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paytm Secret') }} *
@@ -332,7 +332,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paytm Website') }} *
@@ -344,7 +344,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paytm Industry') }} *
@@ -356,7 +356,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paytm Text') }} *</h4>
@@ -369,7 +369,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Paytm Sandbox Check') }} *
@@ -386,7 +386,7 @@
                           </div>
                         <hr>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                             <div class="col-lg-3">
                               <div class="left-area">
                                 <h4 class="heading">
@@ -405,7 +405,7 @@
                           </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Molly Key') }} *</h4>
@@ -418,7 +418,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Molly Text') }} *</h4>
@@ -565,7 +565,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Withdraw Fee') }} *
@@ -577,7 +577,7 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Withdraw Charge(%)') }} *
@@ -603,11 +603,11 @@
 
                       <hr>
 
-                        <h4 class="text-center">{{ __('Vendor') }}</h4>
+                        <h4 class="text-center  d-none">{{ __('Vendor') }}</h4>
 
                       <hr>
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center  d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Fixed Commission') }} *
@@ -622,7 +622,7 @@
                         </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center  d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Percentage Commission(%)') }} *
@@ -637,7 +637,7 @@
                         </div>
 
 
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center  d-none">
                           <div class="col-lg-3">
                             <div class="left-area">
                                 <h4 class="heading">{{ __('Shipping Information For Vendor') }} *

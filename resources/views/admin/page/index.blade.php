@@ -34,7 +34,7 @@
 														<tr>
 									                        <th width="50%">{{ __('Page Title') }}</th>
 									                        <th>{{ __('Header') }}</th>
-									                        <th>{{ __('Footer') }}</th>
+									                       
 									                        <th>{{ __('Options') }}</th>
 														</tr>
 													</thead>
@@ -124,7 +124,7 @@
                columns: [
                         { data: 'title', name: 'title' },
             			{ data: 'header', searchable: false, orderable: false },
-            			{ data: 'footer', searchable: false, orderable: false },
+            			
             			{ data: 'action', searchable: false, orderable: false }
 
                      ],
