@@ -64,7 +64,9 @@ button.close {
 .pinterest a{
 	background: #c40d11;
 }
-
+.sub-content.open, .child-content open {
+    margin-left: 16px;
+}
 
 
 </style>
