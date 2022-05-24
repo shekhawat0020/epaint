@@ -52,7 +52,7 @@
           @endif
           @if (empty($childcat) && empty($subcat) && empty($cat))
           <li>
-            <a href="{{route('front.category')}}">{{ $langg->lang36 }}</a>
+            <a href="{{route('front.category')}}">Products</a>
           </li>
           @endif
 				</ul>
@@ -62,27 +62,24 @@
 		<div class="product_wrapper collaboration_wrapper">
 			<div class="container">
 				<div class="heading">
-					
-          @if (!empty($cat))
-          <li>
-          <h3>{{ $cat->name }}</h3>
-          </li>
-          @endif
-          @if (!empty($subcat))
-          <li>
-          <h3>{{ $subcat->name }}</h3>
-          </li>
-          @endif
           @if (!empty($childcat))
           <li>
           <h3>{{ $childcat->name }}</h3>
           </li>
-          @endif
-          @if (empty($childcat) && empty($subcat) && empty($cat))
+          @elseif (!empty($subcat))
           <li>
-          <h3>{{ $langg->lang36 }}</h3>
+          <h3>{{ $subcat->name }}</h3>
           </li>
+          @elseif (!empty($cat))
+          <li>
+          <h3>{{ $cat->name }}</h3>
+          </li>
+          @else
+          <h3>Products</h3>
           @endif
+          
+        
+         
 					<div class="sortby_c">
             @include('includes.filter')
 						
