@@ -34,8 +34,27 @@
 		<div class="breadcrumb_section">
 			<div class="container">
 				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li>Collaboration</li>
+					<li><a href="{{route('front.index')}}">Home</a></li>
+          @if (!empty($cat))
+          <li>
+            <a href="{{route('front.category', $cat->slug)}}">{{ $cat->name }}</a>
+          </li>
+          @endif
+          @if (!empty($subcat))
+          <li>
+            <a href="{{route('front.category', [$cat->slug, $subcat->slug])}}">{{ $subcat->name }}</a>
+          </li>
+          @endif
+          @if (!empty($childcat))
+          <li>
+            <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{ $childcat->name }}</a>
+          </li>
+          @endif
+          @if (empty($childcat) && empty($subcat) && empty($cat))
+          <li>
+            <a href="{{route('front.category')}}">{{ $langg->lang36 }}</a>
+          </li>
+          @endif
 				</ul>
 			</div>
 		</div>
@@ -43,7 +62,27 @@
 		<div class="product_wrapper collaboration_wrapper">
 			<div class="container">
 				<div class="heading">
-					<h3>Paintings</h3>
+					
+          @if (!empty($cat))
+          <li>
+          <h3>{{ $cat->name }}</h3>
+          </li>
+          @endif
+          @if (!empty($subcat))
+          <li>
+          <h3>{{ $subcat->name }}</h3>
+          </li>
+          @endif
+          @if (!empty($childcat))
+          <li>
+          <h3>{{ $childcat->name }}</h3>
+          </li>
+          @endif
+          @if (empty($childcat) && empty($subcat) && empty($cat))
+          <li>
+          <h3>{{ $langg->lang36 }}</h3>
+          </li>
+          @endif
 					<div class="sortby_c">
             @include('includes.filter')
 						
