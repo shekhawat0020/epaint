@@ -62,24 +62,21 @@
 		<div class="product_wrapper collaboration_wrapper">
 			<div class="container">
 				<div class="heading">
-          @if (!empty($childcat))
-          <li>
+        @if (!empty($childcat))
+      
           <h3>{{ $childcat->name }}</h3>
-          </li>
+      
           @elseif (!empty($subcat))
-          <li>
+        
           <h3>{{ $subcat->name }}</h3>
-          </li>
+        
           @elseif (!empty($cat))
-          <li>
+        
           <h3>{{ $cat->name }}</h3>
-          </li>
+    
           @else
           <h3>Products</h3>
-          @endif
-          
-        
-         
+      @endif
 					<div class="sortby_c">
             @include('includes.filter')
 						
