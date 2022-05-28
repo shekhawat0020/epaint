@@ -73,7 +73,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                              <textarea  class="nic-edit-p" name="details" placeholder="{{ __('Description') }}">{{ Request::old('details') }}</textarea> 
+                              <textarea  class="ckeditor" name="details" placeholder="{{ __('Description') }}">{{ Request::old('details') }}</textarea> 
                               <div class="checkbox-wrapper">
                                 <input type="checkbox" name="secheck" class="checkclick" id="allowProductSEO">
                                 <label for="allowProductSEO">{{ __('Allow Page SEO') }}</label>
@@ -174,6 +174,7 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset('assets/admin/ckeditor/ckeditor.js')}}"></script>
 <script type="text/javascript">
 
 {{-- TAGIT --}}

@@ -74,7 +74,7 @@
                             </div>
                           </div>
                           <div class="col-lg-7">
-                              <textarea class="nic-edit-p" name="details" placeholder="{{ __('Description') }}">{{ $data->details }}</textarea> 
+                              <textarea class="ckeditor" name="details" placeholder="{{ __('Description') }}">{{ $data->details }}</textarea> 
                                 <div class="checkbox-wrapper">
                                   <input type="checkbox" name="secheck" class="checkclick" id="allowProductSEO" {{ ($data->meta_tag != null || strip_tags($data->meta_description) != null) ? 'checked':'' }}>
                                   <label for="allowProductSEO">{{ __('Allow Page SEO') }}</label>
@@ -174,8 +174,10 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
 
+<script src="{{asset('assets/admin/ckeditor/ckeditor.js')}}"></script>
+<script type="text/javascript">
+  
 {{-- TAGIT --}}
 
           $("#metatags").tagit({
