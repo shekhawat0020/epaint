@@ -8,6 +8,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	config.extraPlugins = 'imageuploader';
-	config.UploadUrl = 'http://localhost/epaint/public/assets/admin/ckeditor/plugins/imageuploader/imgupload.php';
-	config.filebrowserImageBrowseUrl = 'http://localhost/epaint/public/assets/admin/ckeditor/plugins/imageuploader/imgbrowser.php';
+	config.UploadUrl = http://printstoryjaipur.com/assets/admin/ckeditor/plugins/imageuploader/imgupload.php';
+	config.filebrowserImageBrowseUrl = 'http://printstoryjaipur.com/assets/admin/ckeditor/plugins/imageuploader/imgbrowser.php';
 };
