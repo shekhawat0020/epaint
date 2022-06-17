@@ -142,6 +142,7 @@ class RazorpayController extends Controller
                     $order['order_number'] = $item_number;
                     $order['shipping'] = 'shipto'; //$request->shipping;
                     $order['pickup_location'] = $request->pickup_location;
+                    $order['gift_wrapped_message'] = $request->gift_wrapped_message;
                     $order['customer_address'] = $request->address;
                     $order['customer_country'] = $request->customer_country;
                     $order['customer_state'] = $request->customer_state;

@@ -885,14 +885,14 @@
 												{{-- Packeging Area Start --}}
 												<div class="packeging-area">
 														<h4 class="title">{{ $langg->lang766 }}	
-														<p style="font-size:8px">do you want to get this gift-wrapped?</p>														
+														<p style="font-size:10px">do you want to get this gift-wrapped?</p>														
 														</h4>
 														
 
 													@foreach($package_data as $key => $data)	
 
-														<div class="radio-design @if($key == 0) d-none @endif" >
-																<input data-giftmsg="@if($key == 0) 0 @else 1 @endif" type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+														<div class="radio-design @if($key == 0) d-none1 @endif" >
+																<input data-giftmsg=@if($key == 0) "0" @else "1" @endif type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
 																<span class="checkmark"></span>
 																<label for="free-package{{ $data->id }}"> 
 																		{{ $data->title }}
@@ -905,8 +905,8 @@
 
 													@endforeach	
 
-													<div class="form-group d-none">
-														<textarea name="gift-wrapped-message" class="form-control"></textarea>
+													<div class="form-group">
+														<textarea name="gift_wrapped_message" id="gift-wrapped-message" class="form-control" style="display:none"></textarea>
 													</div>
 
 												</div>
@@ -981,7 +981,7 @@
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			<div class="modal-body">
 				<ul class="coupon_list">
-					@if($coupans->count())
+				@if(isset($coupans))
 						@foreach($coupans as $coupan)
 						<li>
 							<span class="coupon_name">{{$coupan->code}}</span>
@@ -1419,6 +1419,21 @@ $(document).on('click', '.deliver_this', function(){
 	$('#u_country').val($(this).data('country'));
 	$('#u_zip').val($(this).data('zip'));
 	$('#u_address').val($(this).data('address'));
+});
+
+$('.packing').click(function(){
+	
+	if ($(this).is(":checked")){
+	
+		if($(this).data('giftmsg') == 1){
+			
+			$('#gift-wrapped-message').val('');
+			$('#gift-wrapped-message').show();
+		}else{
+			$('#gift-wrapped-message').val('');
+			$('#gift-wrapped-message').hide();
+		}
+	}
 });
 
 </script>

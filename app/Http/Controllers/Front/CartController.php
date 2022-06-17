@@ -49,12 +49,13 @@ class CartController extends Controller
         }
 
         $coupans = Coupon::get();
-       
+      
         return view('front.cart', compact('coupans', 'products','totalPrice','mainTotal','tx')); 
     }
 
     public function cartview()
     {
+       
         return view('load.cart'); 
     }
 
@@ -96,6 +97,7 @@ class CartController extends Controller
             }
                 if($lcheck == 0)
                 {
+
                     return redirect()->route('front.cart')->with('unsuccess',$lang->out_stock);              
                 }
         }

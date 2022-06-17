@@ -152,7 +152,7 @@
 			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			<div class="modal-body">
 				<ul class="coupon_list">
-					@if($coupans->count())
+					@if(isset($coupans))
 						@foreach($coupans as $coupan)
 						<li>
 							<span class="coupon_name">{{$coupan->code}}</span>

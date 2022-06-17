@@ -452,6 +452,7 @@ class CheckoutController extends Controller
         $order['customer_name'] = $request->name;
         $order['shipping_cost'] = $request->shipping_cost;
         $order['packing_cost'] = $request->packing_cost;
+        $order['gift_wrapped_message'] = $request->gift_wrapped_message;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
         $order['order_number'] = Str::random(10);
