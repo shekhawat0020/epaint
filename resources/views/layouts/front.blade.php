@@ -421,6 +421,8 @@ button.close {
 	</div>
 </div>
 
+
+
 @if($gs->is_popup== 1)
 @if(isset($visited))
 <div class="modal fade lp_modal" id="home_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

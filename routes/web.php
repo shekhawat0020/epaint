@@ -1336,6 +1336,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::get('/upcolor','Front\CartController@upcolor');
   Route::get('/removecart/{id}','Front\CartController@removecart')->name('product.cart.remove');
   Route::get('/carts/coupon','Front\CartController@coupon');
+  Route::get('/carts/coupon/remove','Front\CartController@removeCoupon')->name('remove-coupon');
   Route::get('/carts/coupon/check','Front\CartController@couponcheck');
   // CART SECTION ENDS
 

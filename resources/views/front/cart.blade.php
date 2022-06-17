@@ -108,32 +108,23 @@
                        		<div class="price_detail order-box">
                        			<ul class="price_list2 order-list">
                        				<li>Total MRP <span class="cart-total"> {{ Session::has('cart') ? App\Models\Product::convertPrice($totalPrice) : '0.00' }}</span></li>
-                                   <li>Tax <span>{{$tx}}%</span></li>
-                                    <li>Coupon <span class="discount">{{ App\Models\Product::convertPrice(0)}}</span><input type="hidden" id="d-val" value="{{ App\Models\Product::convertPrice(0)}}"></li>
+                                   <li>GST <span>{{$tx}}%</span></li>
+                                    <li>Coupon<a href="#coupon" data-bs-toggle="modal" class="edit">edit</a> <span class="discount">{{ App\Models\Product::convertPrice(0)}}</span><input type="hidden" id="d-val" value="{{ App\Models\Product::convertPrice(0)}}"></li>
                                     <li class="total-price">Total <span class="main-total"> {{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}</span></li>
                        			</ul>
                        			<div class="coupon_detail cupon-box">
-                       				<a href="javascript::void(0)" class="cc_link" id="coupon-link">Have a coupon code?</a>
-                       				<div class="form-group">
-									   <form id="coupon-form" class="coupon" style="display:none">
-                       					<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" required="" autocomplete="off">
-										<input type="hidden" class="coupon-total" id="grandtotal" value="{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}">
-                       					<button type="submit" class="btn">Apply Now</button>
-									 </form>
-                       				</div>
+                       				
                        				<div class="after_apply" style="display:none">
-                       					<h5>(FA10)</h5>
-                       					<h6>Coupon code applied successfully <a href="#">Remove</a></h6>
+                       					<h5 id="applied_coupan"></h5>
+                       					<h6>Coupon code applied successfully <a href="javasctip::void(0)" class="remove-coupon">Remove</a></h6>
                        				</div>
                        			</div>
                        		</div>
                         	<div class="all_price">
                             	<label> You pay</label>
-                                <div>
+                                <div class="main-total">
 								{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}
-									<!--<span>
-										MRP: <i class="fa fa-rupee"></i> <span class="text-linethrough">999.00</span> | You save <i class="fa fa-rupee"></i> 466.00
-									</span>-->
+									
 								</div>
                             </div>
                         	<ul class="btns">
@@ -154,4 +145,57 @@
 		</div>
 	</section>
 
+
+	<div class="modal fade login_modal" id="coupon" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<ul class="coupon_list">
+					@if($coupans->count())
+						@foreach($coupans as $coupan)
+						<li>
+							<span class="coupon_name">{{$coupan->code}}</span>
+							<button data-code="{{$coupan->code}}" type="button" class="btn applycoupan">Apply</button>
+							
+						</li>
+						@endforeach
+					@else
+					<h3>No Coupans Found</h3>
+					@endif
+				</ul>
+				<form id="coupon-form" class="coupon" style="display:none">
+					<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" required="" autocomplete="off">
+					<input type="hidden" class="coupon-total" id="grandtotal" value="{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}">
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>	
+
+@endsection 
+
+@section('scripts')
+
+<script type="text/javascript">
+$('.applycoupan').click(function(){
+	code = $(this).data('code');
+	$('#code').val(code);
+	$('#coupon-form').submit();
+
+});
+
+$('.remove-coupon').click(function(){
+	$.ajax({url: "{{route('remove-coupon')}}", success: function(result){
+    	if(result.status){
+			$('.main-total').text(result.mainTotal);
+			$('.after_apply').hide();
+			$('#applied_coupan').text('');
+			$('.discount').text(result.discount);
+		}
+  }});
+});
+
+</script>
 @endsection 

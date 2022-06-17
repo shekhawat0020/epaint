@@ -48,7 +48,9 @@ class CartController extends Controller
             $mainTotal = $totalPrice + $tax;
         }
 
-        return view('front.cart', compact('products','totalPrice','mainTotal','tx')); 
+        $coupans = Coupon::get();
+       
+        return view('front.cart', compact('coupans', 'products','totalPrice','mainTotal','tx')); 
     }
 
     public function cartview()
@@ -1053,6 +1055,49 @@ class CartController extends Controller
         }
         }         
     } 
+
+    public function removeCoupon(){
+        if (Session::has('already')) {
+            Session::forget('already');
+        }
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+        if (Session::has('coupon_total')) {
+            Session::forget('coupon_total');
+        }
+        if (Session::has('coupon_total1')) {
+            Session::forget('coupon_total1');
+        }
+        if (Session::has('coupon_percentage')) {
+            Session::forget('coupon_percentage');
+        }
+        $gs = Generalsetting::findOrFail(1);
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $products = $cart->items;
+        $totalPrice = $cart->totalPrice;
+        $mainTotal = $totalPrice;
+        $tx = $gs->tax;
+        if($tx != 0)
+        {
+            $tax = ($totalPrice / 100) * $tx;
+            $mainTotal = $totalPrice + $tax;
+        }
+        $curr = "";
+        if (Session::has('currency')) {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else{
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+
+        return response()->json(array(
+            'mainTotal' => $curr->sign.''.$mainTotal,
+            'discount' => $curr->sign.'0.00',
+            'status' => true
+        )); 
+    }
 
     // Capcha Code Image
     private function  code_image()

@@ -1564,6 +1564,9 @@ prices = $(".product-attr:checked").map(function() {
                             $(".discount").html(data[4]);
                             toastr.success(langg.coupon_found);
                             $("#code").val("");
+                            $('.after_apply').show();
+                            $('#applied_coupan').text(data[1]);
+                            
                         }
                       }
               });
