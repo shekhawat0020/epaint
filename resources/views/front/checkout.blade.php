@@ -809,7 +809,7 @@
 												<ul class="price_list2">
 													<li>Total MRP <span>{{ Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</span></li>
 													@if($gs->tax != 0)
-													<li>TAX <span>{{$gs->tax}}% </span></li>
+													<li>GST <span>{{$gs->tax}}% </span></li>
 													@endif
 													@if(Session::has('coupon'))
 													<li class="discount-bar">Coupon 
@@ -822,8 +822,8 @@
 														@endif
 													</li>
 													@else
-													<li class="discount-bar d-none">Coupon
-														<span id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</span>
+													<li class="discount-bar">Coupon <a href="#coupon" data-bs-toggle="modal" class="edit">edit</a>
+														<span id="discount">{{ $curr->sign }}{{ Session::get('coupon') }} 0.00</span>
 													</li>
 													@endif
 													<li  class="total-price">Total 
@@ -842,16 +842,18 @@
 													
 													</li>
 												</ul>
-												<div class="coupon_detail">
-												<a href="javascript::void(0)" class="cc_link" id="coupon-link">Have a coupon code?</a>
-														<div class="form-group coupon" id="check-coupon-form" style="display:none">
-															<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" >
-															<button type="button" id="applycoupon" class="btn">Apply Now</button>
-														</div>
-													<div class="after_apply" style="display:none">
-														<h5>(FA10)</h5>
-														<h6>Coupon code applied successfully <a href="#">Remove</a></h6>
+												<div class="coupon_detail">	
+												@if(Session::has('coupon'))
+													<div class="after_apply">
+														<h5 id="applied_coupan">{{Session::get('already')}}</h5>
+															<h6>Coupon code applied successfully <a href="javasctip::void(0)" class="remove-coupon">Remove</a></h6>
 													</div>
+												@else
+													<div class="after_apply" style="display:none">
+													<h5 id="applied_coupan"></h5>
+														<h6>Coupon code applied successfully <a href="javasctip::void(0)" class="remove-coupon">Remove</a></h6>
+													</div>
+												@endif
 												</div>
 											</div>
 
@@ -882,12 +884,15 @@
 
 												{{-- Packeging Area Start --}}
 												<div class="packeging-area">
-														<h4 class="title">{{ $langg->lang766 }}</h4>
+														<h4 class="title">{{ $langg->lang766 }}	
+														<p style="font-size:8px">do you want to get this gift-wrapped?</p>														
+														</h4>
+														
 
-													@foreach($package_data as $data)	
+													@foreach($package_data as $key => $data)	
 
-														<div class="radio-design">
-																<input type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+														<div class="radio-design @if($key == 0) d-none @endif" >
+																<input data-giftmsg="@if($key == 0) 0 @else 1 @endif" type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
 																<span class="checkmark"></span>
 																<label for="free-package{{ $data->id }}"> 
 																		{{ $data->title }}
@@ -899,6 +904,10 @@
 														</div>
 
 													@endforeach	
+
+													<div class="form-group d-none">
+														<textarea name="gift-wrapped-message" class="form-control"></textarea>
+													</div>
 
 												</div>
 												{{-- Packeging Area End Start--}}
@@ -966,7 +975,32 @@
 		</div>
 	</section>
 
-
+	<div class="modal fade login_modal" id="coupon" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			<div class="modal-body">
+				<ul class="coupon_list">
+					@if($coupans->count())
+						@foreach($coupans as $coupan)
+						<li>
+							<span class="coupon_name">{{$coupan->code}}</span>
+							<button data-code="{{$coupan->code}}" type="button" class="btn applycoupan">Apply</button>
+							
+						</li>
+						@endforeach
+					@else
+					<h3>No Coupans Found</h3>
+					@endif
+				</ul>
+				<div class="form-group coupon" id="check-coupon-form" style="display:none">
+					<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" required="" autocomplete="off">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>	
 	
 
 @endsection
@@ -1088,7 +1122,9 @@ $('#grandtotal').val(ttotal);
 		
 })
 
-$('#applycoupon').click(function(){
+$('.applycoupan').click(function(){
+	code = $(this).data('code');
+	$('#code').val(code);
 	if($('#code').val() != ""){
         var val = $("#code").val();
         var total = $("#ttotal").val();
@@ -1125,6 +1161,8 @@ $('#applycoupon').click(function(){
 								$('#tgrandtotal').val(data[0]);
 								$('#coupon_code').val(data[1]);
 								$('#coupon_discount').val(data[2]);
+								$('.after_apply').show();
+                            	$('#applied_coupan').text(data[1]);
 								if(data[4] != 0){
 								$('.dpercent').html('('+data[4]+')');
 								}
@@ -1135,27 +1173,60 @@ $('#applycoupon').click(function(){
 
 var ttotal = parseFloat($('#grandtotal').val()) + parseFloat(mship) + parseFloat(mpack);
 ttotal = parseFloat(ttotal);
-      if(ttotal % 1 != 0)
-      {
-        ttotal = ttotal.toFixed(2);
-      }
-
-		if(pos == 0){
-			$('#final-cost').html('{{ $curr->sign }}'+ttotal)
+		if(ttotal % 1 != 0)
+		{
+			ttotal = ttotal.toFixed(2);
 		}
+
+			if(pos == 0){
+				$('#final-cost').html('{{ $curr->sign }}'+ttotal)
+			}
 		else{
 			$('#final-cost').html(ttotal+'{{ $curr->sign }}')
 		}	
 
-                        	toastr.success(langg.coupon_found);
-                            $("#code").val("");
-                        }
-                      }
+			toastr.success(langg.coupon_found);
+			$("#code").val("");
+		}
+		}
               }); 
 	}else{
 alert("Please enter a code");
 }
     });
+
+	$('.remove-coupon').click(function(){
+		$.ajax({url: "{{route('remove-coupon')}}", success: function(result){
+			if(result.status){
+				
+				$('.after_apply').hide();
+				$('#applied_coupan').text('');
+				$('#discount').text('0.00');
+				$('#total-cost').html(result.mainTotal);
+				$('#grandtotal').val(result.mainTotalAmount);
+				$('#tgrandtotal').val(result.mainTotalAmount);
+				$('#coupon_code').val('');
+				$('#coupon_discount').val(0);
+
+				var ttotal = parseFloat($('#grandtotal').val()) + parseFloat(mship) + parseFloat(mpack);
+				ttotal = parseFloat(ttotal);
+						if(ttotal % 1 != 0)
+						{
+							ttotal = ttotal.toFixed(2);
+						}
+
+							if(pos == 0){
+								$('#final-cost').html('{{ $curr->sign }}'+ttotal)
+							}
+						else{
+							$('#final-cost').html(ttotal+'{{ $curr->sign }}')
+						}	
+
+							toastr.success("Coupon removed");
+							$("#code").val("");
+				}
+		}});
+	});
 
 // Password Checking
 

@@ -1057,15 +1057,17 @@ $('#category_select').on('change',function(){
     var prices = "";
 
     // Product Details Product Size Active Js Code
-    $(document).on('click', '.product-size .siz-list .box', function () {
+    $(document).on('click', '.product-size .siz-list li button', function () {
         $('.qttotal').val('1');
+       
         var parent = $(this).parent();
-         size_qty = $(this).find('.size_qty').val();
-         size_price = $(this).find('.size_price').val();
-         size_key = $(this).find('.size_key').val();
-         sizes = $(this).find('.size').val();
-                $('.product-size .siz-list li').removeClass('active');
-                parent.addClass('active');
+         size_qty = $(parent).find('.size_qty').val();
+         
+         size_price = $(parent).find('.size_price').val();
+         size_key = $(parent).find('.size_key').val();
+         sizes = $(parent).find('.size').val();
+               // $('.product-size .siz-list li').removeClass('active');
+              //  parent.addClass('active');
          total = getAmount()+parseFloat(size_price);
          total = total.toFixed(2);
          stock = size_qty;

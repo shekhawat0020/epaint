@@ -141,7 +141,7 @@
 						  @endif
               @endif
 
-							<p class="price">Price: {{ $attrPrice != 0 ?  $gs->currency_format == 0 ? $curr->sign.$withSelectedAtrributePrice : $withSelectedAtrributePrice.$curr->sign :$productt->showPrice() }}</span>
+							<p class="price">Price: <span id="sizeprice">{{ $attrPrice != 0 ?  $gs->currency_format == 0 ? $curr->sign.$withSelectedAtrributePrice : $withSelectedAtrributePrice.$curr->sign :$productt->showPrice() }}</span>
                       <small><del>{{ $productt->showPreviousPrice() }}</del></small></p>
 							<h4>Overview</h4>
 							<div class="copy_block">

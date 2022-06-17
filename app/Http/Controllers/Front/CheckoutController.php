@@ -47,6 +47,7 @@ class CheckoutController extends Controller
 
     public function checkout()
     {
+        
         //$this->code_image();
         if (!Session::has('cart')) {
             return redirect()->route('front.cart')->with('success',"You don't have any product to checkout.");
@@ -63,7 +64,7 @@ class CheckoutController extends Controller
             {
                 $curr = Currency::where('is_default','=',1)->first();
             }
-
+            $coupans = Coupon::get();
 // If a user is Authenticated then there is no problm user can go for checkout
 
         if(Auth::guard('web')->check())
@@ -160,7 +161,8 @@ class CheckoutController extends Controller
                 $total = $total + round(0 * $curr->value, 2); 
                 }
                 $address=Address::get();
-        return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id, 'address_list' => $address]);             
+                $coupans = Coupon::get();
+        return view('front.checkout', ['coupans' => $coupans, 'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id, 'address_list' => $address]);             
         }
 
         else
@@ -267,11 +269,11 @@ class CheckoutController extends Controller
                         if(!Auth::guard('web')->check())
                         {
                 $ck = 1;
-        return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);  
+        return view('front.checkout', ['coupans' => $coupans, 'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);  
                         }
                     }
                 }
-        return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
+        return view('front.checkout', ['coupans' => $coupans, 'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
                }
 
 // If guest checkout is Deactivated then display pop up form with proper error message
@@ -359,8 +361,10 @@ class CheckoutController extends Controller
                 $total = $total + round(0 * $curr->value, 2); 
                 }
                 $ck = 1;
-        return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
-                    }
+               
+                 return view('front.checkout', ['coupans' => $coupans, 'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
+                    
+            }
         }
 
     }

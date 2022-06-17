@@ -1091,9 +1091,10 @@ class CartController extends Controller
         else{
             $curr = Currency::where('is_default','=',1)->first();
         }
-
+        
         return response()->json(array(
             'mainTotal' => $curr->sign.''.$mainTotal,
+            'mainTotalAmount' => $mainTotal,
             'discount' => $curr->sign.'0.00',
             'status' => true
         )); 
