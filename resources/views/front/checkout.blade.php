@@ -257,13 +257,15 @@
 													</select>
 												</div>
 												<div class="form-group col-lg-6">
-													<input type="text" class="form-control" id="u_state" name="customer_state" required="" placeholder="State" value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->state : '' }}">
-														
+												
+													<select class="form-control" id="u_state" name="customer_state" required="">
+													<option value="">Select State</option>
+													</select>	
 												</div>
 												<div class="form-group col-lg-6">
-													<input class="form-control" type="text" id="u_city" name="city"
-														placeholder="{{ $langg->lang158 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->city : '' }}">
+													<select class="form-control" id="u_city" name="city" required="">
+														<option value="">Select City</option>
+													</select>
 												</div>
 												<div class="form-group col-lg-6">
 													<input class="form-control" type="text" id="u_zip" name="zip"
@@ -302,19 +304,21 @@
 												</div>
 
 												<div class="form-group col-lg-6">
-													<select class="form-control ship_input" name="shipping_country">
+													<select class="form-control ship_input" name="shipping_country" id="shipping_country">
 														@include('includes.countries')
 													</select>
 												</div>
 											</div>
 											<div class="row">
 												<div class="form-group col-lg-6">
-													<input type="text" class="form-control" name="shipping_state" id="shipping_state" placeholder="State">
-														
+													<select class="form-control" id="shipping_state" name="shipping_state" required="">
+													<option value="">Select State</option>
+													</select>
 												</div>
 												<div class="form-group col-lg-6">
-													<input class="form-control ship_input" type="text" name="shipping_city"
-														id="shipping_city" placeholder="{{ $langg->lang158 }}">
+														<select class="form-control ship_input" id="shipping_city" name="shipping_city" required="">
+														<option value="">Select City</option>
+														</select>
 												</div>
 												
 
@@ -1434,6 +1438,42 @@ $('.packing').click(function(){
 			$('#gift-wrapped-message').hide();
 		}
 	}
+});
+
+$('#u_country').change(function(){
+	country_id = $(this).find(':selected').data('id');
+	
+	$("#u_state").html('<option>Loading....</option>');
+	$('#u_city').html('<option>Loading....</option>');
+	$.ajax({url: "{{route('get-state','')}}/"+country_id, success: function(result){
+		$("#u_state").html(result);
+	}});
+});
+
+$('#u_state').change(function(){
+	state_id = $(this).find(':selected').data('id');
+	$('#u_city').html('<option>Loading....</option>');
+	$.ajax({url: "{{route('get-city', '')}}/"+state_id, success: function(result){
+		$("#u_city").html(result);
+	}});
+});
+
+$('#shipping_country').change(function(){
+	country_id = $(this).find(':selected').data('id');
+	
+	$("#shipping_state").html('<option>Loading....</option>');
+	$('#shipping_city').html('<option>Loading....</option>');
+	$.ajax({url: "{{route('get-state','')}}/"+country_id, success: function(result){
+		$("#shipping_state").html(result);
+	}});
+});
+
+$('#shipping_state').change(function(){
+	state_id = $(this).find(':selected').data('id');
+	$('#shipping_city').html('<option>Loading....</option>');
+	$.ajax({url: "{{route('get-city', '')}}/"+state_id, success: function(result){
+		$("#shipping_city").html(result);
+	}});
 });
 
 </script>

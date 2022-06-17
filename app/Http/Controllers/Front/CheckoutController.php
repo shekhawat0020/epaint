@@ -958,4 +958,39 @@ $validator = Validator::make($input, $rules, $messages);
         imagepng($image, $actual_path."assets/images/capcha_code.png");
     }
 
+
+    public function getState($country_id){
+
+        $html = '<option value="">Select State</option>';
+        if(Auth::check()){
+            foreach (DB::table('states')->where('country_id', $country_id)->get() as $data){
+                $html .= '<option data-id="'.$data->id.'" value="'.$data->name.'"'.(Auth::user()->state == $data->name) ? "selected" : "".'>'.$data->country_name.'</option>';	
+            }
+        } else{
+            foreach (DB::table('states')->where('country_id', $country_id)->get() as $data){
+                $html .= '<option data-id="'.$data->id.'"  value="'.$data->name.'">'.$data->name .'</option>';
+            }
+        }
+
+        return $html;
+
+    }
+
+    public function getCity($state_id){
+
+        $html = '<option value="">Select City</option>';
+        if(Auth::check()){
+            foreach (DB::table('cities')->where('state_id', $state_id)->get() as $data){
+                $html .= '<option data-id="'.$data->id.'" value="'.$data->name.'"'.(Auth::user()->city == $data->name) ? "selected" : "".'>'.$data->country_name.'</option>';	
+            }
+        } else{
+            foreach (DB::table('cities')->where('state_id', $state_id)->get() as $data){
+                $html .= '<option data-id="'.$data->id.'"  value="'.$data->name.'">'.$data->name .'</option>';
+            }
+        }
+
+        return $html;
+
+    }
+
 }

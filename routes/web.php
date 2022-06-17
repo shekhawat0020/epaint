@@ -1342,6 +1342,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   // CHECKOUT SECTION
   Route::get('/checkout/','Front\CheckoutController@checkout')->name('front.checkout');
+  Route::get('/checkout/getstate/{county_id}','Front\CheckoutController@getState')->name('get-state');
+  Route::get('/checkout/getcity/{state_id}','Front\CheckoutController@getCity')->name('get-city');
   Route::get('/checkout/payment/{slug1}/{slug2}','Front\CheckoutController@loadpayment')->name('front.load.payment');
   Route::get('/order/track/{id}','Front\FrontendController@trackload')->name('front.track.search');
   Route::get('/checkout/payment/return', 'Front\PaymentController@payreturn')->name('payment.return');
