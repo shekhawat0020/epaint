@@ -314,7 +314,7 @@
         <ul class="collapse list-unstyled" id="payments" data-parent="#accordion">
             <li><a href="{{route('admin-gs-payments')}}"><span>{{__('Payment Information')}}</span></a></li>
             {{--<li><a href="{{route('admin-payment-index')}}"><span>{{ __('Payment Gateways') }}</span></a></li>--}}
-            {{--<li><a href="{{route('admin-currency-index')}}"><span>{{ __('Currencies') }}</span></a></li>--}}
+            <li><a href="{{route('admin-currency-index')}}"><span>{{ __('Currencies') }}</span></a></li>
         </ul>
     </li>
     <li>

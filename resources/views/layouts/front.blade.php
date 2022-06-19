@@ -194,6 +194,18 @@ button.close {
 						<span>+91 9087 654 321</span>
 						<a href="#request_modal" data-bs-toggle="modal" class="link">Request a call</a>
 					</li>
+					@if($gs->is_currency == 1)
+									<li>
+										<div class="currency-selector">
+								<span>{{ Session::has('currency') ?   DB::table('currencies')->where('id','=',Session::get('currency'))->first()->sign   : DB::table('currencies')->where('is_default','=',1)->first()->sign }}</span>
+										<select name="currency" class="currency selectors nice">
+										@foreach(DB::table('currencies')->get() as $currency)
+											<option value="{{route('front.currency',$currency->id)}}" {{ Session::has('currency') ? ( Session::get('currency') == $currency->id ? 'selected' : '' ) : ( $currency->is_default == 1 ? 'selected' : '') }} >{{$currency->name}}</option>
+										@endforeach
+										</select>
+										</div>
+									</li>
+									@endif
 				</ul>
 			</div>
 		</div>
