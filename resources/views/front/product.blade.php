@@ -1,5 +1,7 @@
 @extends('layouts.front')
 @section('styles')
+<link rel="stylesheet" type="text/css" href="{{asset('assets/front/css/magiczoomplus.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('assets/front/css/slick.css')}}">
 <style>
  .color-list li .box {
     width: 30px;
@@ -104,30 +106,52 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-6">
+            {{-- <div id="product__slider">
+							<div class="product__slider-thmb">
+                @foreach($productt->galleries as $gal)
+								<div class="slide">
+                  <span>
+                    <img src="{{asset('assets/images/galleries/'.$gal->photo)}}" alt="{{asset('assets/images/galleries/'.$gal->photo)}}" class="img-responsive">
+                  </span>
+                </div>
+                @endforeach
+							</div>
+							<div class="product__slider-main">
+							  @foreach($productt->galleries as $gal)
+								<div class="slide">
+                  <span>
+                    <img src="{{asset('assets/images/galleries/'.$gal->photo)}}" alt="{{asset('assets/images/galleries/'.$gal->photo)}}" class="img-responsive">
+                  </span>
+                </div>
+                @endforeach
+							</div>
+							
+						</div> --}}
 						<div class="product_zoom">
-							<div class="app-figure" id="zoom-fig">
-        						<a id="Zoom-1" class="MagicZoom" title="" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
-            						<img style="width: 100%;" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" alt=""/>
-        						</a>
-        						<div class="selectors">
-									<ul>
-										<li>
-											<a data-zoom-id="Zoom-1" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" data-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
-												<img width="80" srcset="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" alt="">
-											</a>
-										</li>
-                    @foreach($productt->galleries as $gal)
-										<li>
-											<a data-zoom-id="Zoom-1" href="{{asset('assets/images/galleries/'.$gal->photo)}}" data-image="{{asset('assets/images/galleries/'.$gal->photo)}}">
-												<img width="80" srcset="{{asset('assets/images/galleries/'.$gal->photo)}}" src="{{asset('assets/images/galleries/'.$gal->photo)}}" alt="">
-											</a>
-										</li>
-                    @endforeach
-									
-									</ul>
-           						</div>
+							<div class="app-figure slick-slider" id="zoom-fig">
+                  <a id="Zoom-1" class="MagicZoom" title="" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
+                      <img style="width: 100%;" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" alt=""/>
+                  </a>
+                  <div class="selectors slick-list">
+                    <ul>
+                      <li>
+                        <a data-zoom-id="Zoom-1" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" data-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
+                          <img width="80" srcset="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" alt="">
+                        </a>
+                      </li>
+                      @foreach($productt->galleries as $gal)
+                      <li>
+                        <a data-zoom-id="Zoom-1" href="{{asset('assets/images/galleries/'.$gal->photo)}}" data-image="{{asset('assets/images/galleries/'.$gal->photo)}}">
+                          <img width="80" srcset="{{asset('assets/images/galleries/'.$gal->photo)}}" src="{{asset('assets/images/galleries/'.$gal->photo)}}" alt="">
+                        </a>
+                      </li>
+                      @endforeach
+                    
+                    </ul>
+                  </div>
     						</div>
 						</div>
+           
 					</div>
 					<div class="col-6">
 						<div class="product_details">
@@ -511,6 +535,8 @@
 
 
 @section('scripts')
+<script type="text/javascript" src="{{asset('assets/front/js/magiczoomplus.js')}}"></script>	
+<script type="text/javascript" src="{{asset('assets/front/js/slick.min.js')}}"></script>	
 
 <script type="text/javascript">
 
@@ -588,6 +614,96 @@
     });
     return false;
   });
+
+  $('.product__slider-main').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    infinite: false,
+    asNavFor: '.product__slider-thmb'
+  });
+  $('.product__slider-thmb').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    asNavFor: '.product__slider-main',
+    vertical: true,
+    arrows: true,
+    infinite: false,
+    verticalSwiping: true,
+    focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 6,
+        slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 6,
+        slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+      verticalSwiping: false,
+        focusOnSelect: false,
+        vertical: false,
+        }
+      },
+    {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+      verticalSwiping: false,
+        focusOnSelect: false,
+        vertical: false,
+        }
+      },
+    {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+      verticalSwiping: false,
+        focusOnSelect: false,
+        vertical: false,
+        }
+      }
+    ]
+  });
+
+  var mzOptions = {};
+  mzOptions = {
+      onZoomReady: function () {
+
+          console.log('onReady', arguments[0]);
+      },
+      onUpdate: function () {
+          console.log('onUpdated', arguments[0], arguments[1], arguments[2]);
+      },
+      onZoomIn: function () {
+          $("#Zoom-1 figure").find('div[id^="crMz"]').html('');
+          $("#Zoom-1 figure").find('span[id^="crMz"]').html('');
+          console.log('onZoomIn', arguments[0]);
+      },
+      onZoomOut: function () {
+          console.log('onZoomOut', arguments[0]);
+      },
+      onExpandOpen: function () {
+          console.log('onExpandOpen', arguments[0]);
+      },
+      onExpandClose: function () {
+          console.log('onExpandClosed', arguments[0]);
+      }
+  };
 
 </script>
 

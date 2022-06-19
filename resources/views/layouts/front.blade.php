@@ -110,7 +110,20 @@ button.close {
 					<a href="{{ route('front.category',$category->slug) }}" class="dropdown-toggle" data-bs-toggle="dropdown">{{ $category->name }}</a>
 					<ul class="dropdown-menu">
 					@foreach($category->subs()->whereStatus(1)->get() as $subcat)
-					<li><a class="dropdown-item" href="{{ route('front.subcat',['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">{{ $subcat->name }}</a></li>
+					<li>
+						<a class="dropdown-item" href="{{ route('front.subcat',['slug1' => $category->slug, 'slug2' => $subcat->slug]) }}">{{ $subcat->name }}</a>
+						@if(count($subcat->childs) > 0)
+						<span class="menuOPen-btn"></span>
+						<ul class="submenu-megamenu">
+							@foreach($subcat->childs()->whereStatus(1)->get() as $childcat)
+							<li>
+								<a href="{{ route('front.childcat',['slug1' => $category->slug, 'slug2' => $subcat->slug, 'slug3' => $childcat->slug]) }}">{{$childcat->name}}</a>
+							</li>
+							@endforeach
+						</ul>
+						@endif
+
+					</li>
 					@endforeach
 					</ul>
 				@else
