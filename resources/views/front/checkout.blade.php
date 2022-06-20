@@ -425,7 +425,7 @@
 							<div class="inner">
 								<h3>Order Summary</h3>
 								<div class="row">
-									<div class="col-8">
+									<div class="col-12">
 									@foreach($products as $product)
 										<div class="cart_outer">
 											<div class="cart_block">
