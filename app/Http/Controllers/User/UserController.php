@@ -120,7 +120,7 @@ class UserController extends Controller
     }
     public function getAddress(Request $request)
     {
-        $address = Address::get();
+        $address = Address::where('user_id', Auth::user()->id)->get();
 
        return  view('includes.user-address', compact('address'))->render();
       //  return View::make('includes.user-address', compact('address'));

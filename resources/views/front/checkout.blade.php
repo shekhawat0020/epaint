@@ -989,6 +989,7 @@
 						@foreach($coupans as $coupan)
 						<li>
 							<span class="coupon_name">{{$coupan->code}}</span>
+							<p>Get Discount @if($coupan->type) {{ Session::has('currency') ?   DB::table('currencies')->where('id','=',Session::get('currency'))->first()->sign   : DB::table('currencies')->where('is_default','=',1)->first()->sign }} {{$coupan->price}} @else {{$coupan->price}} % @endif</p>
 							<button data-code="{{$coupan->code}}" type="button" class="btn applycoupan">Apply</button>
 							
 						</li>

@@ -20,6 +20,9 @@
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" data-bs-toggle="tab" data-bs-target="#address" type="button">Address Book</button>
 							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" href="{{route('user-logout')}}">Logout</a>
+							</li>
 						</ul>
 						<div class="tab-content" id="myTabContent">
 							<div class="tab-pane fade show active" id="home">

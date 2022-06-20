@@ -329,6 +329,38 @@ $(function ($) {
 
     });
 
+    $(document).on('submit','#subscribeform2',function(e){
+      e.preventDefault();
+      $('#sub-btn2').prop('disabled',true);
+          $.ajax({
+           method:"POST",
+           url:$(this).prop('action'),
+           data:new FormData(this),
+           contentType: false,
+           cache: false,
+           processData: false,
+           success:function(data)
+           {
+              if ((data.errors)) {
+
+                for(var error in data.errors) {
+                  toastr.error(langg.subscribe_error);
+                }
+              }
+              else {
+                 toastr.success(langg.subscribe_success);
+                  $('.preload-close').click()
+              }
+
+              $('#sub-btn2').prop('disabled',false);
+
+
+           }
+
+          });
+
+    });
+
     //  SUBSCRIBE FORM SUBMIT SECTION ENDS
 
 
