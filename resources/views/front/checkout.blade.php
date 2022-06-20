@@ -311,12 +311,12 @@
 											</div>
 											<div class="row">
 												<div class="form-group col-lg-6">
-													<select class="form-control" id="shipping_state" name="shipping_state" required="">
+													<select class="form-control" id="shipping_state" name="shipping_state">
 													<option value="">Select State</option>
 													</select>
 												</div>
 												<div class="form-group col-lg-6">
-														<select class="form-control ship_input" id="shipping_city" name="shipping_city" required="">
+														<select class="form-control ship_input" id="shipping_city" name="shipping_city">
 														<option value="">Select City</option>
 														</select>
 												</div>
