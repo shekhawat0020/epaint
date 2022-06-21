@@ -361,8 +361,8 @@
 							<ul class="share_list a2a_kit a2a_kit_size_32 a2a_default_style">
 								<li>Share:</li>
 								<li><a class="facebook a2a_button_facebook" ><i class="fa fa-facebook"></i></a></li>
-								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-instagram"></i></a></li>
-								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-whatsapp"></i></a></li>
+								<li><!--<a class="instagram a2a_button_whatsapp" ><i class="fa fa-instagram"></i>--></a></li>
+								<li><a class="whatsapp a2a_button_whatsapp" ><i class="fa fa-whatsapp"></i></a></li>
 								<li><a class="pinterest a2a_button_pinterest" ><i class="fa fa-pinterest-p"></i></a></li>
 							</ul>
               <script async src="https://static.addtoany.com/menu/page.js"></script>
