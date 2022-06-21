@@ -46,6 +46,7 @@ class CatalogController extends Controller
 
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)
     {
+      
       if (Session::has('currency')) 
       {
         $curr = Currency::find(Session::get('currency'));
@@ -87,7 +88,10 @@ class CatalogController extends Controller
                                       return $query->where('childcategory_id', $childcat->id);
                                   })
                                   ->when($search, function ($query, $search) {
-                                      return $query->whereRaw('MATCH (name) AGAINST (? IN BOOLEAN MODE)' , array($search));
+                                       $query->whereRaw('MATCH (name) AGAINST (? IN BOOLEAN MODE)' , array($search));
+                                       $query->Orwhere('name' , 'Like', '%'.$search);
+                                       $query->Orwhere('name' , 'Like', $search.'%');
+                                       return $query;
                                   })
                                   ->when($minprice, function($query, $minprice) {
                                     return $query->where('price', '>=', $minprice);

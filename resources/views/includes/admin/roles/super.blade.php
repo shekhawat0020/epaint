@@ -138,7 +138,7 @@
         <a href="{{ route('admin-prod-import') }}"><i class="fas fa-upload"></i>{{ __('Bulk Product Upload') }}</a>
     </li>--}}
 
-    {{--<li>
+    <li>
         <a href="#menu4" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
             <i class="icofont-speech-comments"></i>{{ __('Product Discussion') }}
         </a>
@@ -146,14 +146,14 @@
             <li>
                 <a href="{{ route('admin-rating-index') }}"><span>{{ __('Product Reviews') }}</span></a>
             </li>
-            <li>
+            {{--   <li>
                 <a href="{{ route('admin-comment-index') }}"><span>{{ __('Comments') }}</span></a>
             </li>
             <li>
                 <a href="{{ route('admin-report-index') }}"><span>{{ __('Reports') }}</span></a>
-            </li>
+            </li>--}}
         </ul>
-    </li>--}}
+    </li>
 
     <li>
         <a href="{{ route('admin-coupon-index') }}" class=" wave-effect"><i class="fas fa-percentage"></i>{{ __('Set Coupons') }}</a>
@@ -355,13 +355,15 @@
         </ul>
     </li>
 
+    <li>
+        <a href="{{ route('admin-subs-index') }}" class=" wave-effect"><i class="fas fa-users-cog mr-2"></i>{{ __('Subscribers') }}</a>
+    </li>
+
    {{-- <li>
         <a href="{{ route('admin-staff-index') }}" class=" wave-effect"><i class="fas fa-user-secret"></i>{{ __('Manage Staffs') }}</a>
     </li>
 
-    <li>
-        <a href="{{ route('admin-subs-index') }}" class=" wave-effect"><i class="fas fa-users-cog mr-2"></i>{{ __('Subscribers') }}</a>
-    </li>
+    
 
         <li>
             <a href="{{ route('admin-role-index') }}" class=" wave-effect"><i class="fas fa-user-tag"></i>{{ __('Manage Roles') }}</a>

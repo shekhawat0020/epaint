@@ -254,10 +254,13 @@ button.close {
 				<div class="col-2">
 					<div class="newsletter">
 						<h4>RECEIVE EMAIL UPDATES</h4>
+						<form action="{{route('front.subscribe')}}" id="subscribeform2" method="POST">
 						<div class="form-group">
-							<input type="email" class="form-control" placeholder="Your email address">
-							<button>JOIN</button>
+						{{csrf_field()}}
+							<input type="email" name="email" class="form-control" placeholder="Your email address">
+							<button id="sub-btn2" type="submit">JOIN</button>
 						</div>	
+						</form>
 					</div>
 					<ul class="social_list">
 					@if($socialsetting->f_status == 1)
@@ -465,7 +468,7 @@ button.close {
 							<div class="form-group">
 							{{csrf_field()}}
 								<input type="email" name="email" class="form-control" placeholder="Enter Your Email..." required>
-								<button id="sub-btn" type="button" value="Subscribe" class="btn">Subscribe</button>
+								<button id="sub-btn" type="submit" value="Subscribe" class="btn">Subscribe</button>
 							</div>
 						</form>
 					</div>
