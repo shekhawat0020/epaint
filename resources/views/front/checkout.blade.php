@@ -1448,7 +1448,11 @@ $('#u_country').change(function(){
 	$('#u_city').html('<option>Loading....</option>');
 	$.ajax({url: "{{route('get-state','')}}/"+country_id, success: function(result){
 		$("#u_state").html(result);
+		if($('#u_state').val() != ""){
+			$('#u_state').change();
+		}
 	}});
+
 });
 
 $('#u_state').change(function(){
@@ -1475,6 +1479,13 @@ $('#shipping_state').change(function(){
 	$.ajax({url: "{{route('get-city', '')}}/"+state_id, success: function(result){
 		$("#shipping_city").html(result);
 	}});
+});
+
+
+$(document).ready(function(){
+	if($('#u_country').val() != ""){
+		$('#u_country').change();
+	}
 });
 
 </script>

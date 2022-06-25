@@ -41,7 +41,7 @@
                             {{ $langg->lang289 }} {{$order->customer_email}}<br>
                             {{ $langg->lang290 }} {{$order->customer_phone}}<br>
                             {{ $langg->lang291 }} {{$order->customer_address}}<br>
-                            {{$order->customer_city}}-{{$order->customer_zip}}
+                            {{$order->customer_city}}, {{$order->customer_state}},  {{$order->customer_country}}-{{$order->customer_zip}}
                         </p>
                     
                     @else
@@ -51,7 +51,10 @@
                         {{ $langg->lang289 }} {{$order->shipping_email == null ? $order->customer_email : $order->shipping_email}}<br>
                         {{ $langg->lang290 }} {{$order->shipping_phone == null ? $order->customer_phone : $order->shipping_phone}}<br>
                         {{ $langg->lang291 }} {{$order->shipping_address == null ? $order->customer_address : $order->shipping_address}}<br>
-                        {{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}-{{$order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip}}
+                        {{$order->shipping_city == null ? $order->customer_city : $order->shipping_city}}, 
+                        {{$order->shipping_state == null ? $order->customer_state : $order->shipping_state}}, 
+                        {{$order->shipping_country == null ? $order->customer_country : $order->shipping_country}}, 
+                        {{$order->shipping_zip == null ? $order->customer_zip : $order->shipping_zip}}
                         </p>
                         
                          @else
@@ -67,7 +70,10 @@
                             {{ $langg->lang289 }} {{$order->customer_email}}<br>
                             {{ $langg->lang290 }} {{$order->customer_phone}}<br>
                             {{ $langg->lang291 }} {{$order->customer_address}}<br>
-                            {{$order->customer_city}}-{{$order->customer_zip}}
+                            {{$order->customer_city}},
+                            {{$order->customer_state}},
+                            {{$order->customer_country}},
+                            {{$order->customer_zip}}
                         </p>
 
                     @endif
