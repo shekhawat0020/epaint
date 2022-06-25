@@ -132,7 +132,7 @@
                   <a id="Zoom-1" class="MagicZoom" title="" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
                       <img style="width: 100%;" src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" alt=""/>
                   </a>
-                  <div class="selectors slick-list">
+                  <div class="selectors">
                     <ul>
                       <li>
                         <a data-zoom-id="Zoom-1" href="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" data-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}">
@@ -361,8 +361,8 @@
 							<ul class="share_list a2a_kit a2a_kit_size_32 a2a_default_style">
 								<li>Share:</li>
 								<li><a class="facebook a2a_button_facebook" ><i class="fa fa-facebook"></i></a></li>
-								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-instagram"></i></a></li>
-								<li><a class="pinterest a2a_button_whatsapp" ><i class="fa fa-whatsapp"></i></a></li>
+								<li><!--<a class="instagram a2a_button_whatsapp" ><i class="fa fa-instagram"></i>--></a></li>
+								<li><a class="whatsapp a2a_button_whatsapp" ><i class="fa fa-whatsapp"></i></a></li>
 								<li><a class="pinterest a2a_button_pinterest" ><i class="fa fa-pinterest-p"></i></a></li>
 							</ul>
               <script async src="https://static.addtoany.com/menu/page.js"></script>
@@ -615,71 +615,6 @@
     return false;
   });
 
-  $('.product__slider-main').slick({
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    fade: true,
-    infinite: false,
-    asNavFor: '.product__slider-thmb'
-  });
-  $('.product__slider-thmb').slick({
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    asNavFor: '.product__slider-main',
-    vertical: true,
-    arrows: true,
-    infinite: false,
-    verticalSwiping: true,
-    focusOnSelect: true,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 6,
-        slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 991,
-        settings: {
-          slidesToShow: 6,
-        slidesToScroll: 1,
-        }
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 5,
-          slidesToScroll: 1,
-      verticalSwiping: false,
-        focusOnSelect: false,
-        vertical: false,
-        }
-      },
-    {
-        breakpoint: 576,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-      verticalSwiping: false,
-        focusOnSelect: false,
-        vertical: false,
-        }
-      },
-    {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-      verticalSwiping: false,
-        focusOnSelect: false,
-        vertical: false,
-        }
-      }
-    ]
-  });
-
   var mzOptions = {};
   mzOptions = {
       onZoomReady: function () {
@@ -704,7 +639,62 @@
           console.log('onExpandClosed', arguments[0]);
       }
   };
-
+  $('.product__slider-main').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  fade: true,
+  infinite: false,
+  asNavFor: '.product__slider-thmb'
+});
+$('.selectors>ul').slick({
+  slidesToShow: 6,
+  slidesToScroll: 1,
+  vertical: true,
+  arrows: true,
+  infinite: false,
+  verticalSwiping: true,
+  focusOnSelect: true,
+  responsive: [
+    {
+      breakpoint: 1200,
+      settings: {
+        slidesToShow: 6,
+  		slidesToScroll: 1,
+      }
+    },
+    {
+      breakpoint: 1023,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 1,
+		verticalSwiping: false,
+  		focusOnSelect: false,
+		vertical: false,
+      }
+    },
+	{
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+		verticalSwiping: false,
+  		focusOnSelect: false,
+		  vertical: false,
+      }
+    },
+	{
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+		verticalSwiping: false,
+  		focusOnSelect: false,
+		  vertical: false,
+      }
+    }
+  ]
+});
 </script>
 
 @endsection

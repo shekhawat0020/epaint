@@ -264,7 +264,7 @@ button.close {
 					</div>
 					<ul class="social_list">
 					@if($socialsetting->f_status == 1)
-                        <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                        <li class="facebook"><a href="{{ $socialsetting->facebook }}"><i class="fa fa-facebook-f"></i></a></li>
 					@endif
 					@if($socialsetting->g_status == 1)
                         <li class="instagram"><a href="{{ $socialsetting->gplus }}"><i class="fa fa-instagram"></i></a></li>
