@@ -48,7 +48,10 @@ class CartController extends Controller
             $mainTotal = $totalPrice + $tax;
         }
 
-        $coupans = Coupon::get()->map(function($coupon){
+        $coupans = Coupon::where('status', 1)
+        ->where('start_date', '<=', date('Y-m-d'))
+        ->where('end_date', '>=', date('Y-m-d'))
+        ->get()->map(function($coupon){
             if($coupon->type != 0){
                 if (Session::has('currency')) {
                     $curr = Currency::find(Session::get('currency'));
@@ -62,6 +65,8 @@ class CartController extends Controller
             }
             return $coupon;
         });
+
+      
 
         
       
