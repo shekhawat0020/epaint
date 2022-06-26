@@ -816,7 +816,7 @@
 													<li>GST <span>{{$gs->tax}}% </span></li>
 													@endif
 													@if(Session::has('coupon'))
-													<li class="discount-bar">Coupon 
+													<li class="discount-bar">Coupon <a href="#coupon" data-bs-toggle="modal" class="edit">edit</a>
 													<i class="dpercent">{{ Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')' }}</i>	
 													
 														@if($gs->currency_format == 0)

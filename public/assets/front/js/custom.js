@@ -1591,6 +1591,12 @@ prices = $(".product-attr:checked").map(function() {
                             toastr.error(langg.already_coupon);
                             $("#code").val("");
                         }
+
+                        else if(data == 3)
+                        {
+                            toastr.error("Coupon not allowed for cart value");
+                            $("#code").val("");
+                        }
                         else
                         {
                             $("#coupon_form").toggle();
