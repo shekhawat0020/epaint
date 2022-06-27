@@ -1792,6 +1792,29 @@ $('#track-form').on('submit',function(e){
 $('#coupon-link').on('click', function(){
   $("#coupon-form,#check-coupon-form").toggle();
 });
+//////
+$(document).ready(function() {
+            $(".menuOPen-btn").on("click", function() {
+              if ($(this).hasClass("active")) {
+                $(this).removeClass("active");
+                $(this)
+                  .siblings(".nav_list > li .dropdown-menu>li>ul")
+                  .slideUp(200);
+              } else {
+                $(this)
+                $(".menuOPen-btn").removeClass("active");
+                $(this).addClass("active");
+                $(".nav_list > li .dropdown-menu>li>ul").slideUp(200);
+                $(this)
+                  .siblings(".nav_list > li .dropdown-menu>li>ul")
+                  .slideDown(200);
+              }
+            });
+          });
+      $('.nav_list > li .dropdown-menu').on('click', function(event){
+        event.stopPropagation();
+      });
+//////
 
 
 

@@ -190,8 +190,8 @@ button.close {
 						</a>
 					</li>
 					<li class="req_call">
-						<a href="tel:9087 654 321" class="mobile_phone"><i class="fa fa-phone"></i></a>
-						<span>+91 9087 654 321</span>
+						<a href="tel:9950995035" class="mobile_phone"><i class="fa fa-phone"></i></a>
+						<span>+91 9950995035</span>
 						<a href="#request_modal" data-bs-toggle="modal" class="link">Request a call</a>
 					</li>
 					@if($gs->is_currency == 1)
@@ -246,7 +246,16 @@ button.close {
 				<div class="col-2">
 					<h3>Contact</h3>
                     <ul class="footer_list">
+                    	<li class="footer-contact"><a href="tel:9950995035">
+                            <i class="fa fa-phone"></i>
+                            9950995035</a>
+                        </li>
+                        <li class="footer-contact"><a href="tel:9950503035">
+                            <i class="fa fa-phone"></i>
+                            9950503035</a>
+                        </li>
                         @foreach(DB::table('pages')->where('footer_menu','=','Contact')->get() as $data)
+
 						<li><a href="@if($data->redirect_url != null) {{$data->redirect_url}} @else{{ route('front.page',$data->slug) }} @endif">{{ $data->title }}</a></li>
 						@endforeach
                     </ul>
