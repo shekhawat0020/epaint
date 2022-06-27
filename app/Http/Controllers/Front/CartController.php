@@ -48,7 +48,27 @@ class CartController extends Controller
             $mainTotal = $totalPrice + $tax;
         }
 
-        $coupans = Coupon::get();
+        $coupans = Coupon::where('status', 1)
+        ->where('start_date', '<=', date('Y-m-d'))
+        ->where('end_date', '>=', date('Y-m-d'))
+        ->get()->map(function($coupon){
+            if($coupon->type != 0){
+                if (Session::has('currency')) {
+                    $curr = Currency::find(Session::get('currency'));
+                }
+                else{
+                    $curr = Currency::where('is_default','=',1)->first();
+                }
+
+                $coupon->price = round($coupon->price * $curr->value, 2);
+                
+            }
+            return $coupon;
+        });
+
+      
+
+        
       
         return view('front.cart', compact('coupans', 'products','totalPrice','mainTotal','tx')); 
     }
@@ -836,6 +856,7 @@ class CartController extends Controller
 
     public function coupon()
     {
+       
         $gs = Generalsetting::findOrFail(1);
         $code = $_GET['code'];
         $total = (float)preg_replace('/[^0-9\.]/ui','',$_GET['total']);;
@@ -878,7 +899,11 @@ class CartController extends Controller
                     $coupon->price = (int)$coupon->price;
                     $val = $total / 100;
                     $sub = $val * $coupon->price;
+                    
                     $total = $total - $sub;
+                    if($total <= 0){
+                        return response()->json(3);  
+                    }
                     $data[0] = round($total,2);
                     if($gs->currency_format == 0){
                         $data[0] = $curr->sign.$data[0];
@@ -886,6 +911,7 @@ class CartController extends Controller
                     else{
                         $data[0] = $data[0].$curr->sign;
                     }
+
                     $data[1] = $code;      
                     $data[2] = round($sub, 2);
                     Session::put('coupon', $data[2]);
@@ -903,6 +929,9 @@ class CartController extends Controller
                 else{
                     Session::put('already', $code);
                     $total = $total - round($coupon->price * $curr->value, 2);
+                    if($total <= 0){
+                        return response()->json(3);  
+                    }
                     $data[0] = round($total,2);
                     $data[1] = $code;
                     $data[2] = round($coupon->price * $curr->value, 2);

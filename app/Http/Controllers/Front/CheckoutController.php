@@ -64,7 +64,23 @@ class CheckoutController extends Controller
             {
                 $curr = Currency::where('is_default','=',1)->first();
             }
-            $coupans = Coupon::get();
+            $coupans = Coupon::where('status', 1)
+            ->where('start_date', '<=', date('Y-m-d'))
+            ->where('end_date', '>=', date('Y-m-d'))
+            ->get()->map(function($coupon){
+                if($coupon->type != 0){
+                    if (Session::has('currency')) {
+                        $curr = Currency::find(Session::get('currency'));
+                    }
+                    else{
+                        $curr = Currency::where('is_default','=',1)->first();
+                    }
+
+                    $coupon->price = round($coupon->price * $curr->value, 2);
+                    
+                }
+                return $coupon;
+            });
 // If a user is Authenticated then there is no problm user can go for checkout
 
         if(Auth::guard('web')->check())
@@ -161,7 +177,23 @@ class CheckoutController extends Controller
                 $total = $total + round(0 * $curr->value, 2); 
                 }
                 $address=Address::get();
-                $coupans = Coupon::get();
+                $coupans = Coupon::where('status', 1)
+                ->where('start_date', '<=', date('Y-m-d'))
+                ->where('end_date', '>=', date('Y-m-d'))
+                ->get()->map(function($coupon){
+                    if($coupon->type != 0){
+                        if (Session::has('currency')) {
+                            $curr = Currency::find(Session::get('currency'));
+                        }
+                        else{
+                            $curr = Currency::where('is_default','=',1)->first();
+                        }
+
+                        $coupon->price = round($coupon->price * $curr->value, 2);
+                        
+                    }
+                    return $coupon;
+                });
         return view('front.checkout', ['coupans' => $coupans, 'products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id, 'address_list' => $address]);             
         }
 
@@ -588,7 +620,7 @@ class CheckoutController extends Controller
             Session::forget('coupon_percentage');
 
         //Sending Email To Buyer
-
+        
         if($gs->is_smtp == 1)
         {
         $data = [
@@ -960,18 +992,21 @@ $validator = Validator::make($input, $rules, $messages);
 
 
     public function getState($country_id){
-
+        
         $html = '<option value="">Select State</option>';
         if(Auth::check()){
+           
             foreach (DB::table('states')->where('country_id', $country_id)->get() as $data){
-                $html .= '<option data-id="'.$data->id.'" value="'.$data->name.'"'.(Auth::user()->state == $data->name) ? "selected" : "".'>'.$data->country_name.'</option>';	
+                $selected = (Auth::user()->state == $data->name) ? "selected" : "" ;
+                $html .= '<option data-id="'.$data->id.'" '.$selected.' value="'.$data->name.'">'.$data->name.'</option>';	
             }
         } else{
+            
             foreach (DB::table('states')->where('country_id', $country_id)->get() as $data){
                 $html .= '<option data-id="'.$data->id.'"  value="'.$data->name.'">'.$data->name .'</option>';
             }
         }
-
+    
         return $html;
 
     }
@@ -981,7 +1016,8 @@ $validator = Validator::make($input, $rules, $messages);
         $html = '<option value="">Select City</option>';
         if(Auth::check()){
             foreach (DB::table('cities')->where('state_id', $state_id)->get() as $data){
-                $html .= '<option data-id="'.$data->id.'" value="'.$data->name.'"'.(Auth::user()->city == $data->name) ? "selected" : "".'>'.$data->country_name.'</option>';	
+                $selected = (Auth::user()->city == $data->name) ? "selected" : "" ;
+                $html .= '<option data-id="'.$data->id.'" value="'.$data->name.'"'.$selected.'>'.$data->name.'</option>';	
             }
         } else{
             foreach (DB::table('cities')->where('state_id', $state_id)->get() as $data){

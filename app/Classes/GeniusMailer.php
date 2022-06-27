@@ -51,16 +51,17 @@ class GeniusMailer
         $body = preg_replace("/{order_number}/", $mailData['onumber'] ,$body);
         $body = preg_replace("/{website_title}/", $setup->title ,$body);
 
-        $data = [
-            'email_body' => $body
-        ];
-
+        
 
         $objDemo = new \stdClass();
         $objDemo->to = $mailData['to'];
         $objDemo->from = $setup->from_email;
         $objDemo->title = $setup->from_name;
         $objDemo->subject = $temp->email_subject;
+        $data = [
+            'email_body' => $body,
+            'subject' => $objDemo->subject,
+        ];
 
         try{
             Mail::send('admin.email.mailbody',$data, function ($message) use ($objDemo,$id) {
@@ -86,6 +87,10 @@ class GeniusMailer
         }
     }
 
+
+
+   
+
     public function sendAutoMail(array $mailData)
     {
         $setup = Generalsetting::find(1);
@@ -97,15 +102,18 @@ class GeniusMailer
         $body = preg_replace("/{order_number}/", $mailData['onumber'] ,$body);
         $body = preg_replace("/{website_title}/", $setup->title ,$body);
 
-        $data = [
-            'email_body' => $body
-        ];
+        
 
         $objDemo = new \stdClass();
         $objDemo->to = $mailData['to'];
         $objDemo->from = $setup->from_email;
         $objDemo->title = $setup->from_name;
         $objDemo->subject = $temp->email_subject;
+
+        $data = [
+            'email_body' => $body,
+            'subject' => $objDemo->subject,
+        ];
 
         try{
             Mail::send('admin.email.mailbody',$data, function ($message) use ($objDemo) {
@@ -124,7 +132,8 @@ class GeniusMailer
         $setup = Generalsetting::find(1);
 
         $data = [
-            'email_body' => $mailData['body']
+            'email_body' => $mailData['body'],
+            'subject' => $mailData['subject'],
         ];
 
         $objDemo = new \stdClass();
