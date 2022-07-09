@@ -497,7 +497,7 @@ class RazorpayController extends Controller
                     mail($to,$subject,$msg,$headers);
                     }
 
-                    dd($cartitems[0]);
+                    //dd($cartitems[0]);
 
                 }
                 
