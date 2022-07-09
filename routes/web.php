@@ -2,7 +2,7 @@
 
 // ************************************ ADMIN SECTION **********************************************
 
-Route::prefix('admin')->group(function() {
+ Route::prefix('admin')->group(function() {
 
   //------------ ADMIN LOGIN SECTION ------------
 
@@ -1228,12 +1228,12 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   });
 
-});
+ });
 
 
-// ************************************ VENDOR SECTION ENDS**********************************************
+ // ************************************ VENDOR SECTION ENDS**********************************************
 
-// ************************************ FRONT SECTION **********************************************
+ // ************************************ FRONT SECTION **********************************************
 
   Route::get('/', 'Front\FrontendController@index')->name('front.index');
   Route::get('/extras', 'Front\FrontendController@extraIndex')->name('front.extraIndex');
@@ -1269,6 +1269,9 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::post('/gifting','Front\FrontendController@giftingemail')->name('front.gifting.submit');
   Route::post('/requestcall','Front\FrontendController@requestcallemail')->name('front.requestcall.submit');
   // CONTACT SECTION  ENDS
+
+  Route::get('/gift-cards','Front\GiftCardController@index')->name('front.gift-card');
+  Route::post('/gift-cards/add-cart','Front\GiftCardController@addToCart')->name('front.gift-card-add-cart');
   
   // PRODCT AUTO SEARCH SECTION
   Route::get('/autosearch/product/{slug}','Front\FrontendController@autosearch');
@@ -1404,9 +1407,11 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::get('/{slug}','Front\FrontendController@page')->name('front.page');
   // PAGE SECTION ENDS
 
-// ************************************ FRONT SECTION ENDS**********************************************
+  
 
+  // ************************************ FRONT SECTION ENDS**********************************************
 
 
 
   });
+

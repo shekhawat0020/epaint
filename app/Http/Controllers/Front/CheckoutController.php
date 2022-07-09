@@ -67,6 +67,7 @@ class CheckoutController extends Controller
             $coupans = Coupon::where('status', 1)
             ->where('start_date', '<=', date('Y-m-d'))
             ->where('end_date', '>=', date('Y-m-d'))
+            ->where('coupon_role', 'Coupon')
             ->get()->map(function($coupon){
                 if($coupon->type != 0){
                     if (Session::has('currency')) {
@@ -97,7 +98,10 @@ class CheckoutController extends Controller
                 {                        
                     $user = null;
                     foreach ($cart->items as $prod) {
-                            $user[] = $prod['item']['user_id'];
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
+                                $user[] = $prod['item']['user_id'];
+                           
+                            
                     }
                     $users = array_unique($user);
                     if(count($users) == 1)
@@ -126,6 +130,7 @@ class CheckoutController extends Controller
                 {
                     $user = null;
                     foreach ($cart->items as $prod) {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                             $user[] = $prod['item']['user_id'];
                     }
                     $users = array_unique($user);
@@ -150,6 +155,7 @@ class CheckoutController extends Controller
 
 
                 foreach ($products as $prod) {
+                    $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                     if($prod['item']['type'] == 'Physical')
                     {
                         $dp = 0;
@@ -180,6 +186,7 @@ class CheckoutController extends Controller
                 $coupans = Coupon::where('status', 1)
                 ->where('start_date', '<=', date('Y-m-d'))
                 ->where('end_date', '>=', date('Y-m-d'))
+                ->where('coupon_role', 'Coupon')
                 ->get()->map(function($coupon){
                     if($coupon->type != 0){
                         if (Session::has('currency')) {
@@ -215,6 +222,8 @@ class CheckoutController extends Controller
                 {
                     $user = null;
                     foreach ($cart->items as $prod) {
+                       
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                             $user[] = $prod['item']['user_id'];
                     }
                     $users = array_unique($user);
@@ -244,6 +253,7 @@ class CheckoutController extends Controller
                 {
                     $user = null;
                     foreach ($cart->items as $prod) {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                             $user[] = $prod['item']['user_id'];
                     }
                     $users = array_unique($user);
@@ -269,6 +279,7 @@ class CheckoutController extends Controller
 
 
                 foreach ($products as $prod) {
+                    $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                     if($prod['item']['type'] == 'Physical')
                     {
                         $dp = 0;
@@ -296,6 +307,7 @@ class CheckoutController extends Controller
                 $total =  str_replace($curr->sign,'',$total) + round(0 * $curr->value, 2); 
                 }
                 foreach ($products as $prod) {
+                    $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                     if($prod['item']['type'] != 'Physical')
                     {
                         if(!Auth::guard('web')->check())
@@ -323,6 +335,7 @@ class CheckoutController extends Controller
                 {
                     $user = null;
                     foreach ($cart->items as $prod) {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                             $user[] = $prod['item']['user_id'];
                     }
                     $users = array_unique($user);
@@ -352,6 +365,7 @@ class CheckoutController extends Controller
                 {
                     $user = null;
                     foreach ($cart->items as $prod) {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                             $user[] = $prod['item']['user_id'];
                     }
                     $users = array_unique($user);

@@ -48,9 +48,12 @@ class CartController extends Controller
             $mainTotal = $totalPrice + $tax;
         }
 
+        //dd($products);
+
         $coupans = Coupon::where('status', 1)
         ->where('start_date', '<=', date('Y-m-d'))
         ->where('end_date', '>=', date('Y-m-d'))
+        ->where('coupon_role', 'Coupon')
         ->get()->map(function($coupon){
             if($coupon->type != 0){
                 if (Session::has('currency')) {
@@ -215,6 +218,8 @@ class CartController extends Controller
 
    public function addcart($id)
     {
+
+        
         $prod = Product::where('id','=',$id)->first(['id','user_id','slug','name','photo','size','size_qty','size_price','color','price','stock','type','file','link','license','license_qty','measure','whole_sell_qty','whole_sell_discount','attributes']);
 
 
@@ -335,6 +340,8 @@ class CartController extends Controller
         $cart->totalPrice = 0;
         foreach($cart->items as $data)
         $cart->totalPrice += $data['price'];
+
+       
         Session::put('cart',$cart);
         $data[0] = count($cart->items);        
         return response()->json($data);           

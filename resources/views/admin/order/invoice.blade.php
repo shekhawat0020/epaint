@@ -104,6 +104,7 @@
                                         $tax = 0;
                                         @endphp
                                         @foreach($cart->items as $product)
+                                        @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
                                         <tr>
                                             <td width="50%">
                                                 @if($product['item']['user_id'] != 0)
@@ -125,6 +126,12 @@
 
 
                                             <td>
+                                            @if($product['item']['type'] == 'Gift Card')
+
+                                            <p>
+                                                        <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{ round($product['item_price'] * $order->currency_value , 2) }}
+                                                </p>
+                                            @else
                                                 @if($product['size'])
                                                <p>
                                                     <strong>{{ __('Size') }} :</strong> {{str_replace('-',' ',$product['size'])}}
@@ -154,6 +161,7 @@
                                                     @endforeach
 
                                                     @endif
+                                            @endif
                                                
                                             </td>
 

@@ -77,7 +77,7 @@ class GeniusMailer
 
         }
         catch (\Exception $e){
-             //die($e->getMessage());
+            // die($e->getMessage());
         }
 
         $files = glob('assets/temp_files/*'); //get all file names
@@ -144,6 +144,38 @@ class GeniusMailer
 
         try{
             Mail::send('admin.email.mailbody',$data, function ($message) use ($objDemo) {
+                $message->from($objDemo->from,$objDemo->title);
+                $message->to($objDemo->to);
+                $message->subject($objDemo->subject);
+            });
+        }
+        catch (\Exception $e){
+            //die($e->getMessage());
+            // return $e->getMessage();
+        }
+        return true;
+    }
+
+
+
+    public function sendGiftMail(array $mailData)
+    {
+        $setup = Generalsetting::find(1);
+
+        $data = [
+            'recipiant' => $mailData['recipiant'],
+            'cardCode' => $mailData['cardCode'],
+            'subject' => $mailData['subject'],
+        ];
+
+        $objDemo = new \stdClass();
+        $objDemo->to = $mailData['to'];
+        $objDemo->from = $setup->from_email;
+        $objDemo->title = $setup->from_name;
+        $objDemo->subject = $mailData['subject'];
+
+        try{
+            Mail::send('admin.email.mailgift',$data, function ($message) use ($objDemo) {
                 $message->from($objDemo->from,$objDemo->title);
                 $message->to($objDemo->to);
                 $message->subject($objDemo->subject);

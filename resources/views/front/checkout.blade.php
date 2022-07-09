@@ -427,27 +427,39 @@
 								<div class="row">
 									<div class="col-12">
 									@foreach($products as $product)
+									@php   $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item'];  @endphp
 										<div class="cart_outer">
 											<div class="cart_block">
 												<div class="cart_product">
 													<div class="img_block">
+														@if($product['item']['type'] == 'Gift Card')
+														<img alt="" src="{{$product['item']['photo']}}">
+														@else
 														<img alt="" src="{{ asset('assets/images/products/'.$product['item']['photo']) }}">
+														@endif
 													</div>
-													<h5><a href="{{ route('front.product', $product['item']['slug']) }}" class="head_link">{{ $product['item']['name'] }}</a></h5>
-													<h5><span>Price -</span> {{ App\Models\Product::convertPrice($product['item_price']) }}</h5>
-													@if(!empty($product['size']))
-													<h5><span>{{ $langg->lang312 }} -</span> {{ str_replace('-',' ',$product['size']) }}</h5>
-													@endif
-													@if(!empty($product['color']))
-													<h5><span>{{ $langg->lang313 }} -</span> <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}}; position: absolute; margin-left: 5px;"></span></h5>
-													@endif
-													@if(!empty($product['keys']))
-
-													@foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
-													<h5><span>{{ ucwords(str_replace('_', ' ', $key))  }} -</span> {{ $value }}</h5>
+													@if($product['item']['type'] == 'Gift Card')
+														<h5>{{ $product['item']['name'] }}</h5>
+														@else
+														<h5><a href="{{ route('front.product', $product['item']['slug']) }}" class="head_link">{{ $product['item']['name'] }}</a></h5>
+														@endif
 													
-													@endforeach
+													<h5><span>Price -</span> {{ App\Models\Product::convertPrice($product['item_price']) }}</h5>
+													@if($product['item']['type'] != 'Gift Card')
+															@if(!empty($product['size']))
+															<h5><span>{{ $langg->lang312 }} -</span> {{ str_replace('-',' ',$product['size']) }}</h5>
+															@endif
+															@if(!empty($product['color']))
+															<h5><span>{{ $langg->lang313 }} -</span> <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}}; position: absolute; margin-left: 5px;"></span></h5>
+															@endif
+															@if(!empty($product['keys']))
 
+															@foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
+															<h5><span>{{ ucwords(str_replace('_', ' ', $key))  }} -</span> {{ $value }}</h5>
+															
+															@endforeach
+
+															@endif
 													@endif
 													<h5><span>Qty -</span> {{ $product['qty'] }}</h5>
 													<h5>{{ App\Models\Product::convertPrice($product['price']) }}</h5>

@@ -40,6 +40,33 @@
                     		</div>
 							@if(Session::has('cart'))
 							@foreach($products as $product)
+								
+								@if($product['item']->type == 'Gift Card')
+
+									<div class="cart_block cremove{{ $product['item']->id }}">							
+									<div class="cart_product">
+										<div class="img_block">
+											<img alt="" src="{{ $product['item']->photo ? $product['item']->photo :asset('assets/images/noimage.png') }}">
+										</div>
+										<h3>{{mb_strlen($product['item']->name,'utf-8') > 35 ? mb_substr($product['item']->name,0,35,'utf-8').'...' : $product['item']->name}}</h3>
+									
+										
+									</div>
+									<div class="cart_qty">
+									<span class="rate">{{ App\Models\Product::convertPrice($product['item_price']) }}   </span> 
+										<div class="number_wrap">
+										<input type="hidden" id="stock{{$product['item']->id}}" value="1">
+										</div>
+									</div>
+									<div class="cart_price" id="prc{{$product['item']->id}}">
+										{{ App\Models\Product::convertPrice($product['price']) }} 
+									</div>
+									<div class="del_product">
+										<a href="javascript::void(0)" class="removecart cart-remove" data-class="cremove{{ $product['item']->id }}" data-href="{{ route('product.cart.remove',$product['item']->id) }}"><i class="fa fa-trash-o"></i></a>
+									</div>
+								</div>
+
+								@else
                     		<div class="cart_block cremove{{ $product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values']) }}">							
                     			<div class="cart_product">
                     				<div class="img_block">
@@ -95,7 +122,7 @@
                     				<a href="javascript::void(0)" class="removecart cart-remove" data-class="cremove{{ $product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values']) }}" data-href="{{ route('product.cart.remove',$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])) }}"><i class="fa fa-trash-o"></i></a>
                     			</div>
                     		</div>
-							
+							@endif
                     		@endforeach
 							@endif
 						

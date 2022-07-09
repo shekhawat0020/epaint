@@ -210,6 +210,7 @@ html {
                                 <tbody>
 
                                 @foreach($cart->items as $product)
+                                @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
                                     <tr>
                                             <td>{{ $product['item']['id'] }}</td>
                                             <td>{{mb_strlen($product['item']['name'],'utf-8') > 25 ? mb_substr($product['item']['name'],0,25,'utf-8').'...' : $product['item']['name']}}</td>

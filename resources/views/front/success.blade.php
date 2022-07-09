@@ -144,7 +144,11 @@
                                 <tbody>
 
                                 @foreach($tempcart->items as $product)
-                                    <tr>
+                                
+                                @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
+                                  
+                               
+                                <tr>
 
                                             <td>{{ $product['item']['name'] }}</td>
                                             <td>

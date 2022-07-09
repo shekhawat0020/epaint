@@ -48,17 +48,17 @@
                     </div>
                     </a>
                   </div>
-                  {{--<div class="col-lg-4">
+                 <div class="col-lg-4">
                     <a href="{{ route('admin-prod-digital-create') }}">
                     <div class="cat-box box2">
                       <div class="icon">
                         <i class="fas fa-camera-retro"></i>
                       </div>
-                      <h5 class="title">{{ __("Digital") }} </h5>
+                      <h5 class="title">Gift Card </h5>
                     </div>
                     </a>
                   </div>
-                  <div class="col-lg-4">
+                   <div class="col-lg-4">
                     <a href="{{ route('admin-prod-license-create') }}">
                     <div class="cat-box box3">
                       <div class="icon">
@@ -67,7 +67,7 @@
                       <h5 class="title">{{ __("license") }} </h5>
                     </div>
                     </a>
-                  </div>--}}
+                  </div>
                 </div>
               </div>
             </div>

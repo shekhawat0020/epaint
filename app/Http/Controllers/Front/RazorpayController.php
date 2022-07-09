@@ -90,7 +90,8 @@ class RazorpayController extends Controller
         $cancel_url = action('Front\PaymentController@paycancle');
 
         foreach($cart->items as $key => $prod)
-        {
+        { 
+            $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
             if(!empty($prod['item']['license']) && !empty($prod['item']['license_qty']))
             {
                     foreach($prod['item']['license_qty']as $ttl => $dtl)
@@ -218,36 +219,42 @@ class RazorpayController extends Controller
                     }
                     foreach($cart->items as $prod)
                     {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                         $x = (string)$prod['size_qty'];
                         if(!empty($x))
                         {
-                            $product = Product::findOrFail($prod['item']['id']);
-                            $x = (int)$x;
-                            $x = $x - $prod['qty'];
-                            $temp = $product->size_qty;
-                            $temp[$prod['size_key']] = $x;
-                            $temp1 = implode(',', $temp);
-                            $product->size_qty =  $temp1;
-                            $product->update();               
+                            if($prod['item']['type'] != 'Gift Card'){
+                                $product = Product::findOrFail($prod['item']['id']);
+                                $x = (int)$x;
+                                $x = $x - $prod['qty'];
+                                $temp = $product->size_qty;
+                                $temp[$prod['size_key']] = $x;
+                                $temp1 = implode(',', $temp);
+                                $product->size_qty =  $temp1;
+                                $product->update();    
+                            }           
                         }
                     }
 
 
                     foreach($cart->items as $prod)
                     {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                         $x = (string)$prod['stock'];
                         if($x != null)
                         {
+                            if($prod['item']['type'] != 'Gift Card'){
 
-                            $product = Product::findOrFail($prod['item']['id']);
-                            $product->stock =  $prod['stock'];
-                            $product->update();  
-                            if($product->stock <= 5)
-                            {
-                                $notification = new Notification;
-                                $notification->product_id = $product->id;
-                                $notification->save();                    
-                            }              
+                                $product = Product::findOrFail($prod['item']['id']);
+                                $product->stock =  $prod['stock'];
+                                $product->update();  
+                                if($product->stock <= 5)
+                                {
+                                    $notification = new Notification;
+                                    $notification->product_id = $product->id;
+                                    $notification->save();                    
+                                }    
+                            }          
                         }
                     }
 
@@ -255,6 +262,7 @@ class RazorpayController extends Controller
                                     
                     foreach($cart->items as $prod)
                     {
+                        $prod['item'] =  ($prod['item']->type == 'Gift Card')?(array)$prod['item']:$prod['item'];
                         if($prod['item']['user_id'] != 0)
                         {
                             $vorder =  new VendorOrder;
@@ -279,6 +287,9 @@ class RazorpayController extends Controller
                             $notification->save();    
                         }
                     }
+
+
+                    /*
 
                     $gs = Generalsetting::find(1);
 
@@ -328,7 +339,7 @@ class RazorpayController extends Controller
                         $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
                     mail($to,$subject,$msg,$headers);
                     }
-
+                        */
                     Session::put('tempcart',$cart);
                     Session::forget('cart');
                     
@@ -435,6 +446,116 @@ class RazorpayController extends Controller
                 $notification = new Notification;
                 $notification->order_id = $order->id;
                 $notification->save();
+
+                //dd($order);
+
+                //send maills
+
+                ///order have gift card
+                
+                $gs = Generalsetting::find(1);
+
+                $tempcart = unserialize(bzdecompress(utf8_decode($order->cart)));
+                $cartitems = $tempcart->items;
+                if(isset($cartitems[0])){
+                   
+                    //send gift card to person mail 
+                    $recipiant =  $cartitems[0]['item'];
+                    
+                    $cardCode = rand().time();
+                   
+                    $couponData = new Coupon();
+                    $couponData->code = $cardCode;
+                    $couponData->type = 1;
+                    $couponData->price = $recipiant->price;
+                    $couponData->times = 1;
+                    $couponData->start_date = date('Y-m-d');
+                    $couponData->end_date = date('Y-m-d');
+                    $couponData->coupon_role = 'GiftCard';
+                    $couponData->save();
+
+
+
+                    if($gs->is_smtp == 1)
+                    {
+                        $data = [
+                            'to' => $recipiant->recipiant_email,
+                            'subject' => "You have Recieved a Print Store Gift Card",
+                            'recipiant' => $recipiant,
+                            'cardCode' => $cardCode,
+                        ];
+    
+                        $mailer = new GeniusMailer();
+                        $mailer->sendGiftMail($data);            
+                    }
+                    else
+                    {
+                    $to = $recipiant->recipiant_email;
+                    $subject = "You have Recieved a Print Store Gift Card";
+                    $msg = "Hello ".$recipiant->recipiant_name."!\nYou have Recieved a Print Store Gift Card. from ".$recipiant->sender_name."\nCoupon Code is ".$cardCode.".Please visti http://printstoryjaipur.com/ for redeem. \nThank you.";
+                        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+                    mail($to,$subject,$msg,$headers);
+                    }
+
+                    dd($cartitems[0]);
+
+                }
+                
+               
+
+
+                //order have gift card
+                
+
+                //Sending Email To Buyer
+
+                if($gs->is_smtp == 1)
+                {
+                $data = [
+                    'to' => $order->customer_email,
+                    'type' => "new_order",
+                    'cname' => $order->customer_name,
+                    'oamount' => "",
+                    'aname' => "",
+                    'aemail' => "",
+                    'wtitle' => "",
+                    'onumber' => $order->order_number,
+                ];
+
+                $mailer = new GeniusMailer();
+                $mailer->sendAutoOrderMail($data,$order->id);            
+                }
+                else
+                {
+                    $to =  $order->customer_email;
+                    $subject = "Your Order Placed!!";
+                    $msg = "Hello ".$order->customer_name."!\nYou have placed a new order.\nYour order number is ".$order->order_number.".Please wait for your delivery. \nThank you.";
+                        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+                    mail($to,$subject,$msg,$headers);            
+                }
+                //Sending Email To Admin
+                if($gs->is_smtp == 1)
+                {
+                    $data = [
+                        'to' => Pagesetting::find(1)->contact_email,
+                        'subject' => "New Order Recieved!!",
+                        'body' => "Hello Admin!<br>Your store has received a new order.<br>Order Number is ".$order->order_number.".Please login to your panel to check. <br>Thank you.",
+                    ];
+
+                    $mailer = new GeniusMailer();
+                    $mailer->sendCustomMail($data);            
+                }
+                else
+                {
+                $to = Pagesetting::find(1)->contact_email;
+                $subject = "New Order Recieved!!";
+                $msg = "Hello Admin!\nYour store has recieved a new order.\nOrder Number is ".$order->order_number.".Please login to your panel to check. \nThank you.";
+                    $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+                mail($to,$subject,$msg,$headers);
+                }
+
+
+                //endsend maill
 
                 Session::put('temporder_id',$order->id);
 

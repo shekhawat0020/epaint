@@ -1739,6 +1739,7 @@ table.dataTable thead .sorting_desc_disabled::after {
                                         $tax = 0;
                                         @endphp
                                         @foreach($cart->items as $product)
+                                        @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
                                         <tr>
                                             <td width="50%">
                                                 @if($product['item']['user_id'] != 0)
@@ -1757,6 +1758,16 @@ table.dataTable thead .sorting_desc_disabled::after {
                                             </td>
 
                                             <td>
+											@if($product['item']['type'] == 'Gift Card')
+												
+											<p>
+													Price : {{ App\Models\Currency::where('sign',$order->currency_sign)->first()->name }}{{ round($product['item_price'] * $order->currency_value , 2) }}
+											</p>
+											<p>
+                                                    Qty : {{$product['qty']}} 
+                                               </p>
+											
+											@else
                                                 @if($product['size'])
                                                <p>
                                                     Size : {{str_replace('-',' ',$product['size'])}}
@@ -1773,6 +1784,7 @@ table.dataTable thead .sorting_desc_disabled::after {
                                                <p>
                                                     Qty : {{$product['qty']}} {{ $product['item']['measure'] }}
                                                </p>
+											 @endif
                                             </td>
 
                                             <td>{{ App\Models\Currency::where('sign',$order->currency_sign)->first()->name }}{{ round($product['price'] * $order->currency_value , 2) }}

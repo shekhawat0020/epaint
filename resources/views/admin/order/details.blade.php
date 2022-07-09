@@ -306,12 +306,12 @@
                                                         <tbody>
                                 @foreach($cart->items as $key => $product)
                                     <tr>
-                                        
+                                   @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
                                             <td><input type="hidden" value="{{$key}}">{{ $product['item']['id'] }}</td>
 
                                            
                                             <td>
-                                                @if($product['item']['user_id'] != 0)
+                                            @if($product['item']['user_id'] != 0)
                                                 @php
                                                 $user = App\Models\VendorOrder::where('order_id','=',$order->id)->where('user_id','=',$product['item']['user_id'])->first();
                                                 @endphp
@@ -334,63 +334,80 @@
                                                        @endif
                                                     @endif
 
+                                                @else
+                                                    @if($order->dp == 1 && $order->payment_status == 'Completed')
+
+                                                        <span class="badge badge-success">{{ __('Completed') }}</span>
+                                                    @endif
                                             @endif
                                             </td>
 
 
                                             <td>
                                                 <input type="hidden" value="{{ $product['license'] }}">
-
-                                                @if($product['item']['user_id'] != 0)
-                                                @php
-                                                $user = App\Models\User::find($product['item']['user_id']);
-                                                @endphp
-                                                @if(isset($user))
-                                              <a target="_blank" href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
+                                                @if($product['item']['type'] == 'Gift Card')
+                                                    {{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}
                                                 @else
+                                                    @if($product['item']['user_id'] != 0)
+                                                    @php
+                                                    $user = App\Models\User::find($product['item']['user_id']);
+                                                    @endphp
+                                                    @if(isset($user))
                                                 <a target="_blank" href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
-                                                @endif
-                                                @else 
+                                                    @else
+                                                    <a target="_blank" href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
+                                                    @endif
+                                                    @else 
 
-                                                <a target="_blank" href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
-                                            
-                                                @endif
+                                                    <a target="_blank" href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
+                                                
+                                                    @endif
 
 
-                                                @if($product['license'] != '')
-                              <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" class="btn btn-info product-btn" id="license" style="padding: 5px 12px;"><i class="fa fa-eye"></i> {{ __('View License') }}</a>
+                                                    @if($product['license'] != '')
+                                                    <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" class="btn btn-info product-btn" id="license" style="padding: 5px 12px;"><i class="fa fa-eye"></i> {{ __('View License') }}</a>
+                                                    @endif
                                                 @endif
 
                                             </td>
                                             <td>
-                                                @if($product['size'])
-                                               <p>
-                                                    <strong>{{ __('Size') }} :</strong> {{str_replace('-',' ',$product['size'])}}
-                                               </p>
-                                               @endif
-                                               @if($product['color'])
+                                            @if($product['item']['type'] == 'Gift Card')
+                                            <p>
+                                                    <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{ round($product['item_price'] * $order->currency_value , 2) }}
+                                            </p>
+                                            <p>
+                                                        <strong>{{ __('Qty') }} :</strong> {{$product['qty']}}
+                                                </p>
+                                            @else
+                                                    @if($product['size'])
                                                 <p>
-                                                        <strong>{{ __('color') }} :</strong> <span
-                                                        style="width: 20px; height: 20px; display: inline-block; vertical-align: middle;  background: #{{$product['color']}};"></span>
+                                                        <strong>{{ __('Size') }} :</strong> {{str_replace('-',' ',$product['size'])}}
                                                 </p>
                                                 @endif
-                                                <p>
-                                                        <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{ round($product['item_price'] * $order->currency_value , 2) }}
-                                                </p>
-                                               <p>
-                                                    <strong>{{ __('Qty') }} :</strong> {{$product['qty']}} {{ $product['item']['measure'] }}
-                                               </p>
-                                                    @if(!empty($product['keys']))
-
-                                                    @foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
+                                                @if($product['color'])
                                                     <p>
-
-                                                        <b>{{ ucwords(str_replace('_', ' ', $key))  }} : </b> {{ $value }} 
-
+                                                            <strong>{{ __('color') }} :</strong> <span
+                                                            style="width: 20px; height: 20px; display: inline-block; vertical-align: middle;  background: #{{$product['color']}};"></span>
                                                     </p>
-                                                    @endforeach
-
                                                     @endif
+                                                    <p>
+                                                            <strong>{{ __('Price') }} :</strong> {{$order->currency_sign}}{{ round($product['item_price'] * $order->currency_value , 2) }}
+                                                    </p>
+                                                <p>
+                                                        <strong>{{ __('Qty') }} :</strong> {{$product['qty']}} {{ $product['item']['measure'] }}
+                                                </p>
+                                                        @if(!empty($product['keys']))
+
+                                                        @foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
+                                                        <p>
+
+                                                            <b>{{ ucwords(str_replace('_', ' ', $key))  }} : </b> {{ $value }} 
+
+                                                        </p>
+                                                        @endforeach
+
+                                                        @endif
+                                            @endif
 
 
 

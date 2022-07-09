@@ -194,7 +194,7 @@
 					</div>
 				</div>
                 @foreach($cart->items as $product)
-               
+                @php $product['item'] =  ($product['item']->type == 'Gift Card')?(array)$product['item']:$product['item']; @endphp
 				<div class="delivery_detail">
 					<h4>Delivered 28-Nov-2021 </h4>
 					<a href="#" class="img_block">
