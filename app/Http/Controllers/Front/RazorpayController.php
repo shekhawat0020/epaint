@@ -459,18 +459,7 @@ class RazorpayController extends Controller
                 $cartitems = $tempcart->items;
                 if(isset($cartitems[0])){
 
-                    $d_curr = Currency::where('is_default','=',1)->first();
-                    if (Session::has('currency')) {
-                        $curr = Currency::find(Session::get('currency'));
-                    }
-                    else {
-                        $curr = Currency::where('is_default','=',1)->first();
-                    }
-                    if($d_curr->id == $curr->id){
-                        $Defaultprice =  $recipiant->price;
-                    }else{
-                        $Defaultprice = round($coupon->price / $curr->value, 2);
-                    }
+                   
                    
                     
                     //send gift card to person mail 
@@ -481,7 +470,7 @@ class RazorpayController extends Controller
                     $couponData = new Coupon();
                     $couponData->code = $cardCode;
                     $couponData->type = 1;
-                    $couponData->price = $Defaultprice;
+                    $couponData->price = $recipiant->price;
                     $couponData->times = 1;
                     $couponData->start_date = date('Y-m-d');
                     $couponData->end_date = date('Y-m-d');

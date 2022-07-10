@@ -90,7 +90,19 @@ class GiftCardController extends Controller
             return response()->json(array('errors' => $errors));
         }
 
-        
+        $d_curr = Currency::where('is_default','=',1)->first();
+        if (Session::has('currency')) {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else {
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+        if($d_curr->id == $curr->id){
+            $Defaultprice =  $request->gift_amount;
+        }else{
+            $Defaultprice = round($request->gift_amount / $curr->value, 2);
+        }
+       
 
 
 
@@ -98,7 +110,7 @@ class GiftCardController extends Controller
         $prod->id = 0;
         $prod->name = $request->card_type;
         $prod->photo = asset('assets/front/images/giftcard.webp');
-        $prod->price = $request->gift_amount;
+        $prod->price = $Defaultprice;
         $prod->type = "Gift Card";
         $prod->size_qty = "";
         $prod->size_price = 0;
