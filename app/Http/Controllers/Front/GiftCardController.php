@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Session;
 use App\Models\Compare;
+use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Cart;
 use Illuminate\Support\Collection;
@@ -15,7 +16,16 @@ class GiftCardController extends Controller
 
     public function index()
     {
-        return view('front.gift-card');
+        if (Session::has('currency')) {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else {
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+       
+
+
+        return view('front.gift-card', compact('curr'));
     }
 
 
@@ -36,6 +46,9 @@ class GiftCardController extends Controller
 
         if ($request->gift_amount == ""){
             $errors[] = 'Please enter Gift amount';            
+        }
+        if (!is_numeric($request->gift_amount)){
+            $errors[] = 'Please enter Gift amount numeric value';            
         }
         if ($request->recipiant_name == ""){
             $errors[] = 'Please enter Recipiant Name';            
@@ -77,6 +90,8 @@ class GiftCardController extends Controller
             return response()->json(array('errors' => $errors));
         }
 
+        
+
 
 
         $prod = new Collection();
@@ -112,6 +127,7 @@ class GiftCardController extends Controller
         Session::put('cart',$cart);
         $data[0] = count($cart->items);        
         return response()->json($data);  
+     
      
 
     }

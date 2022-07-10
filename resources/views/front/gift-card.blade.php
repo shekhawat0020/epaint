@@ -31,15 +31,15 @@
 				<ul class="gift_list">
 					<li>
 						<label for="g1"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input type="radio" id="g1" name="card_type" checked value="Happy Bday Card">
+						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g1" name="card_type" checked value="Happy Bday Card">
 					</li>
 					<li>
 						<label for="g2"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input type="radio" id="g2" name="card_type" value="Wedding Card">
+						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g2" name="card_type" value="Wedding Card">
 					</li>
 					<li>
 						<label for="g3"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input type="radio" id="g3" name="card_type" value="Gift Card">
+						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g3" name="card_type" value="Gift Card">
 					</li>
 				</ul>
 				<div class="btn_wrap">
@@ -81,20 +81,20 @@
 					</div>	
 					<ul class="nav nav-tabs" id="myTab">
                         <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab" type="button">₹ 500</button>
+                            <button data-value="500" class="clickamount nav-link active" data-bs-toggle="tab" type="button">{{$curr->sign}} 500</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" type="button">₹ 100</button>
+                            <button data-value="100" class="clickamount nav-link" data-bs-toggle="tab" type="button">{{$curr->sign}} 100</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" type="button">₹ 50</button>
+                            <button data-value="50" class="clickamount nav-link" data-bs-toggle="tab" type="button">{{$curr->sign}} 50</button>
                         </li>
                     </ul>
 					<div class="choose_value">
 						<p>(or choose your own value)</p>
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Enter value" name="gift_amount">
-							<i class="fa fa-rupee"></i>
+							<input type="text" class="form-control" placeholder="Enter value" name="gift_amount" id="gift_amount" value="500">
+							<i class="fa">{{$curr->sign}}</i>
 						</div>	
 					</div>
 					<div class="btn_wrap">
@@ -124,22 +124,22 @@
 					<div class="sender_form">
 						<h4>3. FILL IN THE DETAILS</h4>
 						<div class="form-group">
-							<input type="text" placeholder="Name*" class="form-control" name="recipiant_name">
+							<input type="text" placeholder="Name*" class="form-control" name="recipiant_name" id="recipiant_name">
 						</div>
 						<div class="form-group">
-							<input type="email" placeholder="Recipiant's Email*" class="form-control" name="recipiant_email">
+							<input type="email" placeholder="Recipiant's Email*" class="form-control" name="recipiant_email" id="recipiant_email">
 						</div>
 						<div class="form-group">
 							<input type="email" placeholder="Confirm Recipiant's Email*" class="form-control" name="confirm_recipiant_email">
 						</div>
 						<div class="form-group">
-							<textarea placeholder="Message" class="form-control" name="recipiant_message"></textarea>
+							<textarea placeholder="Message" class="form-control" name="recipiant_message" id="recipiant_message"></textarea>
 						</div>
 						<div class="form-group">
-							<input type="text" placeholder="Sender's Name*" class="form-control" name="sender_name">
+							<input type="text" placeholder="Sender's Name*" class="form-control" name="sender_name" id="sender_name">
 						</div>
 						<div class="btn_wrap">
-						<a href="javascript::void(0)" data-show="4"  class="btn gift-next-step">preview card</a>
+						<a href="javascript::void(0)" data-show="4"  class="btn gift-next-step" id="make_preview">preview card</a>
 						</div>
 					</div>
 					
@@ -167,13 +167,13 @@
 						</div>
 
 						<div class="img_block">
-							<img src="{{asset('assets/front/images/giftcard.webp')}}" alt="">
+							<img id="p_card_type_img" src="{{asset('assets/front/images/giftcard.webp')}}" alt="">
 						</div>
 						<ul class="msg_list">
-							<li><span>Recipient Email:</span> sa@gmail.com</li>
-							<li>Dear sa</li>
-							<li>You have received a Good Earth eGift card <br>worth <strong>₹5000</strong> from sa</li>
-							<li><span>Their message:</span> SA</li>
+							<li><span>Recipient Email:</span> <x id="p_recipiant_email">  </x></li>
+							<li>Dear <x id="p_recipiant_name">sa</x></li>
+							<li>You have received a <x id="p_card_type">Egift</x> card <br>worth <strong>{{$curr->sign}}<x id="p_gift_amount">5000</x></strong> from <x id="p_sender_name">sa</x></li>
+							<li><span>Their message:</span> <x id="p_recipiant_message">sa</x></li>
 						</ul>
 						<div class="coupon_block">
 							<span>xxx xxx</span>
@@ -217,6 +217,27 @@
 
 @section('scripts')
 <script>
+	$('.clickamount').click(function(){
+		amount = $(this).data('value');
+		$('#gift_amount').val(amount);
+	});
+
+	$('#make_preview').click(function(){
+
+		cardTypeVal = $("input[name='card_type']:checked").val();
+		cardTypeImg = $("input[name='card_type']:checked").data('img');
+
+		$('#p_card_type').text(cardTypeVal);
+		$('#p_card_type_img').prop('src', cardTypeImg);
+		$('#p_recipiant_name').text($('#recipiant_name').val());
+		$('#p_recipiant_email').text($('#recipiant_email').val());
+		$('#p_gift_amount').text($('#gift_amount').val());
+		$('#p_sender_name').text($('#sender_name').val());
+		$('#p_recipiant_message').text($('#recipiant_message').val());
+
+	});
+
+
 $('.gift-next-step').click(function(){
 	id = $(this).data('show');
 	$('.gc_wrapper').hide();
@@ -227,6 +248,7 @@ $('.gift-next-step').click(function(){
 $('#gift-card-form').submit(function(e){
 
 	e.preventDefault();
+	$('.alert-danger').hide();
     $('button.submit-btn').prop('disabled',true);
 	$.ajax({
            method:"POST",
@@ -250,8 +272,9 @@ $('#gift-card-form').submit(function(e){
               else
               {
                 $('.alert-danger').hide();
-                $('.alert-success').show();
-                $('.alert-success p').html(data);
+               // $('.alert-success').show();
+               // $('.alert-success p').html(data);
+			   window.location.href="{{route('front.cart')}}";
                
 
               }

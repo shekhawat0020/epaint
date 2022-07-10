@@ -858,7 +858,7 @@
 													
 													</li>
 												</ul>
-												<div class="coupon_detail">	
+												<div class="coupon_detail" style="margin-bottom:5px;">	
 												@if(Session::has('coupon'))
 													<div class="after_apply">
 														<h5 id="applied_coupan">{{Session::get('already')}}</h5>
@@ -1010,8 +1010,11 @@
 					<h3>No Coupans Found</h3>
 					@endif
 				</ul>
-				<div class="form-group coupon" id="check-coupon-form" style="display:none">
+				<hr/>
+				<h3>Apply Coupon Code</h3>
+				<div class="form-group coupon" id="check-coupon-form" style="text-align: center;">
 					<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" required="" autocomplete="off">
+					<button type="button" class="btn btn-primary applycustomCoupon" style="margin-top:5px">Apply</button>
 					
 				</div>
 			</div>
@@ -1051,7 +1054,7 @@ var pos = {{ $gs->currency_format }};
 
 @if(isset($checked))
 
-	$('#comment-log-reg1').modal('show');
+	//$('#comment-log-reg1').modal('show');
 
 @endif
 
@@ -1139,6 +1142,83 @@ $('#grandtotal').val(ttotal);
 		
 })
 
+
+$('.applycustomCoupon').click(function(){
+	
+	if($('#code').val() != ""){
+        var val = $("#code").val();
+        var total = $("#ttotal").val();
+        var ship = 0;
+            $.ajax({
+                    type: "GET",
+                    url:mainurl+"/carts/coupon/check",
+                    data:{code:val, total:total, shipping_cost:ship},
+                    success:function(data){
+                        if(data == 0)
+                        {
+                        	toastr.error(langg.no_coupon);
+                            $("#code").val("");
+                        }
+                        else if(data == 2)
+                        {
+                        	toastr.error(langg.already_coupon);
+                            $("#code").val("");
+                        }
+                        else
+                        {
+                           // $("#check-coupon-form").toggle();
+                            $(".discount-bar").removeClass('d-none');
+
+							if(pos == 0){
+								$('#total-cost').html('{{ $curr->sign }}'+data[0]);
+								$('#discount').html('{{ $curr->sign }}'+data[2]);
+							}
+							else{
+								$('#total-cost').html(data[0]+'{{ $curr->sign }}');
+								$('#discount').html(data[2]+'{{ $curr->sign }}');
+							}
+								$('#grandtotal').val(data[0]);
+								$('#tgrandtotal').val(data[0]);
+								$('#coupon_code').val(data[1]);
+								$('#coupon_discount').val(data[2]);
+								$('.after_apply').show();
+                            	$('#applied_coupan').text(data[1]);
+								if(data[4] != 0){
+								$('.dpercent').html('('+data[4]+')');
+								}
+								else{
+								$('.dpercent').html('');									
+								}
+
+
+var ttotal = parseFloat($('#grandtotal').val()) + parseFloat(mship) + parseFloat(mpack);
+ttotal = parseFloat(ttotal);
+		if(ttotal % 1 != 0)
+		{
+			ttotal = ttotal.toFixed(2);
+		}
+
+			if(pos == 0){
+				$('#final-cost').html('{{ $curr->sign }}'+ttotal)
+			}
+		else{
+			$('#final-cost').html(ttotal+'{{ $curr->sign }}')
+		}	
+
+			toastr.success(langg.coupon_found);
+			$("#code").val("");
+		}
+		}
+              }); 
+	}else{
+alert("Please enter a code");
+}
+    });
+
+
+
+
+	
 $('.applycoupan').click(function(){
 	code = $(this).data('code');
 	$('#code').val(code);
@@ -1163,7 +1243,7 @@ $('.applycoupan').click(function(){
                         }
                         else
                         {
-                            $("#check-coupon-form").toggle();
+                           // $("#check-coupon-form").toggle();
                             $(".discount-bar").removeClass('d-none');
 
 							if(pos == 0){

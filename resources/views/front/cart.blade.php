@@ -194,9 +194,12 @@
 					<h3>No Coupans Found</h3>
 					@endif
 				</ul>
-				<form id="coupon-form" class="coupon" style="display:none">
+<hr/>
+<h3>Apply Coupon Code</h3>
+				<form id="coupon-form" class="coupon" style="text-align: center;">
 					<input type="text" class="form-control" placeholder="Enter your coupon code" id="code" required="" autocomplete="off">
 					<input type="hidden" class="coupon-total" id="grandtotal" value="{{ Session::has('cart') ? App\Models\Product::convertPrice($mainTotal) : '0.00' }}">
+					<button type="submit" class="btn btn-primary" style="margin-top:5px">Apply</button>
 					
 				</form>
 			</div>
