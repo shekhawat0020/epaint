@@ -959,6 +959,7 @@ Route::prefix('user')->group(function() {
   Route::get('/order/trackings/{id}', 'User\OrderController@trackload')->name('user-order-track-search');
   Route::get('/order/{id}', 'User\OrderController@order')->name('user-order');
   Route::get('/download/order/{slug}/{id}', 'User\OrderController@orderdownload')->name('user-order-download');
+  Route::get('/download/order/giftcard/{slug}/{id}', 'User\OrderController@orderdownloadGiftCard')->name('user-order-download-gift-card');
   Route::get('print/order/print/{id}', 'User\OrderController@orderprint')->name('user-order-print');
   Route::get('/json/trans','User\OrderController@trans');
 

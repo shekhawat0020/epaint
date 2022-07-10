@@ -201,6 +201,9 @@
 						<img src="{{ isset($product['item']['photo']) ? asset('assets/images/products/'.$product['item']['photo']):asset('assets/images/noimage.png') }}" alt="">
 					</a>
 					<div class="copy_block">
+                    @if($product['item']['type'] == 'Gift Card')
+                    {{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}
+                    @else
 						@if($product['item']['user_id'] != 0)
                             @php
                             $user = App\Models\User::find($product['item']['user_id']);
@@ -218,24 +221,33 @@
                             href="{{ route('front.product', $product['item']['slug']) }}">{{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}</a>
 
                         @endif
+                    @endif
+                   
 
                         @if($product['item']['type'] != 'Physical')
                         @if($order->payment_status == 'Completed')
-                            @if($product['item']['file'] != null)
-                            <a href="{{ route('user-order-download',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"
-                                class="btn btn-sm btn-primary mt-1">
-                                <i class="fa fa-download"></i> {{ $langg->lang316 }}
-                            </a>
+                            @if($product['item']['type'] == 'Gift Card')
+                            <a href="{{ route('user-order-download-gift-card',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"
+                                    class="btn btn-sm btn-primary mt-1">
+                                    <i class="fa fa-download"></i> Download Gift Card
+                                </a>
                             @else
-                            <a target="_blank" href="{{ $product['item']['link'] }}"
-                                class="btn btn-sm btn-primary mt-1">
-                                <i class="fa fa-download"></i> {{ $langg->lang316 }}
-                            </a>
-                            @endif
-                            @if($product['license'] != '')
-                            <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete"
-                                class="btn btn-sm btn-info product-btn mt-1" id="license"><i
-                                    class="fa fa-eye"></i> {{ $langg->lang317 }}</a>
+                                @if($product['item']['file'] != null)
+                                <a href="{{ route('user-order-download',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"
+                                    class="btn btn-sm btn-primary mt-1">
+                                    <i class="fa fa-download"></i> {{ $langg->lang316 }}
+                                </a>
+                                @else
+                                <a target="_blank" href="{{ $product['item']['link'] }}"
+                                    class="btn btn-sm btn-primary mt-1">
+                                    <i class="fa fa-download"></i> {{ $langg->lang316 }}
+                                </a>
+                                @endif
+                                @if($product['license'] != '')
+                                <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete"
+                                    class="btn btn-sm btn-info product-btn mt-1" id="license"><i
+                                        class="fa fa-eye"></i> {{ $langg->lang317 }}</a>
+                                @endif
                             @endif
                         @endif
                         @endif
@@ -243,26 +255,32 @@
 
 						<p>Return window closed on 09-Dec-2021</p>
                         <p>{{ $langg->lang311 }} : {{$product['qty']}} </p>
-                        @if(!empty($product['size']))
-                        <p>{{ $langg->lang312 }}: {{ $product['item']['measure'] }}{{str_replace('-',' ',$product['size'])}} </p>
-                        @endif
-                        @if(!empty($product['color']))
-                        
-                        <p>{{ $langg->lang313 }}:  <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span></p>
-                        
-                        @endif
+                         @if($product['item']['type'] != 'Gift Card')
+                            @if(!empty($product['size']))
+                            <p>{{ $langg->lang312 }}: {{ $product['item']['measure'] }}{{str_replace('-',' ',$product['size'])}} </p>
+                            @endif
+                            @if(!empty($product['color']))
+                            
+                            <p>{{ $langg->lang313 }}:  <span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span></p>
+                            
+                            @endif
 
-                        @if(!empty($product['keys']))
+                            @if(!empty($product['keys']))
 
-                        @foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
+                            @foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
 
-                            <p>{{ ucwords(str_replace('_', ' ', $key))  }} :  {{ $value }} </p>
-                        @endforeach
+                                <p>{{ ucwords(str_replace('_', ' ', $key))  }} :  {{ $value }} </p>
+                            @endforeach
 
+                            @endif
                         @endif
 						<p class="price">Unit Price : {{$order->currency_sign}}{{round($product['item_price'] * $order->currency_value,2)}}</p>
 						<p class="price">ToTal Price : {{$order->currency_sign}}{{round($product['price'] * $order->currency_value,2)}}</p>
+                        @if($product['item']['type'] != 'Gift Card')
 						<a href="{{ route('front.product', $product['item']['slug']) }}" class="btn"><i class="fa fa-repeat"></i> Buy it again</a>
+                        @else
+						<a href="{{ route('front.gift-card')}}" class="btn"><i class="fa fa-repeat"></i> Buy it again</a>
+                        @endif
 					</div>
 					<ul>
 						<li><a href="#">Leave seller feedback</a></li>
