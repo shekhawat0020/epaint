@@ -198,8 +198,12 @@
 				<div class="delivery_detail">
 					<h4>Delivered 28-Nov-2021 </h4>
 					<a href="#" class="img_block">
+                    @if($product['item']['type'] == 'Gift Card')
+                    <img src="{{ isset($product['item']['photo']) ? $product['item']['photo']:asset('assets/images/noimage.png') }}" alt="">
+                    @else
 						<img src="{{ isset($product['item']['photo']) ? asset('assets/images/products/'.$product['item']['photo']):asset('assets/images/noimage.png') }}" alt="">
-					</a>
+					@endif
+                    </a>
 					<div class="copy_block">
                     @if($product['item']['type'] == 'Gift Card')
                     {{mb_strlen($product['item']['name'],'utf-8') > 30 ? mb_substr($product['item']['name'],0,30,'utf-8').'...' : $product['item']['name']}}
@@ -227,10 +231,16 @@
                         @if($product['item']['type'] != 'Physical')
                         @if($order->payment_status == 'Completed')
                             @if($product['item']['type'] == 'Gift Card')
-                            <a href="{{ route('user-order-download-gift-card',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"
+                            <br/>
+                            {{--<a href="{{ route('user-order-download-gift-card',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"
                                     class="btn btn-sm btn-primary mt-1">
                                     <i class="fa fa-download"></i> Download Gift Card
-                                </a>
+                                </a>--}}
+                               
+                                @if(isset($product['coupon_code']))
+                                Redeem Your Code: <strong>{{$product['coupon_code']}}</strong>
+                                @endif
+                                
                             @else
                                 @if($product['item']['file'] != null)
                                 <a href="{{ route('user-order-download',['slug' => $order->order_number , 'id' => $product['item']['id']]) }}"

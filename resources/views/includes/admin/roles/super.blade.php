@@ -159,6 +159,9 @@
         <a href="{{ route('admin-coupon-index') }}" class=" wave-effect"><i class="fas fa-percentage"></i>{{ __('Set Coupons') }}</a>
     </li>
     <li>
+        <a href="{{ route('admin-gift-card-index') }}" class=" wave-effect"><i class="fas fa-home"></i>{{ __('Set Gift Card') }}</a>
+    </li>
+    <li>
         <a href="{{ route('admin-event-index') }}" class=" wave-effect"><i class="fas fa-home"></i>{{ __('Set Events') }}</a>
     </li>
     <li>

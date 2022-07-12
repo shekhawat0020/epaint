@@ -414,6 +414,23 @@
     
       //------------ ADMIN Event SECTION ENDS------------
 
+      //------------ ADMIN Gift card SECTION ------------
+
+    Route::group(['middleware'=>'permissions:set_gift_card'],function(){
+
+      Route::get('/gift-card/datatables', 'Admin\GiftCardsController@datatables')->name('admin-gift-card-datatables'); //JSON REQUEST
+      Route::get('/gift-card', 'Admin\GiftCardsController@index')->name('admin-gift-card-index');
+      Route::get('/gift-card/create', 'Admin\GiftCardsController@create')->name('admin-gift-card-create');
+      Route::post('/gift-card/create', 'Admin\GiftCardsController@store')->name('admin-gift-card-store');
+      Route::get('/gift-card/edit/{id}', 'Admin\GiftCardsController@edit')->name('admin-gift-card-edit');
+      Route::post('/gift-card/edit/{id}', 'Admin\GiftCardsController@update')->name('admin-gift-card-update');
+      Route::get('/gift-card/delete/{id}', 'Admin\GiftCardsController@destroy')->name('admin-gift-card-delete');
+      Route::get('/gift-card/status/{id1}/{id2}', 'Admin\GiftCardsController@status')->name('admin-gift-card-status');
+    
+      });
+    
+      //------------ ADMIN Gift Card SECTION ENDS------------
+
   //------------ ADMIN BLOG SECTION ------------
 
   Route::group(['middleware'=>'permissions:blog'],function(){

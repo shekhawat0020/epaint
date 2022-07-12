@@ -133,7 +133,7 @@
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
                     <tr>
                         <td bgcolor="#ffffff" align="left" style="padding: 20px 30px 40px 30px; color: #666666; font-family: 'Lato', Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 400; line-height: 25px;">
-                        <p style="margin: 0;" align="center"><img width="300" src="http://localhost/epaint/public/assets/front/images/giftcard.webp" alt=""></p>
+                        <p style="margin: 0;" align="center"><img width="300" src="{{$recipiant->name}}" alt=""></p>
                      
                             <p style="margin: 0;" align="center">Dear {{$recipiant->recipiant_name}}</p>
                             <p style="margin: 0;" align="center">You have received a Good Earth eGift card <br>worth <strong>₹{{$recipiant->price}}</strong> from {{$recipiant->sender_name}}</p>

@@ -9,6 +9,7 @@ use App\Models\Compare;
 use App\Models\Currency;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\GiftCards;
 use Illuminate\Support\Collection;
 
 class GiftCardController extends Controller
@@ -23,9 +24,9 @@ class GiftCardController extends Controller
             $curr = Currency::where('is_default','=',1)->first();
         }
        
+        $GiftCards = GiftCards::where('status', 1)->get();
 
-
-        return view('front.gift-card', compact('curr'));
+        return view('front.gift-card', compact('curr', 'GiftCards'));
     }
 
 
@@ -72,6 +73,10 @@ class GiftCardController extends Controller
             $errors[] = 'Please enter Recipiant Message';            
         }
 
+        if ($request->photo == ""){
+            $errors[] = 'Gift card not selected';            
+        }
+
         if ($request->sender_name == ""){
             $errors[] = 'Please enter Sender name';            
         }
@@ -109,7 +114,7 @@ class GiftCardController extends Controller
         $prod = new Collection();
         $prod->id = 0;
         $prod->name = $request->card_type;
-        $prod->photo = asset('assets/front/images/giftcard.webp');
+        $prod->photo = $request->photo;
         $prod->price = $Defaultprice;
         $prod->type = "Gift Card";
         $prod->size_qty = "";

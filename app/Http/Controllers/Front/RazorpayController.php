@@ -477,6 +477,10 @@ class RazorpayController extends Controller
                     $couponData->coupon_role = 'GiftCard';
                     $couponData->save();
 
+                    //update coupon code in order
+                    $tempcart->items[0]['coupon_code'] = $cardCode;
+                    $cartNewData['cart'] = utf8_encode(bzcompress(serialize($tempcart), 9));
+                    $order->update($cartNewData);
 
 
                     if($gs->is_smtp == 1)

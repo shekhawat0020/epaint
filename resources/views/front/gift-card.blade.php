@@ -29,18 +29,14 @@
 				</div>
 				<h4>1. PICK A DESIGN</h4>
 				<ul class="gift_list">
+					@foreach($GiftCards as $key => $card)
 					<li>
-						<label for="g1"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g1" name="card_type" checked value="Happy Bday Card">
+						<label for="g{{$key}}"><img src="{{ $card->photo ? asset('assets/images/giftcards/'.$card->photo):asset('assets/images/noimage.png') }}" alt=""></label>
+						<input data-img="{{ $card->photo ? asset('assets/images/giftcards/'.$card->photo):asset('assets/images/noimage.png') }}" class="card_type" type="radio" id="g{{$key}}" name="card_type" @if($key == 0) checked @endif value="{{$card->name}}">
 					</li>
-					<li>
-						<label for="g2"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g2" name="card_type" value="Wedding Card">
-					</li>
-					<li>
-						<label for="g3"><img src="{{asset('assets/front/images/giftcard.webp')}}" alt=""></label>
-						<input data-img="{{asset('assets/front/images/giftcard.webp')}}" class="card_type" type="radio" id="g3" name="card_type" value="Gift Card">
-					</li>
+					
+					@endforeach
+					
 				</ul>
 				<div class="btn_wrap">
 					<a href="javascript::void(0)" data-show="2"  class="btn gift-next-step">Choose Value</a>
@@ -169,6 +165,7 @@
 						<div class="img_block">
 							<img id="p_card_type_img" src="{{asset('assets/front/images/giftcard.webp')}}" alt="">
 						</div>
+						<input type="hidden" name="photo" id="photo" value="{{asset('assets/front/images/giftcard.webp')}}">
 						<ul class="msg_list">
 							<li><span>Recipient Email:</span> <x id="p_recipiant_email">  </x></li>
 							<li>Dear <x id="p_recipiant_name">sa</x></li>
@@ -229,6 +226,7 @@
 
 		$('#p_card_type').text(cardTypeVal);
 		$('#p_card_type_img').prop('src', cardTypeImg);
+		$('#photo').val(cardTypeImg);
 		$('#p_recipiant_name').text($('#recipiant_name').val());
 		$('#p_recipiant_email').text($('#recipiant_email').val());
 		$('#p_gift_amount').text($('#gift_amount').val());
